@@ -1,15 +1,15 @@
 package matchers
 
-var TypeJpeg = NewType("jpg", "image/jpeg")
-var TypePng = NewType("png", "image/png")
-var TypeGif = NewType("gif", "image/gif")
-var TypeWebp = NewType("webp", "image/webp")
-var TypeCR2 = NewType("cr2", "image/x-canon-cr2")
-var TypeTiff = NewType("tif", "image/tiff")
-var TypeBmp = NewType("bmp", "image/bmp")
-var TypeJxr = NewType("jxr", "image/vnd.ms-photo")
-var TypePsd = NewType("psd", "image/vnd.adobe.photoshop")
-var TypeIco = NewType("ico", "image/x-icon")
+var TypeJpeg = newType("jpg", "image/jpeg")
+var TypePng = newType("png", "image/png")
+var TypeGif = newType("gif", "image/gif")
+var TypeWebp = newType("webp", "image/webp")
+var TypeCR2 = newType("cr2", "image/x-canon-cr2")
+var TypeTiff = newType("tif", "image/tiff")
+var TypeBmp = newType("bmp", "image/bmp")
+var TypeJxr = newType("jxr", "image/vnd.ms-photo")
+var TypePsd = newType("psd", "image/vnd.adobe.photoshop")
+var TypeIco = newType("ico", "image/x-icon")
 
 var Image = Map{
 	TypeJpeg: Jpeg,

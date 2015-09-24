@@ -6,11 +6,11 @@ import (
 	"gopkg.in/h2non/filetype.v0/types"
 )
 
-// Map of extensions and file types
+// Map of supported types
 var Types = types.Types
 
-// Map of file matchers
-var Matchers = matchers.Matchers
+// Create and register a new type
+var NewType = types.NewType
 
 // Default types
 var Empty = types.Empty
@@ -19,53 +19,6 @@ var Unknown = types.Unknown
 // Predefined errors
 var EmptyBufferErr = errors.New("Empty buffer")
 var UnknownBufferErr = errors.New("Unknown buffer type")
-
-func DoMatch(buf []byte) (types.Type, error) {
-	return matchers.Match(buf)
-}
-
-// Infer the file type of a buffer inspecting the magic numbers
-func Match(buf []byte) (types.Type, error) {
-	return DoMatch(buf)
-}
-
-// Alias to Match()
-func Type(buf []byte) (types.Type, error) {
-	return Match(buf)
-}
-
-func doMatchMap(buf []byte, machers matchers.Map) (types.Type, error) {
-	kind := matchers.MatchMap(buf, machers)
-	if kind != types.Unknown {
-		return kind, nil
-	}
-	return kind, UnknownBufferErr
-}
-
-// Match file as image type
-func Image(buf []byte) (types.Type, error) {
-	return doMatchMap(buf, matchers.Image)
-}
-
-// Match file as audio type
-func Audio(buf []byte) (types.Type, error) {
-	return doMatchMap(buf, matchers.Audio)
-}
-
-// Match file as video type
-func Video(buf []byte) (types.Type, error) {
-	return doMatchMap(buf, matchers.Audio)
-}
-
-// Match file as text font type
-func Font(buf []byte) (types.Type, error) {
-	return doMatchMap(buf, matchers.Font)
-}
-
-// Match file as generic archive type
-func Archive(buf []byte) (types.Type, error) {
-	return doMatchMap(buf, matchers.Archive)
-}
 
 func Is(buf []byte, ext string) bool {
 	kind, ok := types.Types[ext]

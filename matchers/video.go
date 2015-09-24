@@ -1,14 +1,14 @@
 package matchers
 
-var TypeMp4 = NewType("mp4", "video/mp4")
-var TypeM4v = NewType("m4v", "video/x-m4v")
-var TypeMkv = NewType("mkv", "video/x-matroska")
-var TypeWebm = NewType("webm", "video/webm")
-var TypeMov = NewType("mov", "video/quicktime")
-var TypeAvi = NewType("avi", "video/x-msvideo")
-var TypeWmv = NewType("wmv", "video/x-ms-wmv")
-var TypeMpeg = NewType("mpg", "video/mpeg")
-var TypeFlv = NewType("flv", "video/x-flv")
+var TypeMp4 = newType("mp4", "video/mp4")
+var TypeM4v = newType("m4v", "video/x-m4v")
+var TypeMkv = newType("mkv", "video/x-matroska")
+var TypeWebm = newType("webm", "video/webm")
+var TypeMov = newType("mov", "video/quicktime")
+var TypeAvi = newType("avi", "video/x-msvideo")
+var TypeWmv = newType("wmv", "video/x-ms-wmv")
+var TypeMpeg = newType("mpg", "video/mpeg")
+var TypeFlv = newType("flv", "video/x-flv")
 
 var Video = Map{
 	TypeMp4:  Mp4,

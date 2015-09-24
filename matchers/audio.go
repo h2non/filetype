@@ -1,11 +1,11 @@
 package matchers
 
-var TypeMidi = NewType("mid", "audio/midi")
-var TypeMp3 = NewType("mp3", "audio/mpeg")
-var TypeM4a = NewType("m4a", "audio/m4a")
-var TypeOgg = NewType("ogg", "audio/ogg")
-var TypeFlac = NewType("flac", "audio/x-flac")
-var TypeWav = NewType("wav", "audio/x-wav")
+var TypeMidi = newType("mid", "audio/midi")
+var TypeMp3 = newType("mp3", "audio/mpeg")
+var TypeM4a = newType("m4a", "audio/m4a")
+var TypeOgg = newType("ogg", "audio/ogg")
+var TypeFlac = newType("flac", "audio/x-flac")
+var TypeWav = newType("wav", "audio/x-wav")
 
 var Audio = Map{
 	TypeMidi: Midi,

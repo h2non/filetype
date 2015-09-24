@@ -1,9 +1,9 @@
 package matchers
 
-var TypeWoff = NewType("woff", "application/font-woff")
-var TypeWoff2 = NewType("woff2", "application/font-woff")
-var TypeTtf = NewType("ttf", "application/font-sfnt")
-var TypeOtf = NewType("otf", "application/font-sfnt")
+var TypeWoff = newType("woff", "application/font-woff")
+var TypeWoff2 = newType("woff2", "application/font-woff")
+var TypeTtf = newType("ttf", "application/font-sfnt")
+var TypeOtf = newType("otf", "application/font-sfnt")
 
 var Font = Map{
 	TypeWoff:  Woff,
