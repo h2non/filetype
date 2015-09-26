@@ -1,5 +1,7 @@
 package matchers
 
+import "bytes"
+
 var TypeEpub = newType("epub", "application/epub+zip")
 var TypeZip = newType("zip", "application/zip")
 var TypeTar = newType("tar", "application/x-tar")
@@ -33,6 +35,10 @@ var Archive = Map{
 	TypeSqlite: Sqlite,
 }
 
+var (
+	magicTar = []byte{0x75, 0x73, 0x74, 0x61, 0x72}
+)
+
 func Epub(buf []byte, length int) bool {
 	return length > 57 &&
 		buf[0] == 0x50 && buf[1] == 0x4B && buf[2] == 0x3 && buf[3] == 0x4 &&
@@ -54,9 +60,7 @@ func Zip(buf []byte, length int) bool {
 
 func Tar(buf []byte, length int) bool {
 	return length > 261 &&
-		buf[257] == 0x75 && buf[258] == 0x73 &&
-		buf[259] == 0x74 && buf[260] == 0x61 &&
-		buf[261] == 0x72
+		bytes.Equal(buf[257:257+len(magicTar)], magicTar[:])
 }
 
 func Rar(buf []byte, length int) bool {
