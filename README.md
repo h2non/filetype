@@ -8,8 +8,8 @@ Small [Go](https://golang.org) package to infer the file and MIME type checking 
 - Provides file extension and proper MIME type
 - File discovery by extension or MIME type 
 - File discovery by class (image, video, audio...)
-- Bunch of helpers and shortcuts for easy file checking
-- Pluggable by default: plug in new types and file matchers 
+- Provides a bunch of helpers and file matching shortcuts
+- Pluggable: add custom new types and matchers 
 - Simple and semantic API
 
 ## Installation
