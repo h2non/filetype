@@ -124,12 +124,12 @@ func main() {
 
   // Check if the new type is supported by extension
   if filetype.IsSupported("foo") {
-    fmt.Println("Suppored type: foo")
+    fmt.Println("New supported type: foo")
   }
 
   // Check if the new type is supported by MIME
   if filetype.IsMIMESupported("foo/foo") {
-    fmt.Println("Suppored type: foo/foo")
+    fmt.Println("New supported MIME type: foo/foo")
   }
 
   // Try to match the file
