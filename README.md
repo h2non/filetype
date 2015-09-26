@@ -9,19 +9,13 @@ Small [Go](https://golang.org) package to infer the file and MIME type checking 
 - File discovery by extension or MIME type 
 - File discovery by class (image, video, audio...)
 - Provides a bunch of helpers and file matching shortcuts
-- Pluggable: add custom new types and matchers 
+- [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers 
 - Simple and semantic API
 
 ## Installation
 
 ```bash
 go get gopkg.in/h2non/filetype.v0
-```
-
-## Usage 
-
-```go
-import "gopkg.in/h2non/filetype.v0"
 ```
 
 ## API
