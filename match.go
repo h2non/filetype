@@ -15,7 +15,7 @@ var NewMatcher = matchers.NewMatcher
 func Match(buf []byte) (types.Type, error) {
 	length := len(buf)
 	if length == 0 {
-		return types.Empty, nil
+		return types.Unknown, EmptyBufferErr
 	}
 
 	for _, checker := range Matchers {
@@ -31,6 +31,11 @@ func Match(buf []byte) (types.Type, error) {
 // Alias to Match()
 func Get(buf []byte) (types.Type, error) {
 	return Match(buf)
+}
+
+// Register a new matcher type
+func AddMatcher(fileType types.Type, matcher matchers.Matcher) matchers.TypeMatcher {
+	return matchers.NewMatcher(fileType, matcher)
 }
 
 // Checks if the given buffer matches with some supported file type

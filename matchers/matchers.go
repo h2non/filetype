@@ -39,5 +39,6 @@ func register(matchers ...Map) {
 }
 
 func init() {
+	// Arguments order is intentional
 	register(Image, Video, Audio, Font, Archive)
 }

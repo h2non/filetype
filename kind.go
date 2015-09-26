@@ -5,7 +5,7 @@ import (
 	"gopkg.in/h2non/filetype.v0/types"
 )
 
-// Match file as image type
+// Try to match a file as image type
 func Image(buf []byte) (types.Type, error) {
 	return doMatchMap(buf, matchers.Image)
 }
@@ -16,7 +16,7 @@ func IsImage(buf []byte) bool {
 	return kind != types.Unknown
 }
 
-// Match file as audio type
+// Try to match a file as audio type
 func Audio(buf []byte) (types.Type, error) {
 	return doMatchMap(buf, matchers.Audio)
 }
@@ -27,7 +27,7 @@ func IsAudio(buf []byte) bool {
 	return kind != types.Unknown
 }
 
-// Match file as video type
+// Try to match a file as video type
 func Video(buf []byte) (types.Type, error) {
 	return doMatchMap(buf, matchers.Video)
 }
@@ -38,7 +38,7 @@ func IsVideo(buf []byte) bool {
 	return kind != types.Unknown
 }
 
-// Match file as text font type
+// Try to match a file as text font type
 func Font(buf []byte) (types.Type, error) {
 	return doMatchMap(buf, matchers.Font)
 }
@@ -49,7 +49,7 @@ func IsFont(buf []byte) bool {
 	return kind != types.Unknown
 }
 
-// Match file as generic archive type
+// Try to match a file as generic archive type
 func Archive(buf []byte) (types.Type, error) {
 	return doMatchMap(buf, matchers.Archive)
 }

@@ -12,14 +12,19 @@ var Types = types.Types
 // Create and register a new type
 var NewType = types.NewType
 
-// Default types
-var Empty = types.Empty
+// Default unknown file type
 var Unknown = types.Unknown
 
 // Predefined errors
 var EmptyBufferErr = errors.New("Empty buffer")
 var UnknownBufferErr = errors.New("Unknown buffer type")
 
+// Register a new file type
+func AddType(ext, mime string) types.Type {
+	return types.NewType(ext, mime)
+}
+
+// Checks if a given buffer matches with the given file type extension
 func Is(buf []byte, ext string) bool {
 	kind, ok := types.Types[ext]
 	if ok {
@@ -28,24 +33,29 @@ func Is(buf []byte, ext string) bool {
 	return false
 }
 
+// Semantic alias to Is()
+func IsExtension(buf []byte, ext string) bool {
+	return Is(buf, ext)
+}
+
+// Checks if a given buffer matches with the given file type
 func IsType(buf []byte, kind types.Type) bool {
 	matcher := matchers.Matchers[kind]
 	if matcher == nil {
 		return false
 	}
-
-	length := len(buf)
-	return matcher(buf, length) != types.Unknown
+	return matcher(buf, len(buf)) != types.Unknown
 }
 
-// Register a new matcher type
-func AddMatcher(fileType types.Type, matcher matchers.Matcher) matchers.TypeMatcher {
-	return matchers.NewMatcher(fileType, matcher)
-}
-
-// Register a new file type
-func AddType(ext, mime string) types.Type {
-	return types.NewType(ext, mime)
+// Checks if a given buffer matches with the given MIME type
+func IsMIME(buf []byte, mime string) bool {
+	for _, kind := range types.Types {
+		if kind.MIME.Value == mime {
+			matcher := matchers.Matchers[kind]
+			return matcher(buf, len(buf)) != types.Unknown
+		}
+	}
+	return false
 }
 
 // Check if a given file extension is supported
@@ -58,7 +68,7 @@ func IsSupported(ext string) bool {
 	return false
 }
 
-// Check if a given MIME expression is supported
+// Check if a given MIME type is supported
 func IsMIMESupported(mime string) bool {
 	for _, m := range Types {
 		if m.MIME.Value == mime {
@@ -66,4 +76,9 @@ func IsMIMESupported(mime string) bool {
 		}
 	}
 	return false
+}
+
+// Retrieve a Type by file extension
+func GetType(ext string) types.Type {
+	return types.Get(ext)
 }

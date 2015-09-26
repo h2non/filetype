@@ -1,8 +1,16 @@
 # filetype [![Build Status](https://travis-ci.org/h2non/filetype.png)](https://travis-ci.org/h2non/filetype) [![GoDoc](https://godoc.org/github.com/h2non/filetype?status.svg)](https://godoc.org/github.com/h2non/filetype)
 
-Small [Go](https://golang.org) package to infer the file type checking the [magic number](https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files) of a given binary buffer.
+Small [Go](https://golang.org) package to infer the file and MIME type checking the [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files) signature.
 
-Supports a wide range of file types, including images formats, fonts, videos, audio and other common application files, and provides the proper file extension and convenient MIME code.
+## Features
+
+- Supports a [wide range](#supported-types) of file types
+- Provides file extension and proper MIME type
+- File discovery by extension or MIME type 
+- File discovery by class (image, video, audio...)
+- Bunch of helpers and shortcuts for easy file checking
+- Pluggable by default: plug in new types and file matchers 
+- Simple and semantic API
 
 ## Installation
 
@@ -10,31 +18,192 @@ Supports a wide range of file types, including images formats, fonts, videos, au
 go get gopkg.in/h2non/filetype.v0
 ```
 
-## Usage
+## Usage 
 
 ```go
+import "gopkg.in/h2non/filetype.v0"
+```
+
+## API
+
+See [Godoc](https://godoc.org/github.com/h2non/filetype) reference.
+
+## Examples
+
+#### Simple file type checking
+
+```go 
+package main
+
 import (
   "fmt"
-  "io/ioutil"
   "gopkg.in/h2non/filetype.v0"
+  "io/ioutil"
 )
 
 func main() {
   buf, _ := ioutil.ReadFile("sample.jpg")
 
-  kind, unkwown := filetype.Type(buf)
+  kind, unkwown := filetype.Match(buf)
   if unkwown != nil {
-    fmt.Printf("Unkwown file type")
+    fmt.Printf("Unkwown: %s", unkwown)
     return
   }
 
-  fmt.Printf("File type found: %s. MIME: %s", kind.Extension, kind.MIME.Value)
+  fmt.Printf("File type: %s. MIME: %s\n", kind.Extension, kind.MIME.Value)
 }
 ```
 
-## API
+#### Check type class
 
+```go 
+package main
 
+import (
+  "fmt"
+  "gopkg.in/h2non/filetype.v0"
+  "io/ioutil"
+)
+
+func main() {
+  buf, _ := ioutil.ReadFile("sample.jpg")
+
+  if filetype.IsImage(buf) {
+    fmt.Println("Image file")
+  } else {
+    fmt.Println("Not an image")
+  }
+}
+```
+
+#### Supported type
+
+```go 
+package main
+
+import (
+  "fmt"
+  "gopkg.in/h2non/filetype.v0"
+)
+
+func main() {
+  // Check if file is supported by extension
+  if filetype.IsSupported("jpg") {
+    fmt.Println("Extension supported")
+  } else {
+    fmt.Println("Extension not supported")
+  }
+
+  // Check if file is supported by extension
+  if filetype.IsMIMESupported("image/jpeg") {
+    fmt.Println("MIME type supported")
+  } else {
+    fmt.Println("MIME type not supported")
+  }
+}
+```
+
+#### Add additional file type matchers
+
+```go 
+package main
+
+import (
+  "fmt"
+  "gopkg.in/h2non/filetype.v0"
+)
+
+var fooType = filetype.NewType("foo", "foo/foo")
+
+func fooMatcher(buf []byte, length int) bool {
+  return length > 1 && buf[0] == 0x01 && buf[1] == 0x02
+}
+
+func main() {
+  // Register the new matcher and its type
+  filetype.AddMatcher(fooType, fooMatcher)
+
+  // Check if the new type is supported by extension
+  if filetype.IsSupported("foo") {
+    fmt.Println("Suppored type: foo")
+  }
+
+  // Check if the new type is supported by MIME
+  if filetype.IsMIMESupported("foo/foo") {
+    fmt.Println("Suppored type: foo/foo")
+  }
+
+  // Try to match the file
+  fooFile := []byte{0x01, 0x02}
+  kind, _ := filetype.Match(fooFile)
+  if kind == filetype.Unknown {
+    fmt.Println("Unknown file type")
+  } else {
+    fmt.Printf("File type matched: %s\n", kind.Extension)
+  }
+}
+```
+
+## Supported types
+
+#### Image
+
+- **jpg** - `image/jpeg`
+- **png** - `image/png`
+- **gif** - `image/gif`
+- **webp** - `image/webp`
+- **cr2** - `image/x-canon-cr2`
+- **tif** - `image/tiff`
+- **bmp** - `image/bmp`
+- **jxr** - `image/vnd.ms-photo`
+- **psd** - `image/vnd.adobe.photoshop`
+- **ico** - `image/x-icon`
+
+#### Video
+
+- **mp4** - `video/mp4`
+- **m4v** - `video/x-m4v`
+- **mkv** - `video/x-matroska`
+- **webm** - `video/webm`
+- **mov** - `video/quicktime`
+- **avi** - `video/x-msvideo`
+- **wmv** - `video/x-ms-wmv`
+- **mpg** - `video/mpeg`
+- **flv** - `video/x-flv`
+
+#### Audio
+
+- **mid** - `audio/midi`
+- **mp3** - `audio/mpeg`
+- **m4a** - `audio/m4a`
+- **ogg** - `audio/ogg`
+- **flac** - `audio/x-flac`
+- **wav** - `audio/x-wav`
+
+#### Archive
+
+- **epub** - `application/epub+zip`
+- **zip** - `application/zip`
+- **tar** - `application/x-tar`
+- **rar** - `application/x-rar-compressed`
+- **gz** - `application/gzip`
+- **bz2** - `application/x-bzip2`
+- **7z** - `application/x-7z-compressed`
+- **xz** - `application/x-xz`
+- **pdf** - `application/pdf`
+- **exe** - `application/x-msdownload`
+- **swf** - `application/x-shockwave-flash`
+- **rtf** - `application/rtf`
+- **eot** - `application/octet-stream`
+- **ps** - `application/postscript`
+- **sqlite** - `application/x-sqlite3`
+
+#### Font
+
+- **woff** - `application/font-woff`
+- **woff2** - `application/font-woff`
+- **ttf** - `application/font-sfnt`
+- **otf** - `application/font-sfnt`
 
 ## License
 
