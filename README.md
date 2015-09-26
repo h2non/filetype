@@ -28,6 +28,11 @@ import "gopkg.in/h2non/filetype.v0"
 
 See [Godoc](https://godoc.org/github.com/h2non/filetype) reference.
 
+### Subpackages
+
+- [`gopkg.in/h2non/filetype.v0/types`](https://godoc.org/github.com/h2non/filetype/types)
+- [`gopkg.in/h2non/filetype.v0/matchers`](https://godoc.org/github.com/h2non/filetype/matchers)
+
 ## Examples
 
 #### Simple file type checking
