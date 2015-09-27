@@ -123,3 +123,43 @@ func TestMatchesMap(t *testing.T) {
 		}
 	}
 }
+
+//
+// Benchmarks
+//
+
+var tarBuffer, _ = ioutil.ReadFile("./fixtures/sample.tar")
+var zipBuffer, _ = ioutil.ReadFile("./fixtures/sample.zip")
+var jpgBuffer, _ = ioutil.ReadFile("./fixtures/sample.jpg")
+var gifBuffer, _ = ioutil.ReadFile("./fixtures/sample.gif")
+var pngBuffer, _ = ioutil.ReadFile("./fixtures/sample.png")
+
+func BenchmarkMatchTar(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(tarBuffer)
+	}
+}
+
+func BenchmarkMatchZip(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(zipBuffer)
+	}
+}
+
+func BenchmarkMatchJpeg(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(jpgBuffer)
+	}
+}
+
+func BenchmarkMatchGif(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(gifBuffer)
+	}
+}
+
+func BenchmarkMatchPng(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(pngBuffer)
+	}
+}
