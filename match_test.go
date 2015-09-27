@@ -3,6 +3,7 @@ package filetype
 import (
 	"gopkg.in/h2non/filetype.v0/matchers"
 	"gopkg.in/h2non/filetype.v0/types"
+	"io/ioutil"
 	"testing"
 )
 
@@ -24,6 +25,30 @@ func TestMatch(t *testing.T) {
 
 		if match.Extension != test.ext {
 			t.Fatalf("Invalid image type: %s", match.Extension)
+		}
+	}
+}
+
+func TestMatchRealFiles(t *testing.T) {
+	cases := []struct {
+		ext string
+	}{
+		{"gif"},
+		{"jpg"},
+		{"png"},
+		{"zip"},
+		{"tar"},
+	}
+
+	for _, test := range cases {
+		buf, err := ioutil.ReadFile("./fixtures/sample." + test.ext)
+		if err != nil {
+			t.Fatalf("Error: %s", err)
+		}
+
+		kind, _ := Match(buf)
+		if kind.Extension != test.ext {
+			t.Fatalf("Invalid image type: %s", kind.Extension)
 		}
 	}
 }
