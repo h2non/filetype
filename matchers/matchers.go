@@ -6,21 +6,21 @@ import "gopkg.in/h2non/filetype.v0/types"
 var newType = types.NewType
 
 // Matcher function interface as type alias
-type Matcher func([]byte, int) bool
+type Matcher func([]byte) bool
 
 // Type interface to store pairs of type with its matcher function
 type Map map[types.Type]Matcher
 
 // Type specific matcher function interface
-type TypeMatcher func([]byte, int) types.Type
+type TypeMatcher func([]byte) types.Type
 
 // Store registered file type matchers
 var Matchers = make(map[types.Type]TypeMatcher)
 
 // Create and register a new type matcher function
 func NewMatcher(kind types.Type, fn Matcher) TypeMatcher {
-	matcher := func(buf []byte, length int) types.Type {
-		if fn(buf, length) {
+	matcher := func(buf []byte) types.Type {
+		if fn(buf) {
 			return kind
 		}
 		return types.Unknown

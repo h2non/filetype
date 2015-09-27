@@ -44,7 +44,7 @@ func IsType(buf []byte, kind types.Type) bool {
 	if matcher == nil {
 		return false
 	}
-	return matcher(buf, len(buf)) != types.Unknown
+	return matcher(buf) != types.Unknown
 }
 
 // Checks if a given buffer matches with the given MIME type
@@ -52,7 +52,7 @@ func IsMIME(buf []byte, mime string) bool {
 	for _, kind := range types.Types {
 		if kind.MIME.Value == mime {
 			matcher := matchers.Matchers[kind]
-			return matcher(buf, len(buf)) != types.Unknown
+			return matcher(buf) != types.Unknown
 		}
 	}
 	return false

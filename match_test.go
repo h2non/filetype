@@ -48,8 +48,8 @@ func TestMatches(t *testing.T) {
 func TestAddMatcher(t *testing.T) {
 	fileType := AddType("foo", "foo/foo")
 
-	AddMatcher(fileType, func(buf []byte, l int) bool {
-		return l == 2 && buf[0] == 0x00 && buf[1] == 0x00
+	AddMatcher(fileType, func(buf []byte) bool {
+		return len(buf) == 2 && buf[0] == 0x00 && buf[1] == 0x00
 	})
 
 	if !Is([]byte{0x00, 0x00}, "foo") {

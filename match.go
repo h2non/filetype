@@ -19,7 +19,7 @@ func Match(buf []byte) (types.Type, error) {
 	}
 
 	for _, checker := range Matchers {
-		match := checker(buf, length)
+		match := checker(buf)
 		if match != types.Unknown && match.Extension != "" {
 			return match, nil
 		}
@@ -46,9 +46,8 @@ func Matches(buf []byte) bool {
 
 // Perform a file matching againts a map of match functions
 func MatchMap(buf []byte, matchers matchers.Map) types.Type {
-	length := len(buf)
 	for kind, matcher := range matchers {
-		if matcher(buf, length) {
+		if matcher(buf) {
 			return kind
 		}
 	}
