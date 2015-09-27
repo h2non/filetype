@@ -11,6 +11,7 @@ Small [Go](https://golang.org) package to infer the file and MIME type checking 
 - Provides a bunch of helpers and file matching shortcuts
 - [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers 
 - Simple and semantic API
+- [Blazing fast](#benchmarks), even processing large files
 
 ## Installation
 
@@ -203,6 +204,20 @@ func main() {
 - **woff2** - `application/font-woff`
 - **ttf** - `application/font-sfnt`
 - **otf** - `application/font-sfnt`
+
+## Benchmarks
+
+Measured using [real files](tree/master/fixtures). 
+
+Environment: OSX x64 i7 2.7 Ghz
+
+```bash
+BenchmarkMatchTar-8    1000000        1083 ns/op
+BenchmarkMatchZip-8    1000000        1162 ns/op
+BenchmarkMatchJpeg-8   1000000        1280 ns/op
+BenchmarkMatchGif-8    1000000        1315 ns/op
+BenchmarkMatchPng-8    1000000        1121 ns/op
+```
 
 ## License
 
