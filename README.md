@@ -12,6 +12,7 @@ Small [Go](https://golang.org) package to infer the file and MIME type checking 
 - [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers 
 - Simple and semantic API
 - [Blazing fast](#benchmarks), even processing large files
+- Only first 261 bytes representing the max file header is required, so you can just [pass a slice](#file-header)
 
 ## Installation
 
@@ -69,7 +70,7 @@ func main() {
   buf, _ := ioutil.ReadFile("sample.jpg")
 
   if filetype.IsImage(buf) {
-    fmt.Println("Image file")
+    fmt.Println("File is an image")
   } else {
     fmt.Println("Not an image")
   }
@@ -102,6 +103,32 @@ func main() {
   }
 }
 ```
+
+#### File header
+
+```go
+package main
+
+import (
+  "fmt"
+  "gopkg.in/h2non/filetype.v0"
+  "io/ioutil"
+)
+
+func main() {
+  // Read a file
+  buf, _ := ioutil.ReadFile("sample.jpg")
+
+  // We only have to pass the file header = first 261 bytes
+  head := buf[:261]
+
+  if filetype.IsImage(head) {
+    fmt.Println("File is an image")
+  } else {
+    fmt.Println("Not an image")
+  }
+}
+``` 
 
 #### Add additional file type matchers
 
