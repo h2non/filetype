@@ -234,7 +234,7 @@ func main() {
 
 ## Benchmarks
 
-Measured using [real files](tree/master/fixtures). 
+Measured using [real files](/h2non/filetype/tree/master/fixtures). 
 
 Environment: OSX x64 i7 2.7 Ghz
 
