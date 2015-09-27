@@ -115,8 +115,8 @@ import (
 
 var fooType = filetype.NewType("foo", "foo/foo")
 
-func fooMatcher(buf []byte, length int) bool {
-  return length > 1 && buf[0] == 0x01 && buf[1] == 0x02
+func fooMatcher(buf []byte) bool {
+  return len(buf) > 1 && buf[0] == 0x01 && buf[1] == 0x02
 }
 
 func main() {
