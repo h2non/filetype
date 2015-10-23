@@ -38,6 +38,8 @@ func TestMatchRealFiles(t *testing.T) {
 		{"png"},
 		{"zip"},
 		{"tar"},
+		{"tif"},
+		{"mp4"},
 	}
 
 	for _, test := range cases {
