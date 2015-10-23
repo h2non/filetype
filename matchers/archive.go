@@ -109,7 +109,7 @@ func Rtf(buf []byte) bool {
 }
 
 func Eot(buf []byte) bool {
-	return len(buf) > 10 &&
+	return len(buf) > 35 &&
 		buf[34] == 0x4C && buf[35] == 0x50 &&
 		((buf[8] == 0x02 && buf[9] == 0x00 &&
 			buf[10] == 0x01) || (buf[8] == 0x01 &&
