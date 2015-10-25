@@ -28,7 +28,9 @@ var Image = Map{
 
 func Jpeg(buf []byte) bool {
 	return len(buf) > 2 &&
-		buf[0] == 0xFF && buf[1] == 0xD8 && buf[2] == 0xFF
+		buf[0] == 0xFF &&
+		buf[1] == 0xD8 &&
+		buf[2] == 0xFF
 }
 
 func Png(buf []byte) bool {
@@ -57,18 +59,21 @@ func CR2(buf []byte) bool {
 
 func Tiff(buf []byte) bool {
 	return len(buf) > 3 &&
-		(buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x0) ||
-		(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A)
+		((buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x0) ||
+			(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A))
 }
 
 func Bmp(buf []byte) bool {
 	return len(buf) > 1 &&
-		buf[0] == 0x42 && buf[1] == 0x4D
+		buf[0] == 0x42 &&
+		buf[1] == 0x4D
 }
 
 func Jxr(buf []byte) bool {
 	return len(buf) > 2 &&
-		buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0xBC
+		buf[0] == 0x49 &&
+		buf[1] == 0x49 &&
+		buf[2] == 0xBC
 }
 
 func Psd(buf []byte) bool {

@@ -74,8 +74,9 @@ func Wmv(buf []byte) bool {
 
 func Mpeg(buf []byte) bool {
 	return len(buf) > 3 &&
-		buf[0] == 0x0 && buf[1] == 0x0 && buf[2] == 0x1 &&
-		buf[3] >= 0xb0 && buf[3] <= 0xbf
+		buf[0] == 0x0 && buf[1] == 0x0 &&
+		buf[2] == 0x1 && buf[3] >= 0xb0 &&
+		buf[3] <= 0xbf
 }
 
 func Flv(buf []byte) bool {

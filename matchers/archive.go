@@ -114,7 +114,8 @@ func Eot(buf []byte) bool {
 		((buf[8] == 0x02 && buf[9] == 0x00 &&
 			buf[10] == 0x01) || (buf[8] == 0x01 &&
 			buf[9] == 0x00 && buf[10] == 0x00) ||
-			(buf[8] == 0x02 && buf[9] == 0x00 && buf[10] == 0x02))
+			(buf[8] == 0x02 && buf[9] == 0x00 &&
+				buf[10] == 0x02))
 }
 
 func Ps(buf []byte) bool {
