@@ -15,16 +15,18 @@ var NewType = types.NewType
 // Default unknown file type
 var Unknown = types.Unknown
 
-// Predefined errors
-var EmptyBufferErr = errors.New("Empty buffer")
-var UnknownBufferErr = errors.New("Unknown buffer type")
+// Empty buffer error
+var ErrEmptyBuffer = errors.New("Empty buffer")
 
-// Register a new file type
+// Unknown buffer error
+var ErrUnknownBuffer = errors.New("Unknown buffer type")
+
+// AddType registers a new file type
 func AddType(ext, mime string) types.Type {
 	return types.NewType(ext, mime)
 }
 
-// Checks if a given buffer matches with the given file type extension
+// Is checks if a given buffer matches with the given file type extension
 func Is(buf []byte, ext string) bool {
 	kind, ok := types.Types[ext]
 	if ok {
@@ -33,12 +35,12 @@ func Is(buf []byte, ext string) bool {
 	return false
 }
 
-// Semantic alias to Is()
+// IsExtension semantic alias to Is()
 func IsExtension(buf []byte, ext string) bool {
 	return Is(buf, ext)
 }
 
-// Checks if a given buffer matches with the given file type
+// IsType checks if a given buffer matches with the given file type
 func IsType(buf []byte, kind types.Type) bool {
 	matcher := matchers.Matchers[kind]
 	if matcher == nil {
@@ -47,7 +49,7 @@ func IsType(buf []byte, kind types.Type) bool {
 	return matcher(buf) != types.Unknown
 }
 
-// Checks if a given buffer matches with the given MIME type
+// IsMIME checks if a given buffer matches with the given MIME type
 func IsMIME(buf []byte, mime string) bool {
 	for _, kind := range types.Types {
 		if kind.MIME.Value == mime {
@@ -58,9 +60,9 @@ func IsMIME(buf []byte, mime string) bool {
 	return false
 }
 
-// Check if a given file extension is supported
+// IsSupported checks if a given file extension is supported
 func IsSupported(ext string) bool {
-	for name, _ := range Types {
+	for name := range Types {
 		if name == ext {
 			return true
 		}
@@ -68,7 +70,7 @@ func IsSupported(ext string) bool {
 	return false
 }
 
-// Check if a given MIME type is supported
+// IsMIMESupported checks if a given MIME type is supported
 func IsMIMESupported(mime string) bool {
 	for _, m := range Types {
 		if m.MIME.Value == mime {
@@ -78,7 +80,7 @@ func IsMIMESupported(mime string) bool {
 	return false
 }
 
-// Retrieve a Type by file extension
+// GetType retrieves a Type by file extension
 func GetType(ext string) types.Type {
 	return types.Get(ext)
 }

@@ -1,5 +1,6 @@
 package types
 
+// MIME stores the file MIME type values
 type MIME struct {
 	Type    string
 	Subtype string
