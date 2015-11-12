@@ -7,6 +7,7 @@ var (
 	TypeOgg  = newType("ogg", "audio/ogg")
 	TypeFlac = newType("flac", "audio/x-flac")
 	TypeWav  = newType("wav", "audio/x-wav")
+	TypeAmr  = newType("amr", "audio/amr")
 )
 
 var Audio = Map{
@@ -16,6 +17,7 @@ var Audio = Map{
 	TypeOgg:  Ogg,
 	TypeFlac: Flac,
 	TypeWav:  Wav,
+	TypeAmr:  Amr,
 }
 
 func Midi(buf []byte) bool {
@@ -55,4 +57,11 @@ func Wav(buf []byte) bool {
 		buf[2] == 0x46 && buf[3] == 0x46 &&
 		buf[8] == 0x57 && buf[9] == 0x41 &&
 		buf[10] == 0x56 && buf[11] == 0x45
+}
+
+func Amr(buf []byte) bool {
+	return len(buf) > 11 &&
+		buf[0] == 0x23 && buf[1] == 0x21 &&
+		buf[2] == 0x41 && buf[3] == 0x4D &&
+		buf[4] == 0x52 && buf[5] == 0x0A
 }

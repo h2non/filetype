@@ -13,6 +13,7 @@ Small [Go](https://golang.org) package to infer the file and MIME type checking 
 - Simple and semantic API
 - [Blazing fast](#benchmarks), even processing large files
 - Only first 261 bytes representing the max file header is required, so you can just [pass a slice](#file-header)
+- Dependency free (it's just Go code)
 
 ## Installation
 
@@ -206,6 +207,7 @@ func main() {
 - **ogg** - `audio/ogg`
 - **flac** - `audio/x-flac`
 - **wav** - `audio/x-wav`
+- **amr** - `audio/amr`
 
 #### Archive
 
@@ -224,6 +226,13 @@ func main() {
 - **eot** - `application/octet-stream`
 - **ps** - `application/postscript`
 - **sqlite** - `application/x-sqlite3`
+- **nes** - `application/x-nintendo-nes-rom`
+- **crx** - `application/x-google-chrome-extension`
+- **cab** - `application/vnd.ms-cab-compressed`
+- **deb** - `application/x-deb`
+- **ar** - `application/x-unix-archive`
+- **Z** - `application/x-compress`
+- **lz** - `application/x-lzip`
 
 #### Font
 

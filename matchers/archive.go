@@ -16,6 +16,13 @@ var (
 	TypeEot    = newType("eot", "application/octet-stream")
 	TypePs     = newType("ps", "application/postscript")
 	TypeSqlite = newType("sqlite", "application/x-sqlite3")
+	TypeNes    = newType("nes", "application/x-nintendo-nes-rom")
+	TypeCrx    = newType("crx", "application/x-google-chrome-extension")
+	TypeCab    = newType("cab", "application/vnd.ms-cab-compressed")
+	TypeDeb    = newType("deb", "application/x-deb")
+	TypeAr     = newType("ar", "application/x-unix-archive")
+	TypeZ      = newType("Z", "application/x-compress")
+	TypeLz     = newType("lz", "application/x-lzip")
 )
 
 var Archive = Map{
@@ -33,6 +40,13 @@ var Archive = Map{
 	TypeEot:    Eot,
 	TypePs:     Ps,
 	TypeSqlite: Sqlite,
+	TypeNes:    Nes,
+	TypeCrx:    Crx,
+	TypeCab:    Cab,
+	TypeDeb:    Deb,
+	TypeAr:     Ar,
+	TypeZ:      Z,
+	TypeLz:     Lz,
 }
 
 func Epub(buf []byte) bool {
@@ -108,6 +122,24 @@ func Rtf(buf []byte) bool {
 		buf[4] == 0x66
 }
 
+func Nes(buf []byte) bool {
+	return len(buf) > 3 &&
+		buf[0] == 0x4E && buf[1] == 0x45 &&
+		buf[2] == 0x53 && buf[3] == 0x1A
+}
+
+func Crx(buf []byte) bool {
+	return len(buf) > 3 &&
+		buf[0] == 0x43 && buf[1] == 0x72 &&
+		buf[2] == 0x32 && buf[3] == 0x34
+}
+
+func Cab(buf []byte) bool {
+	return len(buf) > 3 &&
+		((buf[0] == 0x4D && buf[1] == 0x53 && buf[2] == 0x43 && buf[3] == 0x46) ||
+			(buf[0] == 0x49 && buf[1] == 0x53 && buf[2] == 0x63 && buf[3] == 0x28))
+}
+
 func Eot(buf []byte) bool {
 	return len(buf) > 35 &&
 		buf[34] == 0x4C && buf[35] == 0x50 &&
@@ -134,4 +166,35 @@ func Sqlite(buf []byte) bool {
 	return len(buf) > 3 &&
 		buf[0] == 0x53 && buf[1] == 0x51 &&
 		buf[2] == 0x4C && buf[3] == 0x69
+}
+
+func Deb(buf []byte) bool {
+	return len(buf) > 20 &&
+		buf[0] == 0x21 && buf[1] == 0x3C && buf[2] == 0x61 &&
+		buf[3] == 0x72 && buf[4] == 0x63 && buf[5] == 0x68 &&
+		buf[6] == 0x3E && buf[7] == 0x0A && buf[8] == 0x64 &&
+		buf[9] == 0x65 && buf[10] == 0x62 && buf[11] == 0x69 &&
+		buf[12] == 0x61 && buf[13] == 0x6E && buf[14] == 0x2D &&
+		buf[15] == 0x62 && buf[16] == 0x69 && buf[17] == 0x6E &&
+		buf[18] == 0x61 && buf[19] == 0x72 && buf[20] == 0x79
+}
+
+func Ar(buf []byte) bool {
+	return len(buf) > 6 &&
+		buf[0] == 0x21 && buf[1] == 0x3C &&
+		buf[2] == 0x61 && buf[3] == 0x72 &&
+		buf[4] == 0x63 && buf[5] == 0x68 &&
+		buf[6] == 0x3E
+}
+
+func Z(buf []byte) bool {
+	return len(buf) > 1 &&
+		((buf[0] == 0x1F && buf[1] == 0xA0) ||
+			(buf[0] == 0x1F && buf[1] == 0x9D))
+}
+
+func Lz(buf []byte) bool {
+	return len(buf) > 3 &&
+		buf[0] == 0x4C && buf[1] == 0x5A &&
+		buf[2] == 0x49 && buf[3] == 0x50
 }
