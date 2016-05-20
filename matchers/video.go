@@ -34,11 +34,20 @@ func M4v(buf []byte) bool {
 }
 
 func Mkv(buf []byte) bool {
-	return len(buf) > 38 &&
-		buf[31] == 0x6D && buf[32] == 0x61 &&
-		buf[33] == 0x74 && buf[34] == 0x72 &&
-		buf[35] == 0x6f && buf[36] == 0x73 &&
-		buf[37] == 0x6B && buf[38] == 0x61
+	return (len(buf) > 15 &&
+		buf[0] == 0x1A && buf[1] == 0x45 &&
+		buf[2] == 0xDF && buf[3] == 0xA3 &&
+		buf[4] == 0x93 && buf[5] == 0x42 &&
+		buf[6] == 0x82 && buf[7] == 0x88 &&
+		buf[8] == 0x6D && buf[9] == 0x61 &&
+		buf[10] == 0x74 && buf[11] == 0x72 &&
+		buf[12] == 0x6F && buf[13] == 0x73 &&
+		buf[14] == 0x6B && buf[15] == 0x61) ||
+		(len(buf) > 38 &&
+			buf[31] == 0x6D && buf[32] == 0x61 &&
+			buf[33] == 0x74 && buf[34] == 0x72 &&
+			buf[35] == 0x6f && buf[36] == 0x73 &&
+			buf[37] == 0x6B && buf[38] == 0x61)
 }
 
 func Webm(buf []byte) bool {
