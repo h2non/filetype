@@ -29,6 +29,7 @@ func Midi(buf []byte) bool {
 func Mp3(buf []byte) bool {
 	return len(buf) > 2 &&
 		((buf[0] == 0x49 && buf[1] == 0x44 && buf[2] == 0x33) ||
+			(buf[0] == 0xFF && buf[1] == 0xfa) ||
 			(buf[0] == 0xFF && buf[1] == 0xfb))
 }
 
