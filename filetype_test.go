@@ -1,8 +1,9 @@
 package filetype
 
 import (
-	"gopkg.in/h2non/filetype.v0/types"
 	"testing"
+
+	"gopkg.in/h2non/filetype.v0/types"
 )
 
 func TestIs(t *testing.T) {
@@ -32,6 +33,8 @@ func TestIsType(t *testing.T) {
 		{[]byte{0xFF, 0xD8, 0xFF}, types.Get("jpg"), true},
 		{[]byte{0xFF, 0xD8, 0x00}, types.Get("jpg"), false},
 		{[]byte{0x89, 0x50, 0x4E, 0x47}, types.Get("png"), true},
+		{[]byte{0xFF, 0xFA, 0x90}, types.Get("mp3"), true},
+		{[]byte{0xFF, 0xFB, 0x90}, types.Get("mp3"), true},
 	}
 
 	for _, test := range cases {
@@ -69,6 +72,7 @@ func TestIsSupported(t *testing.T) {
 		{"abc", false},
 		{"png", true},
 		{"mp4", true},
+		{"mp3", true},
 		{"", false},
 	}
 
@@ -88,6 +92,7 @@ func TestIsMIMESupported(t *testing.T) {
 		{"foo/bar", false},
 		{"image/png", true},
 		{"video/mpeg", true},
+		{"audio/mpeg", true},
 	}
 
 	for _, test := range cases {
