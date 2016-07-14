@@ -40,6 +40,7 @@ func TestMatchRealFiles(t *testing.T) {
 		{"tar"},
 		{"tif"},
 		{"mp4"},
+		{"mp3"},
 	}
 
 	for _, test := range cases {
@@ -117,6 +118,7 @@ func TestMatchesMap(t *testing.T) {
 		{[]byte{0xFF, 0xD8, 0xFF}, true},
 		{[]byte{0x89, 0x50, 0x4E, 0x47}, true},
 		{[]byte{0xFF, 0x0, 0x0}, false},
+		{[]byte{0xFF, 0xFC, 0x90}, false},
 	}
 
 	for _, test := range cases {
