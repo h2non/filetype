@@ -29,7 +29,7 @@ func Midi(buf []byte) bool {
 func Mp3(buf []byte) bool {
 	return len(buf) > 2 &&
 		((buf[0] == 0x49 && buf[1] == 0x44 && buf[2] == 0x33) || // ID3v2
-			// Final bit may be set or not.
+			// Final bit (has crc32) may be or may not be set.
 			(buf[0] == 0xFF && (buf[1] == 0xFA || buf[1] == 0xFB)))
 }
 
