@@ -2,6 +2,8 @@
 
 Small and dependency free [Go](https://golang.org) package to infer file and MIME type checking the [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files) signature.
 
+For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) package.
+
 ## Features
 
 - Supports a [wide range](#supported-types) of file types
