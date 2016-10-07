@@ -246,7 +246,7 @@ func main() {
 
 ## Benchmarks
 
-Measured using [real files](https://github.com/h2non/filetype/tree/master/fixturess). 
+Measured using [real files](https://github.com/h2non/filetype/tree/master/fixtures). 
 
 Environment: OSX x64 i7 2.7 Ghz
 
