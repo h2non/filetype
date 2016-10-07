@@ -1,10 +1,11 @@
 package filetype
 
 import (
-	"gopkg.in/h2non/filetype.v0/matchers"
-	"gopkg.in/h2non/filetype.v0/types"
 	"io/ioutil"
 	"testing"
+
+	"gopkg.in/h2non/filetype.v0/matchers"
+	"gopkg.in/h2non/filetype.v0/types"
 )
 
 func TestMatch(t *testing.T) {
