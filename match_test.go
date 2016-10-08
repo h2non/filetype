@@ -1,10 +1,13 @@
 package filetype
 
 import (
-	"gopkg.in/h2non/filetype.v0/matchers"
-	"gopkg.in/h2non/filetype.v0/types"
+	"bytes"
+	"io"
 	"io/ioutil"
 	"testing"
+
+	"gopkg.in/h2non/filetype.v0/matchers"
+	"gopkg.in/h2non/filetype.v0/types"
 )
 
 func TestMatch(t *testing.T) {
@@ -29,7 +32,7 @@ func TestMatch(t *testing.T) {
 	}
 }
 
-func TestMatchRealFiles(t *testing.T) {
+func TestMatchFile(t *testing.T) {
 	cases := []struct {
 		ext string
 	}{
@@ -43,14 +46,31 @@ func TestMatchRealFiles(t *testing.T) {
 	}
 
 	for _, test := range cases {
-		buf, err := ioutil.ReadFile("./fixtures/sample." + test.ext)
+		kind, _ := MatchFile("./fixtures/sample." + test.ext)
+		if kind.Extension != test.ext {
+			t.Fatalf("Invalid image type: %s", kind.Extension)
+		}
+	}
+}
+
+func TestMatchReader(t *testing.T) {
+	cases := []struct {
+		buf io.Reader
+		ext string
+	}{
+		{bytes.NewBuffer([]byte{0xFF, 0xD8, 0xFF}), "jpg"},
+		{bytes.NewBuffer([]byte{0xFF, 0xD8, 0x00}), "unknown"},
+		{bytes.NewBuffer([]byte{0x89, 0x50, 0x4E, 0x47}), "png"},
+	}
+
+	for _, test := range cases {
+		match, err := MatchReader(test.buf)
 		if err != nil {
 			t.Fatalf("Error: %s", err)
 		}
 
-		kind, _ := Match(buf)
-		if kind.Extension != test.ext {
-			t.Fatalf("Invalid image type: %s", kind.Extension)
+		if match.Extension != test.ext {
+			t.Fatalf("Invalid image type: %s", match.Extension)
 		}
 	}
 }
