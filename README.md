@@ -1,4 +1,4 @@
-# filetype [![Build Status](https://travis-ci.org/h2non/filetype.png)](https://travis-ci.org/h2non/filetype) [![GoDoc](https://godoc.org/github.com/h2non/filetype?status.svg)](https://godoc.org/github.com/h2non/filetype) [![Go Report Card](http://goreportcard.com/badge/h2non/filetype)](http://goreportcard.com/report/h2non/filetype)
+# filetype [![Build Status](https://travis-ci.org/h2non/filetype.png)](https://travis-ci.org/h2non/filetype) [![GoDoc](https://godoc.org/github.com/h2non/filetype?status.svg)](https://godoc.org/github.com/h2non/filetype) [![Go Report Card](http://goreportcard.com/badge/h2non/filetype)](http://goreportcard.com/report/h2non/filetype) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
 Small and dependency free [Go](https://golang.org) package to infer file and MIME type checking the [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files) signature.
 
