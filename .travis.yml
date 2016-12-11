@@ -9,8 +9,6 @@ before_install:
   - go get -u -v github.com/golang/lint/golint
 
 script:
-  - mkdir -p $GOPATH/src/gopkg.in/h2non/filetype.v1
-  - ln -s `$(PWD)` $GOPATH/src/gopkg.in/h2non/filetype.v1
   - diff -u <(echo -n) <(gofmt -s -d ./)
   - diff -u <(echo -n) <(go vet ./...)
   - diff -u <(echo -n) <(golint ./...)
