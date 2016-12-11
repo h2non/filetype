@@ -7,19 +7,19 @@ import (
 	"gopkg.in/h2non/filetype.v1/types"
 )
 
-// Map of supported types
+// Types stores a map of supported types
 var Types = types.Types
 
-// Create and register a new type
+// NewType creates and registers a new type
 var NewType = types.NewType
 
-// Default unknown file type
+// Unknown represents an unknown file type
 var Unknown = types.Unknown
 
-// Empty buffer error
+// ErrEmptyBuffer represents an empty buffer error
 var ErrEmptyBuffer = errors.New("Empty buffer")
 
-// Unknown buffer error
+// ErrUnknownBuffer represents a unknown buffer error
 var ErrUnknownBuffer = errors.New("Unknown buffer type")
 
 // AddType registers a new file type

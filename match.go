@@ -8,10 +8,10 @@ import (
 	"gopkg.in/h2non/filetype.v1/types"
 )
 
-// Map of registered file matchers
+// Matchers is an alias to matchers.Matchers
 var Matchers = matchers.Matchers
 
-// Create and register a new matcher
+// NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
 
 // Match infers the file type of a given buffer inspecting its magic numbers signature
@@ -47,7 +47,7 @@ func MatchFile(filepath string) (types.Type, error) {
 	return MatchReader(file)
 }
 
-// MatchHeader is convenient wrapper to Match() any Reader
+// MatchReader is convenient wrapper to Match() any Reader
 func MatchReader(reader io.Reader) (types.Type, error) {
 	buffer := make([]byte, 512)
 
