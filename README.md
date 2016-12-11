@@ -8,10 +8,10 @@ For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) 
 
 - Supports a [wide range](#supported-types) of file types
 - Provides file extension and proper MIME type
-- File discovery by extension or MIME type 
+- File discovery by extension or MIME type
 - File discovery by class (image, video, audio...)
 - Provides a bunch of helpers and file matching shortcuts
-- [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers 
+- [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers
 - Simple and semantic API
 - [Blazing fast](#benchmarks), even processing large files
 - Only first 261 bytes representing the max file header is required, so you can just [pass a slice](#file-header)
@@ -21,7 +21,7 @@ For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) 
 ## Installation
 
 ```bash
-go get gopkg.in/h2non/filetype.v0
+go get gopkg.in/h2non/filetype.v1
 ```
 
 ## API
@@ -30,19 +30,19 @@ See [Godoc](https://godoc.org/github.com/h2non/filetype) reference.
 
 ### Subpackages
 
-- [`gopkg.in/h2non/filetype.v0/types`](https://godoc.org/github.com/h2non/filetype/types)
-- [`gopkg.in/h2non/filetype.v0/matchers`](https://godoc.org/github.com/h2non/filetype/matchers)
+- [`gopkg.in/h2non/filetype.v1/types`](https://godoc.org/github.com/h2non/filetype/types)
+- [`gopkg.in/h2non/filetype.v1/matchers`](https://godoc.org/github.com/h2non/filetype/matchers)
 
 ## Examples
 
 #### Simple file type checking
 
-```go 
+```go
 package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v0"
+  "gopkg.in/h2non/filetype.v1"
   "io/ioutil"
 )
 
@@ -61,12 +61,12 @@ func main() {
 
 #### Check type class
 
-```go 
+```go
 package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v0"
+  "gopkg.in/h2non/filetype.v1"
   "io/ioutil"
 )
 
@@ -83,12 +83,12 @@ func main() {
 
 #### Supported type
 
-```go 
+```go
 package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v0"
+  "gopkg.in/h2non/filetype.v1"
 )
 
 func main() {
@@ -115,7 +115,7 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v0"
+  "gopkg.in/h2non/filetype.v1"
   "io/ioutil"
 )
 
@@ -132,16 +132,16 @@ func main() {
     fmt.Println("Not an image")
   }
 }
-``` 
+```
 
 #### Add additional file type matchers
 
-```go 
+```go
 package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v0"
+  "gopkg.in/h2non/filetype.v1"
 )
 
 var fooType = filetype.NewType("foo", "foo/foo")
@@ -246,7 +246,7 @@ func main() {
 
 ## Benchmarks
 
-Measured using [real files](https://github.com/h2non/filetype/tree/master/fixtures). 
+Measured using [real files](https://github.com/h2non/filetype/tree/master/fixtures).
 
 Environment: OSX x64 i7 2.7 Ghz
 

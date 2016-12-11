@@ -3,8 +3,8 @@ package filetype
 import (
 	"errors"
 
-	"gopkg.in/h2non/filetype.v0/matchers"
-	"gopkg.in/h2non/filetype.v0/types"
+	"gopkg.in/h2non/filetype.v1/matchers"
+	"gopkg.in/h2non/filetype.v1/types"
 )
 
 // Map of supported types

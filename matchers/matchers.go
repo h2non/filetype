@@ -1,6 +1,6 @@
 package matchers
 
-import "gopkg.in/h2non/filetype.v0/types"
+import "gopkg.in/h2non/filetype.v1/types"
 
 // Internal shortcut to NewType
 var newType = types.NewType

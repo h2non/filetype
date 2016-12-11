@@ -1,4 +1,4 @@
 1.0.0 / 2016-12-11
 ==================
 
-- First version.
+- Initial stable version (v1.0.0).
