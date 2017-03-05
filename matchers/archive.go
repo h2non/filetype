@@ -30,6 +30,7 @@ var Archive = Map{
 	TypeZip:    Zip,
 	TypeTar:    Tar,
 	TypeRar:    Rar,
+	TypeGz:     Gz,
 	TypeBz2:    Bz2,
 	Type7z:     SevenZ,
 	TypeXz:     Xz,

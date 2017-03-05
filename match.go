@@ -1,14 +1,17 @@
 package filetype
 
 import (
-	"gopkg.in/h2non/filetype.v0/matchers"
-	"gopkg.in/h2non/filetype.v0/types"
+	"io"
+	"os"
+
+	"gopkg.in/h2non/filetype.v1/matchers"
+	"gopkg.in/h2non/filetype.v1/types"
 )
 
-// Map of registered file matchers
+// Matchers is an alias to matchers.Matchers
 var Matchers = matchers.Matchers
 
-// Create and register a new matcher
+// NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
 
 // Match infers the file type of a given buffer inspecting its magic numbers signature
@@ -31,6 +34,29 @@ func Match(buf []byte) (types.Type, error) {
 // Get is an alias to Match()
 func Get(buf []byte) (types.Type, error) {
 	return Match(buf)
+}
+
+// MatchFile infers a file type for a file
+func MatchFile(filepath string) (types.Type, error) {
+	file, err := os.Open(filepath)
+	if err != nil {
+		return types.Unknown, err
+	}
+	defer file.Close()
+
+	return MatchReader(file)
+}
+
+// MatchReader is convenient wrapper to Match() any Reader
+func MatchReader(reader io.Reader) (types.Type, error) {
+	buffer := make([]byte, 512)
+
+	_, err := reader.Read(buffer)
+	if err != nil && err != io.EOF {
+		return types.Unknown, err
+	}
+
+	return Match(buffer)
 }
 
 // AddMatcher registers a new matcher type

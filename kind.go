@@ -1,8 +1,8 @@
 package filetype
 
 import (
-	"gopkg.in/h2non/filetype.v0/matchers"
-	"gopkg.in/h2non/filetype.v0/types"
+	"gopkg.in/h2non/filetype.v1/matchers"
+	"gopkg.in/h2non/filetype.v1/types"
 )
 
 // Image tries to match a file as image type

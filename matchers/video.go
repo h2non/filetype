@@ -16,6 +16,7 @@ var Video = Map{
 	TypeMp4:  Mp4,
 	TypeM4v:  M4v,
 	TypeMkv:  Mkv,
+	TypeWebm: Webm,
 	TypeMov:  Mov,
 	TypeAvi:  Avi,
 	TypeWmv:  Wmv,
