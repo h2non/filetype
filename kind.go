@@ -54,7 +54,7 @@ func Archive(buf []byte) (types.Type, error) {
 	return doMatchMap(buf, matchers.Archive)
 }
 
-// IsArchive checks if the given buffer is an audio type
+// IsArchive checks if the given buffer is an archive type
 func IsArchive(buf []byte) bool {
 	kind, _ := Archive(buf)
 	return kind != types.Unknown
