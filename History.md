@@ -1,4 +1,12 @@
 
+v1.0.2 / 2017-07-26
+===================
+
+  * Merge pull request #20 from marshyski/master
+  * Added RedHat RPM as supported matcher archive type
+  * Merge pull request #19 from nlamirault/patch-1
+  * Fix typo in documentation
+
 v1.0.1 / 2017-02-24
 ===================
 
