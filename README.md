@@ -237,6 +237,7 @@ func main() {
 - **Z** - `application/x-compress`
 - **lz** - `application/x-lzip`
 - **rpm** - `application/x-rpm`
+- **elf** - `application/x-executable`
 
 #### Font
 
