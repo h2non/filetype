@@ -1,4 +1,10 @@
 
+v1.0.3 / 2017-08-03
+===================
+
+  * Merge pull request #21 from elemeta/master
+  * Add Elf file as supported matcher archive type
+
 v1.0.2 / 2017-07-26
 ===================
 
