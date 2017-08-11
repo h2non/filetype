@@ -1,6 +1,7 @@
 package filetype
 
 import (
+  "bytes"
 	"io"
 	"os"
 
