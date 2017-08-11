@@ -49,14 +49,14 @@ func MatchFile(filepath string) (types.Type, error) {
 
 // MatchReader is convenient wrapper to Match() any Reader
 func MatchReader(reader io.Reader) (types.Type, error) {
-	buffer := make([]byte, 512)
+	var buffer bytes.Buffer
 
-	_, err := reader.Read(buffer)
+	_, err := io.Copy(&buffer, reader)
 	if err != nil && err != io.EOF {
 		return types.Unknown, err
 	}
 
-	return Match(buffer)
+	return Match(buffer.Bytes())
 }
 
 // AddMatcher registers a new matcher type
