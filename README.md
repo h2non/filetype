@@ -49,9 +49,9 @@ import (
 func main() {
   buf, _ := ioutil.ReadFile("sample.jpg")
 
-  kind, unkwown := filetype.Match(buf)
-  if unkwown != nil {
-    fmt.Printf("Unkwown: %s", unkwown)
+  kind, unknown := filetype.Match(buf)
+  if unknown != nil {
+    fmt.Printf("Unknown: %s", unknown)
     return
   }
 
