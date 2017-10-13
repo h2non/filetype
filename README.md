@@ -4,6 +4,10 @@ Small and dependency free [Go](https://golang.org) package to infer file and MIM
 
 For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) package.
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/1MpD3pzt63uUeG43NP4tDHPY/h2non/filetype'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/1MpD3pzt63uUeG43NP4tDHPY/h2non/filetype.svg' />
+</a>
+
 ## Features
 
 - Supports a [wide range](#supported-types) of file types
