@@ -239,6 +239,15 @@ func main() {
 - **rpm** - `application/x-rpm`
 - **elf** - `application/x-executable`
 
+#### Documents
+
+- **doc** - `application/msword`
+- **docx** - `application/vnd.openxmlformats-officedocument.wordprocessingml.document`
+- **xls** - `application/vnd.ms-excel`
+- **xlsx** - `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
+- **ppt** - `application/vnd.ms-powerpoint`
+- **pptx** - `application/vnd.openxmlformats-officedocument.presentationml.presentation`
+
 #### Font
 
 - **woff** - `application/font-woff`
