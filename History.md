@@ -1,4 +1,16 @@
 
+v1.0.4 / 2017-11-29
+===================
+
+  * fix: tests and document types matchers
+  * refactor(docs): remove codesponsor
+  * Merge pull request #26 from bienkma/master
+  * Add support check file type: .doc, .docx, .pptx, .ppt, .xls, .xlsx
+  * feat(docs): add code sponsor banner
+  * feat(travis): add go 1.9
+  * Merge pull request #24 from strazzere/patch-1
+  * Fix typo in unknown
+
 v1.0.3 / 2017-08-03
 ===================
 
