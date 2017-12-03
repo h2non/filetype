@@ -120,11 +120,12 @@ import (
 )
 
 func main() {
-  // Read a file
-  buf, _ := ioutil.ReadFile("sample.jpg")
+  // Open a file descriptor
+  file, _ := os.Open("movie.mp4")
 
   // We only have to pass the file header = first 261 bytes
-  head := buf[:261]
+  head := make([]byte, 261)
+  file.Read(head)
 
   if filetype.IsImage(head) {
     fmt.Println("File is an image")
