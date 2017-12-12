@@ -1,4 +1,13 @@
 
+v1.0.5 / 2017-12-12
+===================
+
+  * Merge pull request #30 from RangelReale/fix_mp4
+  * Fix duplicated item in mp4 fix
+  * Fix MP4 matcher, with information from http://www.file-recovery.com/mp4-signature-format.htm
+  * Merge pull request #28 from ikovic/master
+  * Updated file header example.
+
 v1.0.4 / 2017-11-29
 ===================
 
