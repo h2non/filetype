@@ -26,8 +26,6 @@ var Video = Map{
 
 func M4v(buf []byte) bool {
 	return len(buf) > 10 &&
-		buf[0] == 0x0 && buf[1] == 0x0 &&
-		buf[2] == 0x0 && buf[3] == 0x1C &&
 		buf[4] == 0x66 && buf[5] == 0x74 &&
 		buf[6] == 0x79 && buf[7] == 0x70 &&
 		buf[8] == 0x4D && buf[9] == 0x34 &&
