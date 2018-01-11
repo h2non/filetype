@@ -97,6 +97,7 @@ func Mp4(buf []byte) bool {
 	return len(buf) > 11 &&
 		(buf[4] == 'f' && buf[5] == 't' && buf[6] == 'y' && buf[7] == 'p') &&
 		((buf[8] == 'a' && buf[9] == 'v' && buf[10] == 'c' && buf[11] == '1') ||
+      (buf[8] == 'd' && buf[9] == 'a' && buf[10] == 's' && buf[11] == 'h') ||
 			(buf[8] == 'i' && buf[9] == 's' && buf[10] == 'o' && buf[11] == '2') ||
      	(buf[8] == 'i' && buf[9] == 's' && buf[10] == 'o' && buf[11] == '3') ||
      	(buf[8] == 'i' && buf[9] == 's' && buf[10] == 'o' && buf[11] == '4') ||
