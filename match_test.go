@@ -185,3 +185,26 @@ func BenchmarkMatchPng(b *testing.B) {
 		Match(pngBuffer)
 	}
 }
+
+func TestPossibleTypes(t *testing.T) {
+	var docBuffer, _ = ioutil.ReadFile("./fixtures/sample.doc")
+	fileBytes := [][]byte{docBuffer}
+	for _, fileByte := range fileBytes {
+		pts, err := PossibleTypes(fileByte)
+		if err != nil {
+			t.Fail()
+			t.Error(err)
+		}
+		var success bool
+		for _, typ := range pts {
+			t.Logf("possible mime-type: %s, ext: %s", typ.MIME.Value, typ.Extension)
+			if typ.Extension == "doc" {
+				success = true
+			}
+		}
+		if !success {
+			t.Fail()
+			t.Error("matched failed")
+		}
+	}
+}
