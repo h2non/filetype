@@ -187,7 +187,7 @@ func BenchmarkMatchPng(b *testing.B) {
 }
 
 func TestPossibleTypes(t *testing.T) {
-	var docBuffer, _ = ioutil.ReadFile("./fixtures/sample.doc")
+	docBuffer, _ := ioutil.ReadFile("./fixtures/sample.doc")
 	fileBytes := [][]byte{docBuffer}
 	for _, fileByte := range fileBytes {
 		pts, err := PossibleTypes(fileByte)
