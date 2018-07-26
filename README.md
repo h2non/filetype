@@ -14,7 +14,7 @@ For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) 
 - [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers
 - Simple and semantic API
 - [Blazing fast](#benchmarks), even processing large files
-- Only first 261 bytes representing the max file header is required, so you can just [pass a slice](#file-header)
+- Only first 262 bytes representing the max file header is required, so you can just [pass a slice](#file-header)
 - Dependency free (just Go code, no C compilation needed)
 - Cross-platform file recognition
 
