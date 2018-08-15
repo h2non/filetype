@@ -14,6 +14,21 @@ var Matchers = matchers.Matchers
 // NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
 
+// PossibleTypes returns the possible mime types of given bytes
+func PossibleTypes(b []byte) ([]types.Type, error) {
+	if len(b) == 0 {
+		return nil, ErrEmptyBuffer
+	}
+	possibleTypes := []types.Type{}
+	for _, checker := range Matchers {
+		matchedType := checker(b)
+		if matchedType != types.Unknown && matchedType.Extension != "" {
+			possibleTypes = append(possibleTypes, matchedType)
+		}
+	}
+	return possibleTypes, nil
+}
+
 // Match infers the file type of a given buffer inspecting its magic numbers signature
 func Match(buf []byte) (types.Type, error) {
 	length := len(buf)
