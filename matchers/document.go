@@ -1,6 +1,10 @@
 package matchers
 
-import "bytes"
+import (
+	"archive/zip"
+	"bytes"
+	"io/ioutil"
+)
 
 var (
 	TypeDoc  = newType("doc", "application/msword")
@@ -44,10 +48,44 @@ func Xls(buf []byte) bool {
 }
 
 func Xlsx(buf []byte) bool {
-	return len(buf) > 3 &&
-		buf[0] == 0x50 && buf[1] == 0x4B &&
-		buf[2] == 0x03 && buf[3] == 0x04 &&
-		bytes.Contains(buf[:256], []byte(TypeXlsx.MIME.Value))
+	if len(buf) <= 3 {
+		return false
+	}
+	if buf[0] != 0x50 || buf[1] != 0x4B ||
+		buf[2] != 0x03 || buf[3] != 0x04 {
+		return false
+	}
+
+	br := bytes.NewReader(buf)
+	zipr, err := zip.NewReader(br, int64(len(buf)))
+	if err != nil {
+		return false
+	}
+
+	var file *zip.File
+	for _, f := range zipr.File {
+		if f.FileInfo().Name() == "[Content_Types].xml" {
+			file = f
+			break
+		}
+	}
+
+	if file == nil {
+		return false
+	}
+
+	rc, err := file.Open()
+	if err != nil {
+		return false
+	}
+	defer rc.Close()
+
+	bs, err := ioutil.ReadAll(rc)
+	if err != nil {
+		return false
+	}
+
+	return bytes.Contains(bs, []byte(TypeXlsx.MIME.Value))
 }
 
 func Ppt(buf []byte) bool {

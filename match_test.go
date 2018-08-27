@@ -146,6 +146,13 @@ func TestMatchesMap(t *testing.T) {
 	}
 }
 
+func TestMatchXlsx(t *testing.T) {
+	kind, _ := MatchFile("./fixtures/sample.xlsx")
+	if kind.Extension != "xlsx" {
+		t.Fatalf("Invalid document type: %s != xlsx", kind.Extension)
+	}
+}
+
 //
 // Benchmarks
 //
@@ -155,6 +162,7 @@ var zipBuffer, _ = ioutil.ReadFile("./fixtures/sample.zip")
 var jpgBuffer, _ = ioutil.ReadFile("./fixtures/sample.jpg")
 var gifBuffer, _ = ioutil.ReadFile("./fixtures/sample.gif")
 var pngBuffer, _ = ioutil.ReadFile("./fixtures/sample.png")
+var xlsxBuffer, _ = ioutil.ReadFile("./fixtures/sample.xlsx")
 
 func BenchmarkMatchTar(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -183,5 +191,11 @@ func BenchmarkMatchGif(b *testing.B) {
 func BenchmarkMatchPng(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Match(pngBuffer)
+	}
+}
+
+func BenchmarkMatchXlsx(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(xlsxBuffer)
 	}
 }

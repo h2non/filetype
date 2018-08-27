@@ -2,6 +2,7 @@ package filetype
 
 import (
 	"io"
+	"io/ioutil"
 	"os"
 
 	"gopkg.in/h2non/filetype.v1/matchers"
@@ -49,10 +50,8 @@ func MatchFile(filepath string) (types.Type, error) {
 
 // MatchReader is convenient wrapper to Match() any Reader
 func MatchReader(reader io.Reader) (types.Type, error) {
-	buffer := make([]byte, 512)
-
-	_, err := reader.Read(buffer)
-	if err != nil && err != io.EOF {
+	buffer, err := ioutil.ReadAll(reader)
+	if err != nil {
 		return types.Unknown, err
 	}
 
