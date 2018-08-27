@@ -148,8 +148,22 @@ func TestMatchesMap(t *testing.T) {
 
 func TestMatchXlsx(t *testing.T) {
 	kind, _ := MatchFile("./fixtures/sample.xlsx")
-	if kind.Extension != "xlsx" {
-		t.Fatalf("Invalid document type: %s != xlsx", kind.Extension)
+	if kind.Extension != matchers.TypeXlsx.Extension {
+		t.Fatalf("Invalid document type: %s != %s", kind.Extension, matchers.TypeDocx.Extension)
+	}
+}
+
+func TestMatchDocx(t *testing.T) {
+	kind, _ := MatchFile("./fixtures/sample.docx")
+	if kind.Extension != matchers.TypeDocx.Extension {
+		t.Fatalf("Invalid document type: %s != %s", kind.Extension, matchers.TypeDocx.Extension)
+	}
+}
+
+func TestMatchPptx(t *testing.T) {
+	kind, _ := MatchFile("./fixtures/sample.pptx")
+	if kind.Extension != matchers.TypePptx.Extension {
+		t.Fatalf("Invalid document type: %s != %s", kind.Extension, matchers.TypePptx.Extension)
 	}
 }
 
@@ -163,6 +177,8 @@ var jpgBuffer, _ = ioutil.ReadFile("./fixtures/sample.jpg")
 var gifBuffer, _ = ioutil.ReadFile("./fixtures/sample.gif")
 var pngBuffer, _ = ioutil.ReadFile("./fixtures/sample.png")
 var xlsxBuffer, _ = ioutil.ReadFile("./fixtures/sample.xlsx")
+var docxBuffer, _ = ioutil.ReadFile("./fixtures/sample.docx")
+var pptxBuffer, _ = ioutil.ReadFile("./fixtures/sample.pptx")
 
 func BenchmarkMatchTar(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -197,5 +213,17 @@ func BenchmarkMatchPng(b *testing.B) {
 func BenchmarkMatchXlsx(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Match(xlsxBuffer)
+	}
+}
+
+func BenchmarkMatchDocx(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(docxBuffer)
+	}
+}
+
+func BenchmarkMatchPptx(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(pptxBuffer)
 	}
 }

@@ -1,12 +1,13 @@
 package matchers
 
 import (
-	"archive/zip"
 	"bytes"
-	"io/ioutil"
+
+	"gopkg.in/h2non/filetype.v1/util"
 )
 
 const defaultDocumentPriority = 500
+const officeContentTypesFileName = "[Content_Types].xml"
 
 var (
 	TypeDoc  = newType("doc", "application/msword", defaultDocumentPriority)
@@ -35,10 +36,20 @@ func Doc(buf []byte) bool {
 }
 
 func Docx(buf []byte) bool {
-	return len(buf) > 3 &&
-		buf[0] == 0x50 && buf[1] == 0x4B &&
-		buf[2] == 0x03 && buf[3] == 0x04 &&
-		bytes.Contains(buf[:256], []byte(TypeDocx.MIME.Value))
+	if len(buf) <= 3 {
+		return false
+	}
+	if buf[0] != 0x50 || buf[1] != 0x4B ||
+		buf[2] != 0x03 || buf[3] != 0x04 {
+		return false
+	}
+
+	xml, err := util.ReadMSOfficeXMLFile(buf, officeContentTypesFileName)
+	if err != nil {
+		return false
+	}
+
+	return bytes.Contains(xml, []byte(TypeDocx.MIME.Value))
 }
 
 func Xls(buf []byte) bool {
@@ -58,36 +69,12 @@ func Xlsx(buf []byte) bool {
 		return false
 	}
 
-	br := bytes.NewReader(buf)
-	zipr, err := zip.NewReader(br, int64(len(buf)))
+	xml, err := util.ReadMSOfficeXMLFile(buf, officeContentTypesFileName)
 	if err != nil {
 		return false
 	}
 
-	var file *zip.File
-	for _, f := range zipr.File {
-		if f.FileInfo().Name() == "[Content_Types].xml" {
-			file = f
-			break
-		}
-	}
-
-	if file == nil {
-		return false
-	}
-
-	rc, err := file.Open()
-	if err != nil {
-		return false
-	}
-	defer rc.Close()
-
-	bs, err := ioutil.ReadAll(rc)
-	if err != nil {
-		return false
-	}
-
-	return bytes.Contains(bs, []byte(TypeXlsx.MIME.Value))
+	return bytes.Contains(xml, []byte(TypeXlsx.MIME.Value))
 }
 
 func Ppt(buf []byte) bool {
@@ -99,8 +86,18 @@ func Ppt(buf []byte) bool {
 }
 
 func Pptx(buf []byte) bool {
-	return len(buf) > 3 &&
-		buf[0] == 0x50 && buf[1] == 0x4B &&
-		buf[2] == 0x07 && buf[3] == 0x08 &&
-		bytes.Contains(buf[:256], []byte(TypePptx.MIME.Value))
+	if len(buf) <= 3 {
+		return false
+	}
+	if buf[0] != 0x50 || buf[1] != 0x4B ||
+		buf[2] != 0x03 || buf[3] != 0x04 {
+		return false
+	}
+
+	xml, err := util.ReadMSOfficeXMLFile(buf, officeContentTypesFileName)
+	if err != nil {
+		return false
+	}
+
+	return bytes.Contains(xml, []byte(TypePptx.MIME.Value))
 }
