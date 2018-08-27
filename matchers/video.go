@@ -1,15 +1,17 @@
 package matchers
 
+const defaultVideoPriority = 900
+
 var (
-	TypeMp4  = newType("mp4", "video/mp4")
-	TypeM4v  = newType("m4v", "video/x-m4v")
-	TypeMkv  = newType("mkv", "video/x-matroska")
-	TypeWebm = newType("webm", "video/webm")
-	TypeMov  = newType("mov", "video/quicktime")
-	TypeAvi  = newType("avi", "video/x-msvideo")
-	TypeWmv  = newType("wmv", "video/x-ms-wmv")
-	TypeMpeg = newType("mpg", "video/mpeg")
-	TypeFlv  = newType("flv", "video/x-flv")
+	TypeMp4  = newType("mp4", "video/mp4", defaultVideoPriority)
+	TypeM4v  = newType("m4v", "video/x-m4v", defaultVideoPriority)
+	TypeMkv  = newType("mkv", "video/x-matroska", defaultVideoPriority)
+	TypeWebm = newType("webm", "video/webm", defaultVideoPriority)
+	TypeMov  = newType("mov", "video/quicktime", defaultVideoPriority)
+	TypeAvi  = newType("avi", "video/x-msvideo", defaultVideoPriority)
+	TypeWmv  = newType("wmv", "video/x-ms-wmv", defaultVideoPriority)
+	TypeMpeg = newType("mpg", "video/mpeg", defaultVideoPriority)
+	TypeFlv  = newType("flv", "video/x-flv", defaultVideoPriority)
 )
 
 var Video = Map{

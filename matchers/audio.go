@@ -1,13 +1,15 @@
 package matchers
 
+const defaultAudioPriority = 800
+
 var (
-	TypeMidi = newType("mid", "audio/midi")
-	TypeMp3  = newType("mp3", "audio/mpeg")
-	TypeM4a  = newType("m4a", "audio/m4a")
-	TypeOgg  = newType("ogg", "audio/ogg")
-	TypeFlac = newType("flac", "audio/x-flac")
-	TypeWav  = newType("wav", "audio/x-wav")
-	TypeAmr  = newType("amr", "audio/amr")
+	TypeMidi = newType("mid", "audio/midi", defaultAudioPriority)
+	TypeMp3  = newType("mp3", "audio/mpeg", defaultAudioPriority)
+	TypeM4a  = newType("m4a", "audio/m4a", defaultAudioPriority)
+	TypeOgg  = newType("ogg", "audio/ogg", defaultAudioPriority)
+	TypeFlac = newType("flac", "audio/x-flac", defaultAudioPriority)
+	TypeWav  = newType("wav", "audio/x-wav", defaultAudioPriority)
+	TypeAmr  = newType("amr", "audio/amr", defaultAudioPriority)
 )
 
 var Audio = Map{

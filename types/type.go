@@ -4,13 +4,15 @@ package types
 type Type struct {
 	MIME      MIME
 	Extension string
+	Priority  int
 }
 
 // NewType creates a new Type
-func NewType(ext, mime string) Type {
+func NewType(ext, mime string, p int) Type {
 	t := Type{
 		MIME:      NewMIME(mime),
 		Extension: ext,
+		Priority:  p,
 	}
 	return Add(t)
 }

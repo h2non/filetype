@@ -2,6 +2,7 @@ package filetype
 
 import (
 	"io"
+	"io/ioutil"
 	"os"
 
 	"gopkg.in/h2non/filetype.v1/matchers"
@@ -14,6 +15,9 @@ var Matchers = matchers.Matchers
 // NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
 
+// MatcherTypes is an alias to `matchers.MatcherTypes`
+var MatcherTypes = matchers.MatcherTypes
+
 // Match infers the file type of a given buffer inspecting its magic numbers signature
 func Match(buf []byte) (types.Type, error) {
 	length := len(buf)
@@ -21,7 +25,9 @@ func Match(buf []byte) (types.Type, error) {
 		return types.Unknown, ErrEmptyBuffer
 	}
 
-	for _, checker := range Matchers {
+	for _, typ := range MatcherTypes {
+		checker := Matchers[*typ]
+
 		match := checker(buf)
 		if match != types.Unknown && match.Extension != "" {
 			return match, nil
@@ -49,10 +55,8 @@ func MatchFile(filepath string) (types.Type, error) {
 
 // MatchReader is convenient wrapper to Match() any Reader
 func MatchReader(reader io.Reader) (types.Type, error) {
-	buffer := make([]byte, 512)
-
-	_, err := reader.Read(buffer)
-	if err != nil && err != io.EOF {
+	buffer, err := ioutil.ReadAll(reader)
+	if err != nil {
 		return types.Unknown, err
 	}
 
