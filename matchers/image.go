@@ -1,16 +1,18 @@
 package matchers
 
+const defaultImagePriority = 1000
+
 var (
-	TypeJpeg = newType("jpg", "image/jpeg")
-	TypePng  = newType("png", "image/png")
-	TypeGif  = newType("gif", "image/gif")
-	TypeWebp = newType("webp", "image/webp")
-	TypeCR2  = newType("cr2", "image/x-canon-cr2")
-	TypeTiff = newType("tif", "image/tiff")
-	TypeBmp  = newType("bmp", "image/bmp")
-	TypeJxr  = newType("jxr", "image/vnd.ms-photo")
-	TypePsd  = newType("psd", "image/vnd.adobe.photoshop")
-	TypeIco  = newType("ico", "image/x-icon")
+	TypeJpeg = newType("jpg", "image/jpeg", defaultImagePriority)
+	TypePng  = newType("png", "image/png", defaultImagePriority)
+	TypeGif  = newType("gif", "image/gif", defaultImagePriority)
+	TypeWebp = newType("webp", "image/webp", defaultImagePriority)
+	TypeCR2  = newType("cr2", "image/x-canon-cr2", defaultImagePriority)
+	TypeTiff = newType("tif", "image/tiff", defaultImagePriority)
+	TypeBmp  = newType("bmp", "image/bmp", defaultImagePriority)
+	TypeJxr  = newType("jxr", "image/vnd.ms-photo", defaultImagePriority)
+	TypePsd  = newType("psd", "image/vnd.adobe.photoshop", defaultImagePriority)
+	TypeIco  = newType("ico", "image/x-icon", defaultImagePriority)
 )
 
 var Image = Map{

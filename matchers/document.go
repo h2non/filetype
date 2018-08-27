@@ -6,13 +6,15 @@ import (
 	"io/ioutil"
 )
 
+const defaultDocumentPriority = 500
+
 var (
-	TypeDoc  = newType("doc", "application/msword")
-	TypeDocx = newType("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-	TypeXls  = newType("xls", "application/vnd.ms-excel")
-	TypeXlsx = newType("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-	TypePpt  = newType("ppt", "application/vnd.ms-powerpoint")
-	TypePptx = newType("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+	TypeDoc  = newType("doc", "application/msword", defaultDocumentPriority)
+	TypeDocx = newType("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", defaultDocumentPriority)
+	TypeXls  = newType("xls", "application/vnd.ms-excel", defaultDocumentPriority)
+	TypeXlsx = newType("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", defaultDocumentPriority)
+	TypePpt  = newType("ppt", "application/vnd.ms-powerpoint", defaultDocumentPriority)
+	TypePptx = newType("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation", defaultDocumentPriority)
 )
 
 var Document = Map{

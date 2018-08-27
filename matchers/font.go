@@ -1,10 +1,12 @@
 package matchers
 
+const defaultFontPriority = 700
+
 var (
-	TypeWoff  = newType("woff", "application/font-woff")
-	TypeWoff2 = newType("woff2", "application/font-woff")
-	TypeTtf   = newType("ttf", "application/font-sfnt")
-	TypeOtf   = newType("otf", "application/font-sfnt")
+	TypeWoff  = newType("woff", "application/font-woff", defaultFontPriority)
+	TypeWoff2 = newType("woff2", "application/font-woff", defaultFontPriority)
+	TypeTtf   = newType("ttf", "application/font-sfnt", defaultFontPriority)
+	TypeOtf   = newType("otf", "application/font-sfnt", defaultFontPriority)
 )
 
 var Font = Map{

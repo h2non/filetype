@@ -24,7 +24,7 @@ var ErrUnknownBuffer = errors.New("Unknown buffer type")
 
 // AddType registers a new file type
 func AddType(ext, mime string) types.Type {
-	return types.NewType(ext, mime)
+	return types.NewType(ext, mime, 0)
 }
 
 // Is checks if a given buffer matches with the given file type extension

@@ -15,6 +15,9 @@ var Matchers = matchers.Matchers
 // NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
 
+// MatcherTypes is an alias to `matchers.MatcherTypes`
+var MatcherTypes = matchers.MatcherTypes
+
 // Match infers the file type of a given buffer inspecting its magic numbers signature
 func Match(buf []byte) (types.Type, error) {
 	length := len(buf)
@@ -22,7 +25,9 @@ func Match(buf []byte) (types.Type, error) {
 		return types.Unknown, ErrEmptyBuffer
 	}
 
-	for _, checker := range Matchers {
+	for _, typ := range MatcherTypes {
+		checker := Matchers[*typ]
+
 		match := checker(buf)
 		if match != types.Unknown && match.Extension != "" {
 			return match, nil
