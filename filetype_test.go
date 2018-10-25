@@ -3,7 +3,7 @@ package filetype
 import (
 	"testing"
 
-	"gopkg.in/h2non/filetype.v1/types"
+	"github.com/h2non/filetype/types"
 )
 
 func TestIs(t *testing.T) {

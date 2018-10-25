@@ -4,12 +4,13 @@ import (
 	"io"
 	"os"
 
-	"gopkg.in/h2non/filetype.v1/matchers"
-	"gopkg.in/h2non/filetype.v1/types"
+	"github.com/h2non/filetype/matchers"
+	"github.com/h2non/filetype/types"
 )
 
 // Matchers is an alias to matchers.Matchers
 var Matchers = matchers.Matchers
+
 // MatcherKeys is an alias to matchers.MatcherKeys
 var MatcherKeys = matchers.MatcherKeys
 

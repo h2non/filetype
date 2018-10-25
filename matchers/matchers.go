@@ -1,7 +1,7 @@
 package matchers
 
 import (
-	"gopkg.in/h2non/filetype.v1/types"
+	"github.com/h2non/filetype/types"
 )
 
 // Internal shortcut to NewType
