@@ -10,6 +10,7 @@ import (
 
 // Matchers is an alias to matchers.Matchers
 var Matchers = matchers.Matchers
+// MatcherKeys is an alias to matchers.MatcherKeys
 var MatcherKeys = matchers.MatcherKeys
 
 // NewMatcher is an alias to matchers.NewMatcher
