@@ -1,6 +1,8 @@
 package matchers
 
-import "gopkg.in/h2non/filetype.v1/types"
+import (
+	"gopkg.in/h2non/filetype.v1/types"
+)
 
 // Internal shortcut to NewType
 var newType = types.NewType
@@ -16,6 +18,7 @@ type TypeMatcher func([]byte) types.Type
 
 // Store registered file type matchers
 var Matchers = make(map[types.Type]TypeMatcher)
+var MatcherKeys []types.Type
 
 // Create and register a new type matcher function
 func NewMatcher(kind types.Type, fn Matcher) TypeMatcher {
@@ -27,10 +30,12 @@ func NewMatcher(kind types.Type, fn Matcher) TypeMatcher {
 	}
 
 	Matchers[kind] = matcher
+	MatcherKeys = append(MatcherKeys, kind)
 	return matcher
 }
 
 func register(matchers ...Map) {
+	MatcherKeys = MatcherKeys[:0]
 	for _, m := range matchers {
 		for kind, matcher := range m {
 			NewMatcher(kind, matcher)
