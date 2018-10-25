@@ -43,12 +43,15 @@ func TestMatchFile(t *testing.T) {
 		{"tar"},
 		{"tif"},
 		{"mp4"},
+		{"docx"},
+		{"pptx"},
+		{"xlsx"},
 	}
 
 	for _, test := range cases {
 		kind, _ := MatchFile("./fixtures/sample." + test.ext)
 		if kind.Extension != test.ext {
-			t.Fatalf("Invalid image type: %s != %s", kind.Extension, test.ext)
+			t.Fatalf("Invalid type: %s != %s", kind.Extension, test.ext)
 		}
 	}
 }
@@ -155,6 +158,9 @@ var zipBuffer, _ = ioutil.ReadFile("./fixtures/sample.zip")
 var jpgBuffer, _ = ioutil.ReadFile("./fixtures/sample.jpg")
 var gifBuffer, _ = ioutil.ReadFile("./fixtures/sample.gif")
 var pngBuffer, _ = ioutil.ReadFile("./fixtures/sample.png")
+var xlsxBuffer, _ = ioutil.ReadFile("./fixtures/sample.xlsx")
+var pptxBuffer, _ = ioutil.ReadFile("./fixtures/sample.pptx")
+var docxBuffer, _ = ioutil.ReadFile("./fixtures/sample.docx")
 
 func BenchmarkMatchTar(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -183,5 +189,23 @@ func BenchmarkMatchGif(b *testing.B) {
 func BenchmarkMatchPng(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Match(pngBuffer)
+	}
+}
+
+func BenchmarkMatchXlsx(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(xlsxBuffer)
+	}
+}
+
+func BenchmarkMatchPptx(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(pptxBuffer)
+	}
+}
+
+func BenchmarkMatchDocx(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(docxBuffer)
 	}
 }

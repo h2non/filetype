@@ -174,5 +174,9 @@ func search(buf []byte, start, rangeNum int) int {
 		end = length
 	}
 
+	if start >= end {
+		return -1
+	}
+
 	return bytes.Index(buf[start:end], signature)
 }
