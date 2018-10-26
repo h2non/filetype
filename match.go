@@ -4,12 +4,15 @@ import (
 	"io"
 	"os"
 
-	"gopkg.in/h2non/filetype.v1/matchers"
-	"gopkg.in/h2non/filetype.v1/types"
+	"github.com/h2non/filetype/matchers"
+	"github.com/h2non/filetype/types"
 )
 
 // Matchers is an alias to matchers.Matchers
 var Matchers = matchers.Matchers
+
+// MatcherKeys is an alias to matchers.MatcherKeys
+var MatcherKeys = matchers.MatcherKeys
 
 // NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
@@ -21,7 +24,8 @@ func Match(buf []byte) (types.Type, error) {
 		return types.Unknown, ErrEmptyBuffer
 	}
 
-	for _, checker := range Matchers {
+	for _, kind := range MatcherKeys {
+		checker := Matchers[kind]
 		match := checker(buf)
 		if match != types.Unknown && match.Extension != "" {
 			return match, nil
@@ -49,7 +53,7 @@ func MatchFile(filepath string) (types.Type, error) {
 
 // MatchReader is convenient wrapper to Match() any Reader
 func MatchReader(reader io.Reader) (types.Type, error) {
-	buffer := make([]byte, 512)
+	buffer := make([]byte, 4096) // just make msooxml test happy, but 4096 bytes maybe not enough to determine the real type
 
 	_, err := reader.Read(buffer)
 	if err != nil && err != io.EOF {
