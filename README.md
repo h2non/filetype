@@ -21,7 +21,7 @@ For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) 
 ## Installation
 
 ```bash
-go get gopkg.in/h2non/filetype.v1
+go get github.com/h2non/filetype
 ```
 
 ## API
@@ -30,8 +30,8 @@ See [Godoc](https://godoc.org/github.com/h2non/filetype) reference.
 
 ### Subpackages
 
-- [`gopkg.in/h2non/filetype.v1/types`](https://godoc.org/github.com/h2non/filetype/types)
-- [`gopkg.in/h2non/filetype.v1/matchers`](https://godoc.org/github.com/h2non/filetype/matchers)
+- [`github.com/h2non/filetype/types`](https://godoc.org/github.com/h2non/filetype/types)
+- [`github.com/h2non/filetype/matchers`](https://godoc.org/github.com/h2non/filetype/matchers)
 
 ## Examples
 
@@ -42,8 +42,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v1"
   "io/ioutil"
+
+  "github.com/h2non/filetype"
 )
 
 func main() {
@@ -66,8 +67,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v1"
   "io/ioutil"
+
+  "github.com/h2non/filetype"
 )
 
 func main() {
@@ -88,7 +90,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v1"
+
+  "github.com/h2non/filetype"
 )
 
 func main() {
@@ -115,8 +118,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v1"
   "io/ioutil"
+  
+  "github.com/h2non/filetype"
 )
 
 func main() {
@@ -142,7 +146,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/filetype.v1"
+  
+  "github.com/h2non/filetype"
 )
 
 var fooType = filetype.NewType("foo", "foo/foo")
