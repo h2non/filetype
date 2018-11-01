@@ -11,6 +11,7 @@ var (
 	TypeJxr  = newType("jxr", "image/vnd.ms-photo")
 	TypePsd  = newType("psd", "image/vnd.adobe.photoshop")
 	TypeIco  = newType("ico", "image/x-icon")
+	TypeHeic = newType("heic", "image/heic")
 )
 
 var Image = Map{
@@ -24,6 +25,15 @@ var Image = Map{
 	TypeJxr:  Jxr,
 	TypePsd:  Psd,
 	TypeIco:  Ico,
+	TypeHeic: Heic,
+}
+
+func Heic(buf []byte) bool {
+	return len(buf) > 16 &&
+		(buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0x00) &&
+		(buf[3] == 0x24 || buf[3] == 0x18 || buf[3] == 0x1c) &&
+		(buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70 ) &&
+		(buf[12] == 0x00 && buf[13] == 0x00 && buf[14] == 0x00 &&  buf[15] == 0x00 )
 }
 
 func Jpeg(buf []byte) bool {
@@ -60,7 +70,9 @@ func CR2(buf []byte) bool {
 func Tiff(buf []byte) bool {
 	return len(buf) > 3 &&
 		((buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x0) ||
-			(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A))
+			(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A)) &&
+		// Differentiate Tiff from CR2
+		buf[8] != 0x43 && buf[9] != 0x52
 }
 
 func Bmp(buf []byte) bool {
