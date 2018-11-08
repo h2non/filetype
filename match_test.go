@@ -46,6 +46,7 @@ func TestMatchFile(t *testing.T) {
 		{"docx"},
 		{"pptx"},
 		{"xlsx"},
+		{"mov"},
 	}
 
 	for _, test := range cases {
