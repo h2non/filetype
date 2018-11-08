@@ -12,7 +12,7 @@ import (
 var Matchers = matchers.Matchers
 
 // MatcherKeys is an alias to matchers.MatcherKeys
-var MatcherKeys = matchers.MatcherKeys
+var MatcherKeys = &matchers.MatcherKeys
 
 // NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
@@ -24,7 +24,7 @@ func Match(buf []byte) (types.Type, error) {
 		return types.Unknown, ErrEmptyBuffer
 	}
 
-	for _, kind := range MatcherKeys {
+	for _, kind := range *MatcherKeys {
 		checker := Matchers[kind]
 		match := checker(buf)
 		if match != types.Unknown && match.Extension != "" {
