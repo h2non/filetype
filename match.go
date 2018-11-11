@@ -12,7 +12,7 @@ import (
 var Matchers = matchers.Matchers
 
 // MatcherKeys is an alias to matchers.MatcherKeys
-var MatcherKeys = matchers.MatcherKeys
+var MatcherKeys = &matchers.MatcherKeys
 
 // NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
@@ -24,7 +24,7 @@ func Match(buf []byte) (types.Type, error) {
 		return types.Unknown, ErrEmptyBuffer
 	}
 
-	for _, kind := range MatcherKeys {
+	for _, kind := range *MatcherKeys {
 		checker := Matchers[kind]
 		match := checker(buf)
 		if match != types.Unknown && match.Extension != "" {
@@ -53,7 +53,7 @@ func MatchFile(filepath string) (types.Type, error) {
 
 // MatchReader is convenient wrapper to Match() any Reader
 func MatchReader(reader io.Reader) (types.Type, error) {
-	buffer := make([]byte, 4096) // just make msooxml test happy, but 4096 bytes maybe not enough to determine the real type
+	buffer := make([]byte, 8192) // 8K makes msooxml tests happy and allows for expanded custom file checks
 
 	_, err := reader.Read(buffer)
 	if err != nil && err != io.EOF {
