@@ -74,7 +74,7 @@ func Matches(buf []byte) bool {
 	return kind != types.Unknown
 }
 
-// MatchMap performs a file matching againts a map of match functions
+// MatchMap performs a file matching against a map of match functions
 func MatchMap(buf []byte, matchers matchers.Map) types.Type {
 	for kind, matcher := range matchers {
 		if matcher(buf) {
@@ -84,7 +84,7 @@ func MatchMap(buf []byte, matchers matchers.Map) types.Type {
 	return types.Unknown
 }
 
-// MatchesMap is an alias to Matches() but using matching againts a map of match functions
+// MatchesMap is an alias to Matches() but using matching against a map of match functions
 func MatchesMap(buf []byte, matchers matchers.Map) bool {
 	return MatchMap(buf, matchers) != types.Unknown
 }
