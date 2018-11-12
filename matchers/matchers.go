@@ -1,7 +1,7 @@
 package matchers
 
 import (
-	"github.com/h2non/filetype/types"
+	"github.com/eriken/filetype/types"
 )
 
 // Internal shortcut to NewType
