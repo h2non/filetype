@@ -4,8 +4,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/eriken/filetype/matchers"
-	"github.com/eriken/filetype/types"
+	"github.com/h2non/filetype/matchers"
+	"github.com/h2non/filetype/types"
 )
 
 // Matchers is an alias to matchers.Matchers

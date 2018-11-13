@@ -3,7 +3,7 @@ package filetype
 import (
 	"testing"
 
-	"github.com/eriken/filetype/types"
+	"github.com/h2non/filetype/types"
 )
 
 func TestIs(t *testing.T) {
