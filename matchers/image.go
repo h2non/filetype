@@ -2,7 +2,7 @@ package matchers
 
 var (
 	TypeJpeg     = newType("jpg", "image/jpeg")
-	TypeJpeg2000 = newType("jp2", "image/jpegjp2")
+	TypeJpeg2000 = newType("jp2", "image/jp2")
 	TypePng      = newType("png", "image/png")
 	TypeGif      = newType("gif", "image/gif")
 	TypeWebp     = newType("webp", "image/webp")
