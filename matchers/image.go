@@ -113,6 +113,6 @@ func Heic(buf []byte) bool {
 	return len(buf) > 16 &&
 		(buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0x00) &&
 		(buf[3] == 0x24 || buf[3] == 0x18 || buf[3] == 0x1c) &&
-		(buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70 ) &&
-		(buf[12] == 0x00 && buf[13] == 0x00 && buf[14] == 0x00 &&  buf[15] == 0x00 )
+		(buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70) &&
+		(buf[12] == 0x00 && buf[13] == 0x00 && buf[14] == 0x00 && buf[15] == 0x00)
 }
