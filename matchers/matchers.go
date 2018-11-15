@@ -30,7 +30,8 @@ func NewMatcher(kind types.Type, fn Matcher) TypeMatcher {
 	}
 
 	Matchers[kind] = matcher
-	MatcherKeys = append(MatcherKeys, kind)
+	// prepend here so any user defined matchers get added first
+	MatcherKeys = append([]types.Type{kind}, MatcherKeys...)
 	return matcher
 }
 
@@ -45,5 +46,6 @@ func register(matchers ...Map) {
 
 func init() {
 	// Arguments order is intentional
-	register(Image, Video, Audio, Font, Document, Archive)
+	// Archive files will be checked last due to prepend above in func NewMatcher
+	register(Archive, Document, Font, Audio, Video, Image)
 }
