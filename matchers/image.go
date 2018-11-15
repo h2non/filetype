@@ -2,6 +2,7 @@ package matchers
 
 var (
 	TypeJpeg = newType("jpg", "image/jpeg")
+  TypeJpeg2000 = newType("jp2", "image/jp2")
 	TypePng  = newType("png", "image/png")
 	TypeGif  = newType("gif", "image/gif")
 	TypeWebp = newType("webp", "image/webp")
@@ -16,6 +17,7 @@ var (
 
 var Image = Map{
 	TypeJpeg: Jpeg,
+  TypeJpeg2000: Jpeg2000,
 	TypePng:  Png,
 	TypeGif:  Gif,
 	TypeWebp: Webp,
