@@ -60,6 +60,17 @@ func IsArchive(buf []byte) bool {
 	return kind != types.Unknown
 }
 
+// Document tries to match a file as document type
+func Document(buf []byte) (types.Type, error) {
+	return doMatchMap(buf, matchers.Document)
+}
+
+// IsDocument checks if the given buffer is an document type
+func IsDocument(buf []byte) bool {
+	kind, _ := Document(buf)
+	return kind != types.Unknown
+}
+
 func doMatchMap(buf []byte, machers matchers.Map) (types.Type, error) {
 	kind := MatchMap(buf, machers)
 	if kind != types.Unknown {
