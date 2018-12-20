@@ -217,6 +217,7 @@ func main() {
 - **flac** - `audio/x-flac`
 - **wav** - `audio/x-wav`
 - **amr** - `audio/amr`
+- **aac** - `audio/aac`
 
 #### Archive
 
