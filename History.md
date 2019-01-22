@@ -1,4 +1,44 @@
 
+v1.0.6 / 2019-01-22
+===================
+
+  * Merge pull request #55 from ivanlemeshev/master
+  * Added ftypmp4v to MP4 matcher
+  * Merge pull request #54 from aofei/master
+  * chore: add support for Go modules
+  * feat: add support for AAC (audio/aac)
+  * Merge pull request #53 from lynxbyorion/check-for-docoments
+  * Added checks for documents.
+  * Merge pull request #51 from eriken/master
+  * fixed bad mime and import paths
+  * Merge pull request #50 from eriken/jpeg2000_support
+  * fix import paths
+  * jpeg2000 support
+  * Merge pull request #47 from Ma124/master
+  * Merge pull request #49 from amoore614/master
+  * more robust check for .mov files
+  * bugfix: reverse order of matcher key list so user registered matchers appear first
+  * bugfix: store ptr to MatcherKeys in case user registered matchers are used.
+  * update comment
+  * Bump buffer size to 8K to allow for more custom file matching
+  * refactor(readme): update package import path
+  * Merge pull request #48 from kumakichi/support_msooxml
+  * do not use v1
+  * ok, master already changed travis
+  * add fixtures, but MatchReader may not work for some msooxml files, 4096 bytes maybe not enough
+  * support ms ooxml, #40
+  * Fixed misspells
+  * fix(travis): use string notation for matrix items
+  * Merge pull request #42 from bruth/patch-2
+  * refactor(travis): remove Go 1.6, add Go 1.10
+  * Change maximum bytes required for detection
+  * Merge pull request #36 from yiiTT/patch-1
+  * Add MP4 dash and additional ISO formats
+  * Merge pull request #34 from RangelReale/fix-mp4-case
+  * Merge pull request #32 from yiiTT/fix-m4v
+  * Fixed mp4 detection case-sensitivity according to http://www.ftyps.com/
+  * Fix M4v matcher
+
 v1.0.5 / 2017-12-12
 ===================
 
