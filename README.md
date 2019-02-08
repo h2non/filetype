@@ -262,6 +262,10 @@ func main() {
 - **ttf** - `application/font-sfnt`
 - **otf** - `application/font-sfnt`
 
+#### Application
+
+- **wasm** - `application/wasm`
+
 ## Benchmarks
 
 Measured using [real files](https://github.com/h2non/filetype/tree/master/fixtures).
