@@ -245,6 +245,7 @@ func main() {
 - **lz** - `application/x-lzip`
 - **rpm** - `application/x-rpm`
 - **elf** - `application/x-executable`
+- **dicom** - `application/dicom`
 
 #### Documents
 
