@@ -50,9 +50,9 @@ import (
 func main() {
   buf, _ := ioutil.ReadFile("sample.jpg")
 
-  kind, unknown := filetype.Match(buf)
-  if unknown != nil {
-    fmt.Printf("Unknown: %s", unknown)
+  kind, _ := filetype.Match(buf)
+  if kind == filetype.Unknown {
+    fmt.Println("Unknown file type")
     return
   }
 
