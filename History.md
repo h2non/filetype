@@ -1,4 +1,11 @@
 
+v1.0.7 / 2019-02-09
+===================
+
+  * Merge pull request #56 from akupila/wasm
+  * add wasm to readme
+  * detect wasm file type
+
 v1.0.6 / 2019-01-22
 ===================
 
