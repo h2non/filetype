@@ -192,6 +192,7 @@ func main() {
 - **cr2** - `image/x-canon-cr2`
 - **tif** - `image/tiff`
 - **bmp** - `image/bmp`
+- **heif** - `image/heif`
 - **jxr** - `image/vnd.ms-photo`
 - **psd** - `image/vnd.adobe.photoshop`
 - **ico** - `image/x-icon`
