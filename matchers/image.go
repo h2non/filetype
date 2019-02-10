@@ -14,7 +14,7 @@ var (
 	TypeJxr      = newType("jxr", "image/vnd.ms-photo")
 	TypePsd      = newType("psd", "image/vnd.adobe.photoshop")
 	TypeIco      = newType("ico", "image/x-icon")
-	TypeHeic     = newType("heic", "image/heic")
+	TypeHeif     = newType("heif", "image/heif")
 )
 
 var Image = Map{
@@ -29,7 +29,7 @@ var Image = Map{
 	TypeJxr:      Jxr,
 	TypePsd:      Psd,
 	TypeIco:      Ico,
-	TypeHeic:     Heic,
+	TypeHeif:     Heif,
 }
 
 func Jpeg(buf []byte) bool {
@@ -111,7 +111,7 @@ func Ico(buf []byte) bool {
 		buf[2] == 0x01 && buf[3] == 0x00
 }
 
-func Heic(buf []byte) bool {
+func Heif(buf []byte) bool {
 	if !isobmff.IsISOBMFF(buf) {
 		return false
 	}
