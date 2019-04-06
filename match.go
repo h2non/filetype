@@ -17,6 +17,46 @@ var MatcherKeys = &matchers.MatcherKeys
 // NewMatcher is an alias to matchers.NewMatcher
 var NewMatcher = matchers.NewMatcher
 
+const maxBufSize = 8192
+
+// MatcherWriter is a matcher that coplies to the writer interface
+type MatcherWriter struct {
+	buf []byte
+}
+
+func (mb *MatcherWriter) Write(p []byte) (n int, err error) {
+	incomingSize := len(p)
+	currentSize := len(mb.buf)
+	if currentSize < maxBufSize {
+		// write only when the current size of the buffer is less than the max buffer size
+		newSize := currentSize + incomingSize
+		overflow := newSize - maxBufSize
+		reSlice := p
+		if overflow > 0 {
+			// if the maxBufSize is exceeded by the new size, we need to do some re slicing
+			maxLen := incomingSize - overflow
+			reSlice = p[0:maxLen]
+		}
+		mb.buf = append(mb.buf, reSlice...)
+	}
+	return incomingSize, nil
+}
+
+// Match calls the Match function with the inner buffer of the MatcherWriter
+func (mb *MatcherWriter) Match() (types.Type, error) {
+	if mb.buf == nil {
+		return types.Unknown, ErrEmptyBuffer
+	}
+	return Match(mb.buf)
+}
+
+// NewMatcherWriter creates a matcher which is a io.Writer
+func NewMatcherWriter() *MatcherWriter {
+	return &MatcherWriter{
+		buf: make([]byte, 0, maxBufSize),
+	}
+}
+
 // Match infers the file type of a given buffer inspecting its magic numbers signature
 func Match(buf []byte) (types.Type, error) {
 	length := len(buf)
