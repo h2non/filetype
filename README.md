@@ -196,6 +196,7 @@ func main() {
 - **jxr** - `image/vnd.ms-photo`
 - **psd** - `image/vnd.adobe.photoshop`
 - **ico** - `image/x-icon`
+- **dwg** - `image/vnd.dwg`
 
 #### Video
 
