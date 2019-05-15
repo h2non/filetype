@@ -48,6 +48,7 @@ func TestMatchFile(t *testing.T) {
 		{"xlsx"},
 		{"mov"},
 		{"wasm"},
+		{"dwg"},
 	}
 
 	for _, test := range cases {
@@ -163,6 +164,7 @@ var pngBuffer, _ = ioutil.ReadFile("./fixtures/sample.png")
 var xlsxBuffer, _ = ioutil.ReadFile("./fixtures/sample.xlsx")
 var pptxBuffer, _ = ioutil.ReadFile("./fixtures/sample.pptx")
 var docxBuffer, _ = ioutil.ReadFile("./fixtures/sample.docx")
+var dwgBuffer, _ = ioutil.ReadFile("./fixtures/sample.dwg")
 
 func BenchmarkMatchTar(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -209,5 +211,11 @@ func BenchmarkMatchPptx(b *testing.B) {
 func BenchmarkMatchDocx(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Match(docxBuffer)
+	}
+}
+
+func BenchmarkMatchDwg(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(dwgBuffer)
 	}
 }
