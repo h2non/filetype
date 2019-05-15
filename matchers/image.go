@@ -15,6 +15,7 @@ var (
 	TypePsd      = newType("psd", "image/vnd.adobe.photoshop")
 	TypeIco      = newType("ico", "image/x-icon")
 	TypeHeif     = newType("heif", "image/heif")
+	TypeDwg      = newType("dwg", "image/vnd.dwg")
 )
 
 var Image = Map{
@@ -30,6 +31,7 @@ var Image = Map{
 	TypePsd:      Psd,
 	TypeIco:      Ico,
 	TypeHeif:     Heif,
+	TypeDwg:      Dwg,
 }
 
 func Jpeg(buf []byte) bool {
@@ -130,4 +132,10 @@ func Heif(buf []byte) bool {
 	}
 
 	return false
+}
+
+func Dwg(buf []byte) bool {
+	return len(buf) > 3 &&
+		buf[0] == 0x41 && buf[1] == 0x43 &&
+		buf[2] == 0x31 && buf[3] == 0x30
 }
