@@ -34,13 +34,12 @@ const (
 	TYPE_PPTX
 	TYPE_OOXML
 )
-
+//reference: https://bz.apache.org/ooo/show_bug.cgi?id=111457
 func Doc(buf []byte) bool {
-	return len(buf) > 7 &&
+	return len(buf) > 513 &&
 		buf[0] == 0xD0 && buf[1] == 0xCF &&
 		buf[2] == 0x11 && buf[3] == 0xE0 &&
-		buf[4] == 0xA1 && buf[5] == 0xB1 &&
-		buf[6] == 0x1A && buf[7] == 0xE1
+    buf[512] == 0xEC && buf[513] == 0xA5
 }
 
 func Docx(buf []byte) bool {
@@ -52,8 +51,7 @@ func Xls(buf []byte) bool {
 	return len(buf) > 7 &&
 		buf[0] == 0xD0 && buf[1] == 0xCF &&
 		buf[2] == 0x11 && buf[3] == 0xE0 &&
-		buf[4] == 0xA1 && buf[5] == 0xB1 &&
-		buf[6] == 0x1A && buf[7] == 0xE1
+	  buf[512] == 0x09 && buf[513] == 0x08
 }
 
 func Xlsx(buf []byte) bool {
@@ -65,8 +63,7 @@ func Ppt(buf []byte) bool {
 	return len(buf) > 7 &&
 		buf[0] == 0xD0 && buf[1] == 0xCF &&
 		buf[2] == 0x11 && buf[3] == 0xE0 &&
-		buf[4] == 0xA1 && buf[5] == 0xB1 &&
-		buf[6] == 0x1A && buf[7] == 0xE1
+		buf[512] == 0xA0 && buf[513] == 0x46
 }
 
 func Pptx(buf []byte) bool {
