@@ -34,17 +34,18 @@ const (
 	TYPE_PPTX
 	TYPE_OOXML
 )
+
 //reference: https://bz.apache.org/ooo/show_bug.cgi?id=111457
 func Doc(buf []byte) bool {
-  if len(buf) > 513 {
+	if len(buf) > 513 {
 		return buf[0] == 0xD0 && buf[1] == 0xCF &&
-		  buf[2] == 0x11 && buf[3] == 0xE0 &&
-      buf[512] == 0xEC && buf[513] == 0xA5
-  } else {
-    return len(buf) > 3 &&
-		  buf[0] == 0xD0 && buf[1] == 0xCF &&
-		  buf[2] == 0x11 && buf[3] == 0xE0
-  }
+			buf[2] == 0x11 && buf[3] == 0xE0 &&
+			buf[512] == 0xEC && buf[513] == 0xA5
+	} else {
+		return len(buf) > 3 &&
+			buf[0] == 0xD0 && buf[1] == 0xCF &&
+			buf[2] == 0x11 && buf[3] == 0xE0
+	}
 }
 
 func Docx(buf []byte) bool {
@@ -53,15 +54,15 @@ func Docx(buf []byte) bool {
 }
 
 func Xls(buf []byte) bool {
-  if len(buf) > 513 {
+	if len(buf) > 513 {
 		return buf[0] == 0xD0 && buf[1] == 0xCF &&
-		  buf[2] == 0x11 && buf[3] == 0xE0 &&
-      buf[512] == 0x09 && buf[513] == 0x08
-  } else {
-    return len(buf) > 3 &&
-		  buf[0] == 0xD0 && buf[1] == 0xCF &&
-		  buf[2] == 0x11 && buf[3] == 0xE0
-  }
+			buf[2] == 0x11 && buf[3] == 0xE0 &&
+			buf[512] == 0x09 && buf[513] == 0x08
+	} else {
+		return len(buf) > 3 &&
+			buf[0] == 0xD0 && buf[1] == 0xCF &&
+			buf[2] == 0x11 && buf[3] == 0xE0
+	}
 }
 
 func Xlsx(buf []byte) bool {
@@ -69,16 +70,16 @@ func Xlsx(buf []byte) bool {
 	return ok && typ == TYPE_XLSX
 }
 
-func Ppt(buf []byte) bool {		
-  if len(buf) > 513 {
+func Ppt(buf []byte) bool {
+	if len(buf) > 513 {
 		return buf[0] == 0xD0 && buf[1] == 0xCF &&
-		  buf[2] == 0x11 && buf[3] == 0xE0 &&
-      buf[512] == 0xA0 && buf[513] == 0x46
-  } else {
-    return len(buf) > 3 &&
-		  buf[0] == 0xD0 && buf[1] == 0xCF &&
-		  buf[2] == 0x11 && buf[3] == 0xE0
-  }
+			buf[2] == 0x11 && buf[3] == 0xE0 &&
+			buf[512] == 0xA0 && buf[513] == 0x46
+	} else {
+		return len(buf) > 3 &&
+			buf[0] == 0xD0 && buf[1] == 0xCF &&
+			buf[2] == 0x11 && buf[3] == 0xE0
+	}
 }
 
 func Pptx(buf []byte) bool {
