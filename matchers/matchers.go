@@ -1,6 +1,8 @@
 package matchers
 
 import (
+	"sort"
+
 	"github.com/h2non/filetype/types"
 )
 
@@ -15,6 +17,13 @@ type Map map[types.Type]Matcher
 
 // Type specific matcher function interface
 type TypeMatcher func([]byte) types.Type
+
+// Type sorts map keys
+type MapKeys []types.Type
+
+func (m MapKeys) Len() int           { return len(m) }
+func (m MapKeys) Less(i, j int) bool { return m[i].Extension < m[j].Extension }
+func (m MapKeys) Swap(i, j int)      { m[i], m[j] = m[j], m[i] }
 
 // Store registered file type matchers
 var Matchers = make(map[types.Type]TypeMatcher)
@@ -38,7 +47,13 @@ func NewMatcher(kind types.Type, fn Matcher) TypeMatcher {
 func register(matchers ...Map) {
 	MatcherKeys = MatcherKeys[:0]
 	for _, m := range matchers {
-		for kind, matcher := range m {
+		mapKeys := make(MapKeys, 0, len(m))
+		for kind := range m {
+			mapKeys = append(mapKeys, kind)
+		}
+		sort.Sort(mapKeys)
+		for _, kind := range mapKeys {
+			matcher := m[kind]
 			NewMatcher(kind, matcher)
 		}
 	}
