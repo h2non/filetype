@@ -26,7 +26,7 @@ var (
 	TypeRpm    = newType("rpm", "application/x-rpm")
 	TypeElf    = newType("elf", "application/x-executable")
 	TypeDcm    = newType("dcm", "application/dicom")
-	TypeIso    = newType("iso", "application/iso")
+	TypeIso    = newType("iso", "application/x-iso9660-image")
 )
 
 var Archive = Map{
