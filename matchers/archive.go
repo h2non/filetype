@@ -26,6 +26,7 @@ var (
 	TypeRpm    = newType("rpm", "application/x-rpm")
 	TypeElf    = newType("elf", "application/x-executable")
 	TypeDcm    = newType("dcm", "application/dicom")
+	TypeIso    = newType("iso", "application/iso")
 )
 
 var Archive = Map{
@@ -54,6 +55,7 @@ var Archive = Map{
 	TypeRpm:    Rpm,
 	TypeElf:    Elf,
 	TypeDcm:    Dcm,
+	TypeIso:    Iso,
 }
 
 func Epub(buf []byte) bool {
@@ -222,4 +224,11 @@ func Dcm(buf []byte) bool {
 	return len(buf) > 131 &&
 		buf[128] == 0x44 && buf[129] == 0x49 &&
 		buf[130] == 0x43 && buf[131] == 0x4D
+}
+
+func Iso(buf []byte) bool {
+	return len(buf) > 32773 &&
+		buf[32769] == 0x43 && buf[32770] == 0x44 &&
+		buf[32771] == 0x30 && buf[32772] == 0x30 &&
+		buf[32773] == 0x31
 }
