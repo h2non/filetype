@@ -235,6 +235,7 @@ func main() {
 - **exe** - `application/x-msdownload`
 - **swf** - `application/x-shockwave-flash`
 - **rtf** - `application/rtf`
+- **iso** - `application/x-iso9660-image`
 - **eot** - `application/octet-stream`
 - **ps** - `application/postscript`
 - **sqlite** - `application/x-sqlite3`
