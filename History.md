@@ -1,4 +1,17 @@
 
+v1.0.9 / 2019-07-25
+===================
+
+  * Merge pull request #75 from Trane9991/master
+  * add video/3gpp support
+  * fix: use proper iso file mime type
+  * feat: add iso image format
+  * Merge pull request #65 from Fentonz/master
+  * Merge pull request #70 from fanpei91/master
+  * add image/vnd.dwg to README
+  * add image/vnd.dwg support
+  * Added support for .iso files
+
 v1.0.8 / 2019-02-10
 ===================
 
