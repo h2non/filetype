@@ -209,6 +209,7 @@ func main() {
 - **wmv** - `video/x-ms-wmv`
 - **mpg** - `video/mpeg`
 - **flv** - `video/x-flv`
+- **3gp** - `video/3gpp`
 
 #### Audio
 

@@ -10,6 +10,7 @@ var (
 	TypeWmv  = newType("wmv", "video/x-ms-wmv")
 	TypeMpeg = newType("mpg", "video/mpeg")
 	TypeFlv  = newType("flv", "video/x-flv")
+	Type3gp  = newType("3gp", "video/3gpp")
 )
 
 var Video = Map{
@@ -22,6 +23,7 @@ var Video = Map{
 	TypeWmv:  Wmv,
 	TypeMpeg: Mpeg,
 	TypeFlv:  Flv,
+	Type3gp:  Match3gp,
 }
 
 func M4v(buf []byte) bool {
@@ -126,4 +128,11 @@ func Mp4(buf []byte) bool {
 			(buf[8] == 'N' && buf[9] == 'D' && buf[10] == 'X' && buf[11] == 'S') ||
 			(buf[8] == 'F' && buf[9] == '4' && buf[10] == 'V' && buf[11] == ' ') ||
 			(buf[8] == 'F' && buf[9] == '4' && buf[10] == 'P' && buf[11] == ' '))
+}
+
+func Match3gp(buf []byte) bool {
+	return len(buf) > 10 &&
+		buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 &&
+		buf[7] == 0x70 && buf[8] == 0x33 && buf[9] == 0x67 &&
+		buf[10] == 0x70
 }
