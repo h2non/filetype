@@ -43,6 +43,8 @@ func TestMatchFile(t *testing.T) {
 		{"tar"},
 		{"tif"},
 		{"mp4"},
+		{"mkv"},
+		{"webm"},
 		{"docx"},
 		{"pptx"},
 		{"xlsx"},
@@ -165,6 +167,8 @@ var xlsxBuffer, _ = ioutil.ReadFile("./fixtures/sample.xlsx")
 var pptxBuffer, _ = ioutil.ReadFile("./fixtures/sample.pptx")
 var docxBuffer, _ = ioutil.ReadFile("./fixtures/sample.docx")
 var dwgBuffer, _ = ioutil.ReadFile("./fixtures/sample.dwg")
+var mkvBuffer, _ = ioutil.ReadFile("./fixtures/sample.mkv")
+var webmBuffer, _ = ioutil.ReadFile("./fixtures/sample.webm")
 
 func BenchmarkMatchTar(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -217,5 +221,17 @@ func BenchmarkMatchDocx(b *testing.B) {
 func BenchmarkMatchDwg(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Match(dwgBuffer)
+	}
+}
+
+func BenchmarkMatchMkv(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(mkvBuffer)
+	}
+}
+
+func BenchmarkMatchWebm(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(webmBuffer)
 	}
 }
