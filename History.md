@@ -1,4 +1,10 @@
 
+v1.0.10 / 2019-08-06
+====================
+
+  * Merge pull request #76 from lex-r/fix-matroska-detection
+  * fix: mkv and webm types detection
+
 v1.0.9 / 2019-07-25
 ===================
 
