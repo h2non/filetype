@@ -1,33 +1,33 @@
 package matchers
 
 var (
-	TypeJpeg = newType("jpg", "image/jpeg")
-  TypeJpeg2000 = newType("jp2", "image/jp2")
-	TypePng  = newType("png", "image/png")
-	TypeGif  = newType("gif", "image/gif")
-	TypeWebp = newType("webp", "image/webp")
-	TypeCR2  = newType("cr2", "image/x-canon-cr2")
-	TypeTiff = newType("tif", "image/tiff")
-	TypeBmp  = newType("bmp", "image/bmp")
-	TypeJxr  = newType("jxr", "image/vnd.ms-photo")
-	TypePsd  = newType("psd", "image/vnd.adobe.photoshop")
-	TypeIco  = newType("ico", "image/x-icon")
-	TypeHeic = newType("heic", "image/heic")
+	TypeJpeg     = newType("jpg", "image/jpeg")
+	TypeJpeg2000 = newType("jp2", "image/jp2")
+	TypePng      = newType("png", "image/png")
+	TypeGif      = newType("gif", "image/gif")
+	TypeWebp     = newType("webp", "image/webp")
+	TypeCR2      = newType("cr2", "image/x-canon-cr2")
+	TypeTiff     = newType("tif", "image/tiff")
+	TypeBmp      = newType("bmp", "image/bmp")
+	TypeJxr      = newType("jxr", "image/vnd.ms-photo")
+	TypePsd      = newType("psd", "image/vnd.adobe.photoshop")
+	TypeIco      = newType("ico", "image/x-icon")
+	TypeHeic     = newType("heic", "image/heic")
 )
 
 var Image = Map{
-	TypeJpeg: Jpeg,
-  TypeJpeg2000: Jpeg2000,
-	TypePng:  Png,
-	TypeGif:  Gif,
-	TypeWebp: Webp,
-	TypeCR2:  CR2,
-	TypeTiff: Tiff,
-	TypeBmp:  Bmp,
-	TypeJxr:  Jxr,
-	TypePsd:  Psd,
-	TypeIco:  Ico,
-	TypeHeic: Heic,
+	TypeJpeg:     Jpeg,
+	TypeJpeg2000: Jpeg2000,
+	TypePng:      Png,
+	TypeGif:      Gif,
+	TypeWebp:     Webp,
+	TypeCR2:      CR2,
+	TypeTiff:     Tiff,
+	TypeBmp:      Bmp,
+	TypeJxr:      Jxr,
+	TypePsd:      Psd,
+	TypeIco:      Ico,
+	TypeHeic:     Heic,
 }
 
 func Jpeg(buf []byte) bool {
