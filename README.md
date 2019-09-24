@@ -50,9 +50,9 @@ import (
 func main() {
   buf, _ := ioutil.ReadFile("sample.jpg")
 
-  kind, unknown := filetype.Match(buf)
-  if unknown != nil {
-    fmt.Printf("Unknown: %s", unknown)
+  kind, _ := filetype.Match(buf)
+  if kind == filetype.Unknown {
+    fmt.Println("Unknown file type")
     return
   }
 
@@ -192,9 +192,11 @@ func main() {
 - **cr2** - `image/x-canon-cr2`
 - **tif** - `image/tiff`
 - **bmp** - `image/bmp`
+- **heif** - `image/heif`
 - **jxr** - `image/vnd.ms-photo`
 - **psd** - `image/vnd.adobe.photoshop`
 - **ico** - `image/x-icon`
+- **dwg** - `image/vnd.dwg`
 
 #### Video
 
@@ -207,6 +209,7 @@ func main() {
 - **wmv** - `video/x-ms-wmv`
 - **mpg** - `video/mpeg`
 - **flv** - `video/x-flv`
+- **3gp** - `video/3gpp`
 
 #### Audio
 
@@ -217,6 +220,7 @@ func main() {
 - **flac** - `audio/x-flac`
 - **wav** - `audio/x-wav`
 - **amr** - `audio/amr`
+- **aac** - `audio/aac`
 
 #### Archive
 
@@ -232,6 +236,7 @@ func main() {
 - **exe** - `application/x-msdownload`
 - **swf** - `application/x-shockwave-flash`
 - **rtf** - `application/rtf`
+- **iso** - `application/x-iso9660-image`
 - **eot** - `application/octet-stream`
 - **ps** - `application/postscript`
 - **sqlite** - `application/x-sqlite3`
@@ -244,6 +249,7 @@ func main() {
 - **lz** - `application/x-lzip`
 - **rpm** - `application/x-rpm`
 - **elf** - `application/x-executable`
+- **dcm** - `application/dicom`
 
 #### Documents
 
@@ -260,6 +266,10 @@ func main() {
 - **woff2** - `application/font-woff`
 - **ttf** - `application/font-sfnt`
 - **otf** - `application/font-sfnt`
+
+#### Application
+
+- **wasm** - `application/wasm`
 
 ## Benchmarks
 

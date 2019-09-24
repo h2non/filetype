@@ -1,5 +1,7 @@
 package matchers
 
+import "bytes"
+
 var (
 	TypeMp4  = newType("mp4", "video/mp4")
 	TypeM4v  = newType("m4v", "video/x-m4v")
@@ -10,6 +12,7 @@ var (
 	TypeWmv  = newType("wmv", "video/x-ms-wmv")
 	TypeMpeg = newType("mpg", "video/mpeg")
 	TypeFlv  = newType("flv", "video/x-flv")
+	Type3gp  = newType("3gp", "video/3gpp")
 )
 
 var Video = Map{
@@ -22,6 +25,7 @@ var Video = Map{
 	TypeWmv:  Wmv,
 	TypeMpeg: Mpeg,
 	TypeFlv:  Flv,
+	Type3gp:  Match3gp,
 }
 
 func M4v(buf []byte) bool {
@@ -33,26 +37,17 @@ func M4v(buf []byte) bool {
 }
 
 func Mkv(buf []byte) bool {
-	return (len(buf) > 15 &&
+	return len(buf) > 3 &&
 		buf[0] == 0x1A && buf[1] == 0x45 &&
 		buf[2] == 0xDF && buf[3] == 0xA3 &&
-		buf[4] == 0x93 && buf[5] == 0x42 &&
-		buf[6] == 0x82 && buf[7] == 0x88 &&
-		buf[8] == 0x6D && buf[9] == 0x61 &&
-		buf[10] == 0x74 && buf[11] == 0x72 &&
-		buf[12] == 0x6F && buf[13] == 0x73 &&
-		buf[14] == 0x6B && buf[15] == 0x61) ||
-		(len(buf) > 38 &&
-			buf[31] == 0x6D && buf[32] == 0x61 &&
-			buf[33] == 0x74 && buf[34] == 0x72 &&
-			buf[35] == 0x6f && buf[36] == 0x73 &&
-			buf[37] == 0x6B && buf[38] == 0x61)
+		containsMatroskaSignature(buf, []byte{'m', 'a', 't', 'r', 'o', 's', 'k', 'a'})
 }
 
 func Webm(buf []byte) bool {
 	return len(buf) > 3 &&
 		buf[0] == 0x1A && buf[1] == 0x45 &&
-		buf[2] == 0xDF && buf[3] == 0xA3
+		buf[2] == 0xDF && buf[3] == 0xA3 &&
+		containsMatroskaSignature(buf, []byte{'w', 'e', 'b', 'm'})
 }
 
 func Mov(buf []byte) bool {
@@ -109,6 +104,7 @@ func Mp4(buf []byte) bool {
 			(buf[8] == 'm' && buf[9] == 'm' && buf[10] == 'p' && buf[11] == '4') ||
 			(buf[8] == 'm' && buf[9] == 'p' && buf[10] == '4' && buf[11] == '1') ||
 			(buf[8] == 'm' && buf[9] == 'p' && buf[10] == '4' && buf[11] == '2') ||
+			(buf[8] == 'm' && buf[9] == 'p' && buf[10] == '4' && buf[11] == 'v') ||
 			(buf[8] == 'm' && buf[9] == 'p' && buf[10] == '7' && buf[11] == '1') ||
 			(buf[8] == 'M' && buf[9] == 'S' && buf[10] == 'N' && buf[11] == 'V') ||
 			(buf[8] == 'N' && buf[9] == 'D' && buf[10] == 'A' && buf[11] == 'S') ||
@@ -125,4 +121,25 @@ func Mp4(buf []byte) bool {
 			(buf[8] == 'N' && buf[9] == 'D' && buf[10] == 'X' && buf[11] == 'S') ||
 			(buf[8] == 'F' && buf[9] == '4' && buf[10] == 'V' && buf[11] == ' ') ||
 			(buf[8] == 'F' && buf[9] == '4' && buf[10] == 'P' && buf[11] == ' '))
+}
+
+func Match3gp(buf []byte) bool {
+	return len(buf) > 10 &&
+		buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 &&
+		buf[7] == 0x70 && buf[8] == 0x33 && buf[9] == 0x67 &&
+		buf[10] == 0x70
+}
+
+func containsMatroskaSignature(buf, subType []byte) bool {
+	limit := 4096
+	if len(buf) < limit {
+		limit = len(buf)
+	}
+
+	index := bytes.Index(buf[:limit], subType)
+	if index < 3 {
+		return false
+	}
+
+	return buf[index-3] == 0x42 && buf[index-2] == 0x82
 }

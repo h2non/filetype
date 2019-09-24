@@ -1,5 +1,7 @@
 package matchers
 
+import "github.com/h2non/filetype/matchers/isobmff"
+
 var (
 	TypeJpeg     = newType("jpg", "image/jpeg")
 	TypeJpeg2000 = newType("jp2", "image/jp2")
@@ -12,7 +14,8 @@ var (
 	TypeJxr      = newType("jxr", "image/vnd.ms-photo")
 	TypePsd      = newType("psd", "image/vnd.adobe.photoshop")
 	TypeIco      = newType("ico", "image/x-icon")
-	TypeHeic     = newType("heic", "image/heic")
+	TypeHeif     = newType("heif", "image/heif")
+	TypeDwg      = newType("dwg", "image/vnd.dwg")
 )
 
 var Image = Map{
@@ -27,7 +30,8 @@ var Image = Map{
 	TypeJxr:      Jxr,
 	TypePsd:      Psd,
 	TypeIco:      Ico,
-	TypeHeic:     Heic,
+	TypeHeif:     Heif,
+	TypeDwg:      Dwg,
 }
 
 func Jpeg(buf []byte) bool {
@@ -111,10 +115,29 @@ func Ico(buf []byte) bool {
 		buf[2] == 0x01 && buf[3] == 0x00
 }
 
-func Heic(buf []byte) bool {
-	return len(buf) > 16 &&
-		(buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0x00) &&
-		(buf[3] == 0x24 || buf[3] == 0x18 || buf[3] == 0x1c) &&
-		(buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70) &&
-		(buf[12] == 0x00 && buf[13] == 0x00 && buf[14] == 0x00 && buf[15] == 0x00)
+func Heif(buf []byte) bool {
+	if !isobmff.IsISOBMFF(buf) {
+		return false
+	}
+
+	majorBrand, _, compatibleBrands := isobmff.GetFtyp(buf)
+	if majorBrand == "heic" {
+		return true
+	}
+
+	if majorBrand == "mif1" || majorBrand == "msf1" {
+		for _, compatibleBrand := range compatibleBrands {
+			if compatibleBrand == "heic" {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+func Dwg(buf []byte) bool {
+	return len(buf) > 3 &&
+		buf[0] == 0x41 && buf[1] == 0x43 &&
+		buf[2] == 0x31 && buf[3] == 0x30
 }
