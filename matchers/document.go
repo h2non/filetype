@@ -87,7 +87,9 @@ func msooxml(buf []byte) (typ docType, found bool) {
 		return v, ok
 	}
 
-	if !compareBytes(buf, []byte("[Content_Types].xml"), 0x1E) && !compareBytes(buf, []byte("_rels/.rels"), 0x1E) {
+	if !compareBytes(buf, []byte("[Content_Types].xml"), 0x1E) &&
+		!compareBytes(buf, []byte("_rels/.rels"), 0x1E) &&
+		!compareBytes(buf, []byte("docProps"), 0x1E) {
 		return
 	}
 
