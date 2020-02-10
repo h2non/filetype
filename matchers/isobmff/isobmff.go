@@ -4,9 +4,9 @@ import "encoding/binary"
 
 // IsISOBMFF checks whether the given buffer represents ISO Base Media File Format data
 func IsISOBMFF(buf []byte) bool {
-	if len(buf) < 16 || string(buf[4:8]) != "ftyp" {
-		return false
-	}
+  if len(buf) < 16 || string(buf[4:8]) != "ftyp" {
+    return false
+  }
 
 	if ftypLength := binary.BigEndian.Uint32(buf[0:4]); len(buf) < int(ftypLength) {
 		return false
@@ -21,7 +21,7 @@ func GetFtyp(buf []byte) (string, string, []string) {
     return "", "", []string{""} 
   }
 
-	ftypLength := binary.BigEndian.Uint32(buf[0:4])
+  ftypLength := binary.BigEndian.Uint32(buf[0:4])
 
 	majorBrand := string(buf[8:12])
 	minorVersion := string(buf[12:16])
