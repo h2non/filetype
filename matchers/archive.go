@@ -19,7 +19,7 @@ var (
 	TypeNes    = newType("nes", "application/x-nintendo-nes-rom")
 	TypeCrx    = newType("crx", "application/x-google-chrome-extension")
 	TypeCab    = newType("cab", "application/vnd.ms-cab-compressed")
-	TypeDeb    = newType("deb", "application/x-deb")
+	TypeDeb    = newType("deb", "application/vnd.debian.binary-package")
 	TypeAr     = newType("ar", "application/x-unix-archive")
 	TypeZ      = newType("Z", "application/x-compress")
 	TypeLz     = newType("lz", "application/x-lzip")

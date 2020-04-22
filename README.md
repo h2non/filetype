@@ -243,7 +243,7 @@ func main() {
 - **nes** - `application/x-nintendo-nes-rom`
 - **crx** - `application/x-google-chrome-extension`
 - **cab** - `application/vnd.ms-cab-compressed`
-- **deb** - `application/x-deb`
+- **deb** - `application/vnd.debian.binary-package`
 - **ar** - `application/x-unix-archive`
 - **Z** - `application/x-compress`
 - **lz** - `application/x-lzip`
