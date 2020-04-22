@@ -13,7 +13,7 @@ var (
 	TypeBmp      = newType("bmp", "image/bmp")
 	TypeJxr      = newType("jxr", "image/vnd.ms-photo")
 	TypePsd      = newType("psd", "image/vnd.adobe.photoshop")
-	TypeIco      = newType("ico", "image/x-icon")
+	TypeIco      = newType("ico", "image/vnd.microsoft.icon")
 	TypeHeif     = newType("heif", "image/heif")
 	TypeDwg      = newType("dwg", "image/vnd.dwg")
 )

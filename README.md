@@ -195,7 +195,7 @@ func main() {
 - **heif** - `image/heif`
 - **jxr** - `image/vnd.ms-photo`
 - **psd** - `image/vnd.adobe.photoshop`
-- **ico** - `image/x-icon`
+- **ico** - `image/vnd.microsoft.icon`
 - **dwg** - `image/vnd.dwg`
 
 #### Video
