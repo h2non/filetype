@@ -15,7 +15,7 @@ var (
 	TypeRtf    = newType("rtf", "application/rtf")
 	TypeEot    = newType("eot", "application/octet-stream")
 	TypePs     = newType("ps", "application/postscript")
-	TypeSqlite = newType("sqlite", "application/x-sqlite3")
+	TypeSqlite = newType("sqlite", "application/vnd.sqlite3")
 	TypeNes    = newType("nes", "application/x-nintendo-nes-rom")
 	TypeCrx    = newType("crx", "application/x-google-chrome-extension")
 	TypeCab    = newType("cab", "application/vnd.ms-cab-compressed")

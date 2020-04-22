@@ -1,6 +1,6 @@
 # filetype [![Build Status](https://travis-ci.org/h2non/filetype.png)](https://travis-ci.org/h2non/filetype) [![GoDoc](https://godoc.org/github.com/h2non/filetype?status.svg)](https://godoc.org/github.com/h2non/filetype) [![Go Report Card](http://goreportcard.com/badge/h2non/filetype)](http://goreportcard.com/report/h2non/filetype) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
-Small and dependency free [Go](https://golang.org) package to infer file and MIME type checking the [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files) signature.
+Small and dependency free [Go](https://golang.org) package to infer file and MIME type checking the [magic numbers](<https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files>) signature.
 
 For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) package.
 
@@ -119,7 +119,7 @@ package main
 import (
   "fmt"
   "io/ioutil"
-  
+
   "github.com/h2non/filetype"
 )
 
@@ -146,7 +146,7 @@ package main
 
 import (
   "fmt"
-  
+
   "github.com/h2non/filetype"
 )
 
@@ -239,7 +239,7 @@ func main() {
 - **iso** - `application/x-iso9660-image`
 - **eot** - `application/octet-stream`
 - **ps** - `application/postscript`
-- **sqlite** - `application/x-sqlite3`
+- **sqlite** - `application/vnd.sqlite3`
 - **nes** - `application/x-nintendo-nes-rom`
 - **crx** - `application/x-google-chrome-extension`
 - **cab** - `application/vnd.ms-cab-compressed`
