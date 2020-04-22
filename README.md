@@ -233,7 +233,7 @@ func main() {
 - **7z** - `application/x-7z-compressed`
 - **xz** - `application/x-xz`
 - **pdf** - `application/pdf`
-- **exe** - `application/x-msdownload`
+- **exe** - `application/vnd.microsoft.portable-executable`
 - **swf** - `application/x-shockwave-flash`
 - **rtf** - `application/rtf`
 - **iso** - `application/x-iso9660-image`

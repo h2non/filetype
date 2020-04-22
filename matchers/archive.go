@@ -10,7 +10,7 @@ var (
 	Type7z     = newType("7z", "application/x-7z-compressed")
 	TypeXz     = newType("xz", "application/x-xz")
 	TypePdf    = newType("pdf", "application/pdf")
-	TypeExe    = newType("exe", "application/x-msdownload")
+	TypeExe    = newType("exe", "application/vnd.microsoft.portable-executable")
 	TypeSwf    = newType("swf", "application/x-shockwave-flash")
 	TypeRtf    = newType("rtf", "application/rtf")
 	TypeEot    = newType("eot", "application/octet-stream")
