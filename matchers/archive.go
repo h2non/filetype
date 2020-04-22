@@ -4,7 +4,7 @@ var (
 	TypeEpub   = newType("epub", "application/epub+zip")
 	TypeZip    = newType("zip", "application/zip")
 	TypeTar    = newType("tar", "application/x-tar")
-	TypeRar    = newType("rar", "application/x-rar-compressed")
+	TypeRar    = newType("rar", "application/vnd.rar")
 	TypeGz     = newType("gz", "application/gzip")
 	TypeBz2    = newType("bz2", "application/x-bzip2")
 	Type7z     = newType("7z", "application/x-7z-compressed")

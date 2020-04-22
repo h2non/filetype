@@ -227,7 +227,7 @@ func main() {
 - **epub** - `application/epub+zip`
 - **zip** - `application/zip`
 - **tar** - `application/x-tar`
-- **rar** - `application/x-rar-compressed`
+- **rar** - `application/vnd.rar`
 - **gz** - `application/gzip`
 - **bz2** - `application/x-bzip2`
 - **7z** - `application/x-7z-compressed`
