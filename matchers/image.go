@@ -76,18 +76,18 @@ func Webp(buf []byte) bool {
 }
 
 func CR2(buf []byte) bool {
-	return len(buf) > 9 &&
-		((buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x0) ||
-			(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A)) &&
-		buf[8] == 0x43 && buf[9] == 0x52
+	return len(buf) > 10 &&
+		((buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x0) || // Little Endian
+			(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A)) && // Big Endian
+		buf[8] == 0x43 && buf[9] == 0x52 && // CR2 magic word
+		buf[10] == 0x02 // CR2 major version
 }
 
 func Tiff(buf []byte) bool {
-	return len(buf) > 9 &&
-		((buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x0) ||
-			(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A)) &&
-		// Differentiate Tiff from CR2
-		buf[8] != 0x43 && buf[9] != 0x52
+	return len(buf) > 10 &&
+		((buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x0) || // Little Endian
+			(buf[0] == 0x4D && buf[1] == 0x4D && buf[2] == 0x0 && buf[3] == 0x2A)) && // Big Endian
+		!CR2(buf) // To avoid conflicts differentiate Tiff from CR2
 }
 
 func Bmp(buf []byte) bool {
