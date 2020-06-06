@@ -1,6 +1,6 @@
 # filetype [![Build Status](https://travis-ci.org/h2non/filetype.png)](https://travis-ci.org/h2non/filetype) [![GoDoc](https://godoc.org/github.com/h2non/filetype?status.svg)](https://godoc.org/github.com/h2non/filetype) [![Go Report Card](http://goreportcard.com/badge/h2non/filetype)](http://goreportcard.com/report/h2non/filetype) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
-Small and dependency free [Go](https://golang.org) package to infer file and MIME type checking the [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files) signature.
+Small and dependency free [Go](https://golang.org) package to infer file and MIME type checking the [magic numbers](<https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files>) signature.
 
 For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) package.
 
@@ -119,7 +119,7 @@ package main
 import (
   "fmt"
   "io/ioutil"
-  
+
   "github.com/h2non/filetype"
 )
 
@@ -146,7 +146,7 @@ package main
 
 import (
   "fmt"
-  
+
   "github.com/h2non/filetype"
 )
 
@@ -195,7 +195,7 @@ func main() {
 - **heif** - `image/heif`
 - **jxr** - `image/vnd.ms-photo`
 - **psd** - `image/vnd.adobe.photoshop`
-- **ico** - `image/x-icon`
+- **ico** - `image/vnd.microsoft.icon`
 - **dwg** - `image/vnd.dwg`
 
 #### Video
@@ -227,23 +227,23 @@ func main() {
 - **epub** - `application/epub+zip`
 - **zip** - `application/zip`
 - **tar** - `application/x-tar`
-- **rar** - `application/x-rar-compressed`
+- **rar** - `application/vnd.rar`
 - **gz** - `application/gzip`
 - **bz2** - `application/x-bzip2`
 - **7z** - `application/x-7z-compressed`
 - **xz** - `application/x-xz`
 - **pdf** - `application/pdf`
-- **exe** - `application/x-msdownload`
+- **exe** - `application/vnd.microsoft.portable-executable`
 - **swf** - `application/x-shockwave-flash`
 - **rtf** - `application/rtf`
 - **iso** - `application/x-iso9660-image`
 - **eot** - `application/octet-stream`
 - **ps** - `application/postscript`
-- **sqlite** - `application/x-sqlite3`
+- **sqlite** - `application/vnd.sqlite3`
 - **nes** - `application/x-nintendo-nes-rom`
 - **crx** - `application/x-google-chrome-extension`
 - **cab** - `application/vnd.ms-cab-compressed`
-- **deb** - `application/x-deb`
+- **deb** - `application/vnd.debian.binary-package`
 - **ar** - `application/x-unix-archive`
 - **Z** - `application/x-compress`
 - **lz** - `application/x-lzip`
