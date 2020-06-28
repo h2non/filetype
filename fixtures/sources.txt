@@ -1,0 +1,34 @@
+
+sample.gif
+==========
+* Original filename:
+  Universal_joint.gif
+* Source:
+  https://commons.wikimedia.org/wiki/File:Universal_joint.gif
+* Attribution:
+  Van helsing via Wikimedia Commons
+* License:
+  CC BY-SA (http://creativecommons.org/licenses/by-sa/3.0/)
+
+sample.tif
+==========
+* Original filename:
+  STSCI-H-p1918a-f-2000x2000.tif
+* Source:
+  https://hubblesite.org/contents/media/images/2019/18/4505-Image
+* Attribution:
+  NASA, ESA, N. Smith (University of Arizona), and J. Morse (BoldlyGo Institute)
+* License:
+  Public Domain
+
+sample.webm
+===========
+* Original filename:
+  Artefact_comparison_ToS_f15509.webm
+* Source:
+  https://commons.wikimedia.org/wiki/File:Artefact_comparison_ToS_f15509.webm
+* Attribution:
+  Mango Blender Open Movie Project, Blender Foundation via Wikimedia Commons
+* License:
+  CC BY (https://creativecommons.org/licenses/by/3.0)
+
