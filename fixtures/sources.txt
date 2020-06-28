@@ -1,3 +1,15 @@
+
+sample.gif
+==========
+* Original filename:
+  Universal_joint.gif
+* Source:
+  https://commons.wikimedia.org/wiki/File:Universal_joint.gif
+* Attribution:
+  Van helsing via Wikimedia Commons
+* License:
+  CC BY-SA (http://creativecommons.org/licenses/by-sa/3.0/)
+
 sample.tif
 ==========
 * Original filename:
@@ -6,5 +18,6 @@ sample.tif
   https://hubblesite.org/contents/media/images/2019/18/4505-Image
 * Attribution:
   NASA, ESA, N. Smith (University of Arizona), and J. Morse (BoldlyGo Institute)
-
+* License:
+  Public Domain
 
