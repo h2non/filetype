@@ -1,0 +1,10 @@
+sample.tif
+==========
+* Original filename:
+  STSCI-H-p1918a-f-2000x2000.tif
+* Source:
+  https://hubblesite.org/contents/media/images/2019/18/4505-Image
+* Attribution:
+  NASA, ESA, N. Smith (University of Arizona), and J. Morse (BoldlyGo Institute)
+
+
