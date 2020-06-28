@@ -21,3 +21,14 @@ sample.tif
 * License:
   Public Domain
 
+sample.webm
+===========
+* Original filename:
+  Artefact_comparison_ToS_f15509.webm
+* Source:
+  https://commons.wikimedia.org/wiki/File:Artefact_comparison_ToS_f15509.webm
+* Attribution:
+  Mango Blender Open Movie Project, Blender Foundation via Wikimedia Commons
+* License:
+  CC BY (https://creativecommons.org/licenses/by/3.0)
+
