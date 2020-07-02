@@ -60,3 +60,14 @@ sample.xlsx
 * Attribution:
   "2019 Total Taxable Resource Estimates", US Department of the Treasury
 
+sample.jpg
+==========
+* Original filename:
+  697_VPME2279_1.jpg
+* Source
+  https://www.bep.gov/images/697_VPME2279_1.jpg
+* Attribution:
+  "Die proof - Ornamental Alphabet, A to H inclusive"
+  Bureau of Engraving & Printing image gallery, US Department of the Treasury
+
+
