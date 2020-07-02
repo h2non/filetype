@@ -51,6 +51,8 @@ func TestMatchFile(t *testing.T) {
 		{"mov"},
 		{"wasm"},
 		{"dwg"},
+		{"pdf"},
+		{"epub"},
 	}
 
 	for _, test := range cases {
@@ -169,6 +171,8 @@ var docxBuffer, _ = ioutil.ReadFile("./fixtures/sample.docx")
 var dwgBuffer, _ = ioutil.ReadFile("./fixtures/sample.dwg")
 var mkvBuffer, _ = ioutil.ReadFile("./fixtures/sample.mkv")
 var webmBuffer, _ = ioutil.ReadFile("./fixtures/sample.webm")
+var pdfBuffer, _ = ioutil.ReadFile("./fixtures/sample.pdf")
+var epubBuffer, _ = ioutil.ReadFile("./fixtures/sample.epub")
 
 func BenchmarkMatchTar(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -233,5 +237,17 @@ func BenchmarkMatchMkv(b *testing.B) {
 func BenchmarkMatchWebm(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Match(webmBuffer)
+	}
+}
+
+func BenchmarkMatchPdf(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(pdfBuffer)
+	}
+}
+
+func BenchmarkMatchEpub(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(epubBuffer)
 	}
 }
