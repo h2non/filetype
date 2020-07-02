@@ -32,3 +32,12 @@ sample.webm
 * License:
   CC BY (https://creativecommons.org/licenses/by/3.0)
 
+sample.pdf
+==========
+* Original filename:
+  f4506t.pdf
+* Source:
+  https://www.irs.gov/pub/irs-pdf/f4506t.pdf
+* Attribution:
+  IRS form 4506-T (June 2019), US Department of the Treasury
+
