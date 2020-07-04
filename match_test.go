@@ -120,6 +120,42 @@ func TestAddMatcher(t *testing.T) {
 	}
 }
 
+func TestAddChild(t *testing.T) {
+	parentType := AddType("fooparent", "foo/parent")
+	parentFn := func(buf []byte) bool {
+		return len(buf) >= 2 && buf[0] == 0x00 && buf[1] == 0x00
+	}
+	parentMatcher := AddMatcher(parentType, parentFn)
+
+	childType := AddType("foochild", "foo/child")
+	childFn := func(buf []byte) bool {
+		return len(buf) > 2 &&
+			buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0x00
+	}
+	parentMatcher.AddChild(childType, childFn)
+
+	if !Is([]byte{0x00, 0x00}, "fooparent") {
+		t.Fatalf("Parent cannot match")
+	}
+
+	if !Is([]byte{0x00, 0x00, 0x00}, "foochild") {
+		t.Fatalf("Child cannot match")
+	}
+
+	if !Is([]byte{0x00, 0x00, 0x00}, "fooparent") {
+		t.Fatalf("Parent does not match child")
+	}
+
+	if !IsSupported("foochild") {
+		t.Fatalf("Not supported extension")
+	}
+
+	if !IsMIMESupported("foo/child") {
+		t.Fatalf("Not supported MIME type")
+	}
+
+}
+
 func TestMatchMap(t *testing.T) {
 	cases := []struct {
 		buf  []byte
