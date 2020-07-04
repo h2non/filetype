@@ -43,19 +43,17 @@ func IsExtension(buf []byte, ext string) bool {
 
 // IsType checks if a given buffer matches with the given file type
 func IsType(buf []byte, kind types.Type) bool {
-	matcher := matchers.Matchers[kind]
-	if matcher == nil {
-		return false
+	if matcher, ok := matchers.Matchers[kind]; ok {
+		return matcher.Match(buf)
 	}
-	return matcher(buf) != types.Unknown
+	return false
 }
 
 // IsMIME checks if a given buffer matches with the given MIME type
 func IsMIME(buf []byte, mime string) bool {
 	for _, kind := range types.Types {
 		if kind.MIME.Value == mime {
-			matcher := matchers.Matchers[kind]
-			return matcher(buf) != types.Unknown
+			return IsType(buf, kind)
 		}
 	}
 	return false
