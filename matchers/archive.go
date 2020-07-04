@@ -30,8 +30,8 @@ var (
 )
 
 var Archive = Map{
-	TypeEpub:   Epub,
 	TypeZip:    Zip,
+	TypeEpub:   ChildMatcher(TypeZip, TypeEpub, Epub),
 	TypeTar:    Tar,
 	TypeRar:    Rar,
 	TypeGz:     Gz,
