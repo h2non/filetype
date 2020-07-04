@@ -1,12 +1,8 @@
 language: go
 
 go:
-  - "1.10"
-  - "1.11"
-  - "1.12"
   - "1.13"
   - "1.14"
-  - "tip"
 
 before_install:
   - go get -u -v golang.org/x/lint/golint
