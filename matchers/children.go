@@ -4,7 +4,7 @@ import (
 	"github.com/h2non/filetype/types"
 )
 
-// Store any types with registered children
+// ChildMatchers stores any registered children for a given type
 var ChildMatchers = make(map[types.Type][]TypeMatcher)
 
 // ChildMatcher creates a TypeMatcher as a child of the parent Type
@@ -18,5 +18,3 @@ func ChildMatcher(parent types.Type, kind types.Type, fn ByteMatcher) ByteMatche
 func (m TypeMatcher) AddChild(kind types.Type, fn ByteMatcher) {
 	_ = ChildMatcher(m.myType, kind, fn)
 }
-
-
