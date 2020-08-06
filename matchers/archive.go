@@ -27,6 +27,7 @@ var (
 	TypeElf    = newType("elf", "application/x-executable")
 	TypeDcm    = newType("dcm", "application/dicom")
 	TypeIso    = newType("iso", "application/x-iso9660-image")
+	TypeMachO  = newType("macho", "application/x-mach-binary") // Mach-O binaries have no common extension.
 )
 
 var Archive = Map{
@@ -56,6 +57,7 @@ var Archive = Map{
 	TypeElf:    Elf,
 	TypeDcm:    Dcm,
 	TypeIso:    Iso,
+	TypeMachO:  MachO,
 }
 
 func Epub(buf []byte) bool {
@@ -231,4 +233,14 @@ func Iso(buf []byte) bool {
 		buf[32769] == 0x43 && buf[32770] == 0x44 &&
 		buf[32771] == 0x30 && buf[32772] == 0x30 &&
 		buf[32773] == 0x31
+}
+
+func MachO(buf []byte) bool {
+	return len(buf) > 3 && ((buf[0] == 0xFE && buf[1] == 0xED && buf[2] == 0xFA && buf[3] == 0xCF) ||
+		(buf[0] == 0xFE && buf[1] == 0xED && buf[2] == 0xFA && buf[3] == 0xCE) ||
+		(buf[0] == 0xBE && buf[1] == 0xBA && buf[2] == 0xFE && buf[3] == 0xCA) ||
+		// Big endian versions below here...
+		(buf[0] == 0xCF && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
+		(buf[0] == 0xCE && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
+		(buf[0] == 0xCA && buf[1] == 0xFE && buf[2] == 0xBA && buf[3] == 0xBE))
 }
