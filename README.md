@@ -270,6 +270,8 @@ func main() {
 #### Application
 
 - **wasm** - `application/wasm`
+- **dex** - `application/vnd.android.dex`
+- **dey** - `application/vnd.android.dey`
 
 ## Benchmarks
 
