@@ -25,13 +25,12 @@ func Match(buf []byte) (types.Type, error) {
 	}
 
 	for _, kind := range *MatcherKeys {
-		checker := Matchers[kind]
-		match := checker(buf)
+		matcher := Matchers[kind]
+		match := matcher.Type(buf)
 		if match != types.Unknown && match.Extension != "" {
 			return match, nil
 		}
 	}
-
 	return types.Unknown, nil
 }
 
@@ -64,7 +63,7 @@ func MatchReader(reader io.Reader) (types.Type, error) {
 }
 
 // AddMatcher registers a new matcher type
-func AddMatcher(fileType types.Type, matcher matchers.Matcher) matchers.TypeMatcher {
+func AddMatcher(fileType types.Type, matcher matchers.ByteMatcher) matchers.TypeMatcher {
 	return matchers.NewMatcher(fileType, matcher)
 }
 
