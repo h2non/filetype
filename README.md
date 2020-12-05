@@ -250,6 +250,8 @@ func main() {
 - **rpm** - `application/x-rpm`
 - **elf** - `application/x-executable`
 - **dcm** - `application/dicom`
+- **pcap** - `application/vnd.tcpdump.pcap`
+- **dmg** - `application/x-apple-diskimage`
 
 #### Documents
 

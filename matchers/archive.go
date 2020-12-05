@@ -28,6 +28,8 @@ var (
 	TypeDcm    = newType("dcm", "application/dicom")
 	TypeIso    = newType("iso", "application/x-iso9660-image")
 	TypeMachO  = newType("macho", "application/x-mach-binary") // Mach-O binaries have no common extension.
+	TypePcap   = newType("pcap", "application/vnd.tcpdump.pcap")
+	TypeDmg    = newType("dmg", "application/x-apple-diskimage")
 )
 
 var Archive = Map{
@@ -58,6 +60,8 @@ var Archive = Map{
 	TypeDcm:    Dcm,
 	TypeIso:    Iso,
 	TypeMachO:  MachO,
+	TypePcap:   Pcap,
+	TypeDmg:    Dmg,
 }
 
 func Epub(buf []byte) bool {
@@ -243,4 +247,17 @@ func MachO(buf []byte) bool {
 		(buf[0] == 0xCF && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
 		(buf[0] == 0xCE && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
 		(buf[0] == 0xCA && buf[1] == 0xFE && buf[2] == 0xBA && buf[3] == 0xBE))
+}
+
+func Pcap(buf []byte) bool {
+	return len(buf) > 3 && ((buf[0] == 0xA1 && buf[1] == 0xB2 && buf[2] == 0xC3 && buf[3] == 0xD4) ||
+		(buf[0] == 0xD4 && buf[1] == 0xC3 && buf[2] == 0xB2 && buf[3] == 0xA1))
+}
+
+func Dmg(buf []byte) bool {
+	return len(buf) > 6 &&
+		buf[0] == 0x78 && buf[1] == 0x01 &&
+		buf[2] == 0x73 && buf[3] == 0x0D &&
+		buf[4] == 0x62 && buf[5] == 0x62 &&
+		buf[6] == 0x60
 }
