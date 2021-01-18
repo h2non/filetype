@@ -29,8 +29,8 @@ func AddType(ext, mime string) types.Type {
 
 // Is checks if a given buffer matches with the given file type extension
 func Is(buf []byte, ext string) bool {
-	kind, ok := types.Types[ext]
-	if ok {
+	kind := types.Get(ext)
+	if kind != types.Unknown {
 		return IsType(buf, kind)
 	}
 	return false
@@ -52,33 +52,48 @@ func IsType(buf []byte, kind types.Type) bool {
 
 // IsMIME checks if a given buffer matches with the given MIME type
 func IsMIME(buf []byte, mime string) bool {
-	for _, kind := range types.Types {
+	result := false
+	types.Types.Range(func(k, v interface{}) bool {
+		kind := v.(types.Type)
 		if kind.MIME.Value == mime {
 			matcher := matchers.Matchers[kind]
-			return matcher(buf) != types.Unknown
+			result = matcher(buf) != types.Unknown
+			return false
 		}
-	}
-	return false
+		return true
+	})
+
+	return result
 }
 
 // IsSupported checks if a given file extension is supported
 func IsSupported(ext string) bool {
-	for name := range Types {
-		if name == ext {
-			return true
+	result := false
+	types.Types.Range(func(k, v interface{}) bool {
+		key := k.(string)
+		if key == ext {
+			result = true
+			return false
 		}
-	}
-	return false
+		return true
+	})
+
+	return result
 }
 
 // IsMIMESupported checks if a given MIME type is supported
 func IsMIMESupported(mime string) bool {
-	for _, m := range Types {
-		if m.MIME.Value == mime {
-			return true
+	result := false
+	types.Types.Range(func(k, v interface{}) bool {
+		kind := v.(types.Type)
+		if kind.MIME.Value == mime {
+			result = true
+			return false
 		}
-	}
-	return false
+		return true
+	})
+
+	return result
 }
 
 // GetType retrieves a Type by file extension

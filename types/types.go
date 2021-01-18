@@ -1,18 +1,23 @@
 package types
 
-var Types = make(map[string]Type)
+import "sync"
+
+// Types Support concurrent map writes
+var Types sync.Map
 
 // Add registers a new type in the package
 func Add(t Type) Type {
-	Types[t.Extension] = t
+	Types.Store(t.Extension, t)
 	return t
 }
 
 // Get retrieves a Type by extension
 func Get(ext string) Type {
-	kind := Types[ext]
-	if kind.Extension != "" {
-		return kind
+	if tmp, ok := Types.Load(ext); ok {
+		kind := tmp.(Type)
+		if kind.Extension != "" {
+			return kind
+		}
 	}
 	return Unknown
 }
