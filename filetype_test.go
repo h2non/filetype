@@ -2,9 +2,25 @@ package filetype
 
 import (
 	"testing"
+	"time"
 
 	"github.com/h2non/filetype/types"
 )
+
+func TestConcurrent(t *testing.T) {
+	go func() {
+		for i := 0; i < 10000; i++ {
+			types.NewType("xml", "text/xml")
+		}
+	}()
+	go func() {
+		for i := 0; i < 10000; i++ {
+			types.NewType("xml", "text/xml")
+		}
+	}()
+
+	time.Sleep(time.Second * 2)
+}
 
 func TestIs(t *testing.T) {
 	cases := []struct {
@@ -22,6 +38,7 @@ func TestIs(t *testing.T) {
 			t.Fatalf("Invalid match: %s", test.ext)
 		}
 	}
+
 }
 
 func TestIsType(t *testing.T) {
