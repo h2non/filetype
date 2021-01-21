@@ -51,7 +51,6 @@ func TestMatchFile(t *testing.T) {
 		{"mov"},
 		{"wasm"},
 		{"dwg"},
-		{"dex"},
 		{"dey"},
 	}
 
