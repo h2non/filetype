@@ -9,6 +9,7 @@ var (
 	TypeBz2    = newType("bz2", "application/x-bzip2")
 	Type7z     = newType("7z", "application/x-7z-compressed")
 	TypeXz     = newType("xz", "application/x-xz")
+	TypeZstd   = newType("zst", "application/zstd")
 	TypePdf    = newType("pdf", "application/pdf")
 	TypeExe    = newType("exe", "application/vnd.microsoft.portable-executable")
 	TypeSwf    = newType("swf", "application/x-shockwave-flash")
@@ -39,6 +40,7 @@ var Archive = Map{
 	TypeBz2:    bytePrefixMatcher(bz2Magic),
 	Type7z:     bytePrefixMatcher(sevenzMagic),
 	TypeXz:     bytePrefixMatcher(xzMagic),
+	TypeZstd:   bytePrefixMatcher(zstdMagic),
 	TypePdf:    bytePrefixMatcher(pdfMagic),
 	TypeExe:    bytePrefixMatcher(exeMagic),
 	TypeSwf:    Swf,
@@ -83,8 +85,9 @@ var (
 		0x64, 0x65, 0x62, 0x69, 0x61, 0x6E, 0x2D, 0x62,
 		0x69, 0x6E, 0x61, 0x72, 0x79,
 	}
-	arMagic = []byte{0x21, 0x3C, 0x61, 0x72, 0x63, 0x68, 0x3E}
-	lzMagic = []byte{0x4C, 0x5A, 0x49, 0x50}
+	arMagic   = []byte{0x21, 0x3C, 0x61, 0x72, 0x63, 0x68, 0x3E}
+	zstdMagic = []byte{0x28, 0xB5, 0x2F, 0xFD}
+	lzMagic   = []byte{0x4C, 0x5A, 0x49, 0x50}
 )
 
 func bytePrefixMatcher(magicPattern []byte) Matcher {

@@ -51,6 +51,7 @@ func TestMatchFile(t *testing.T) {
 		{"mov"},
 		{"wasm"},
 		{"dwg"},
+		{"zst"},
 	}
 
 	for _, test := range cases {
