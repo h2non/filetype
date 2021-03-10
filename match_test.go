@@ -60,6 +60,11 @@ func TestMatchFile(t *testing.T) {
 			t.Fatalf("Invalid type: %s != %s", kind.Extension, test.ext)
 		}
 	}
+	// test zstd with skippable frame
+	kind, _ := MatchFile("./fixtures/sample_skippable.zst")
+	if kind.Extension != "zst" {
+		t.Fatalf("Invalid type: %s != %s", kind.Extension, "zst")
+	}
 }
 
 func TestMatchReader(t *testing.T) {
