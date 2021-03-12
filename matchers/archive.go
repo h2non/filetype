@@ -1,5 +1,12 @@
 package matchers
 
+import "encoding/binary"
+
+const (
+	ZstdMagicSkippableStart = 0x184D2A50
+	ZstdMagicSkippableMask  = 0xFFFFFFF0
+)
+
 var (
 	TypeEpub   = newType("epub", "application/epub+zip")
 	TypeZip    = newType("zip", "application/zip")
@@ -40,7 +47,7 @@ var Archive = Map{
 	TypeBz2:    bytePrefixMatcher(bz2Magic),
 	Type7z:     bytePrefixMatcher(sevenzMagic),
 	TypeXz:     bytePrefixMatcher(xzMagic),
-	TypeZstd:   bytePrefixMatcher(zstdMagic),
+	TypeZstd:   Zst,
 	TypePdf:    bytePrefixMatcher(pdfMagic),
 	TypeExe:    bytePrefixMatcher(exeMagic),
 	TypeSwf:    Swf,
@@ -178,4 +185,27 @@ func MachO(buf []byte) bool {
 		(buf[0] == 0xCF && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
 		(buf[0] == 0xCE && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
 		(buf[0] == 0xCA && buf[1] == 0xFE && buf[2] == 0xBA && buf[3] == 0xBE))
+}
+
+// Zstandard compressed data is made of one or more frames.
+// There are two frame formats defined by Zstandard: Zstandard frames and Skippable frames.
+// See more details from https://tools.ietf.org/id/draft-kucherawy-dispatch-zstd-00.html#rfc.section.2
+func Zst(buf []byte) bool {
+	if compareBytes(buf, zstdMagic, 0) {
+		return true
+	} else {
+		// skippable frames
+    if len(buf) < 8 {
+      return false
+    }
+		if binary.LittleEndian.Uint32(buf[:4]) & ZstdMagicSkippableMask == ZstdMagicSkippableStart {
+			userDataLength := binary.LittleEndian.Uint32(buf[4:8])
+			if len(buf) < 8 + int(userDataLength) {
+			  return false
+      }
+			nextFrame := buf[8+userDataLength:]
+			return Zst(nextFrame)
+		}
+		return false
+	}
 }
