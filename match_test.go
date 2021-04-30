@@ -52,6 +52,8 @@ func TestMatchFile(t *testing.T) {
 		{"wasm"},
 		{"dwg"},
 		{"zst"},
+		{"dll"},
+		{"exe"},
 	}
 
 	for _, test := range cases {
@@ -175,6 +177,8 @@ var docxBuffer, _ = ioutil.ReadFile("./fixtures/sample.docx")
 var dwgBuffer, _ = ioutil.ReadFile("./fixtures/sample.dwg")
 var mkvBuffer, _ = ioutil.ReadFile("./fixtures/sample.mkv")
 var webmBuffer, _ = ioutil.ReadFile("./fixtures/sample.webm")
+var dllBuffer, _ = ioutil.ReadFile("./fixtures/sample.dll")
+var exeBuffer, _ = ioutil.ReadFile("./fixtures/sample.exe")
 
 func BenchmarkMatchTar(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -239,5 +243,16 @@ func BenchmarkMatchMkv(b *testing.B) {
 func BenchmarkMatchWebm(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Match(webmBuffer)
+	}
+}
+
+func BenchmarkMatchDll(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(dllBuffer)
+	}
+}
+func BenchmarkMatchExe(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Match(exeBuffer)
 	}
 }
