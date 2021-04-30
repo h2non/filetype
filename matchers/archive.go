@@ -1,10 +1,19 @@
 package matchers
 
-import "encoding/binary"
+import (
+	"bytes"
+	"debug/pe"
+	"encoding/binary"
+)
 
 const (
 	ZstdMagicSkippableStart = 0x184D2A50
 	ZstdMagicSkippableMask  = 0xFFFFFFF0
+
+	ImageFileDll             uint16 = 0x2000
+	ImageSubsystemNative     uint16 = 1
+	ImageSubsystemWindowsGui uint16 = 2
+	ImageSubsystemWindowsCui uint16 = 3
 )
 
 var (
@@ -19,6 +28,7 @@ var (
 	TypeZstd   = newType("zst", "application/zstd")
 	TypePdf    = newType("pdf", "application/pdf")
 	TypeExe    = newType("exe", "application/vnd.microsoft.portable-executable")
+	TypeDLL    = newType("dll", "application/x-msdownload")
 	TypeSwf    = newType("swf", "application/x-shockwave-flash")
 	TypeRtf    = newType("rtf", "application/rtf")
 	TypeEot    = newType("eot", "application/octet-stream")
@@ -49,7 +59,8 @@ var Archive = Map{
 	TypeXz:     bytePrefixMatcher(xzMagic),
 	TypeZstd:   Zst,
 	TypePdf:    bytePrefixMatcher(pdfMagic),
-	TypeExe:    bytePrefixMatcher(exeMagic),
+	TypeExe:    Exe,
+	TypeDLL:    Dll,
 	TypeSwf:    Swf,
 	TypeRtf:    bytePrefixMatcher(rtfMagic),
 	TypeEot:    Eot,
@@ -80,7 +91,8 @@ var (
 	bz2Magic    = []byte{0x42, 0x5A, 0x68}
 	sevenzMagic = []byte{0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C}
 	pdfMagic    = []byte{0x25, 0x50, 0x44, 0x46}
-	exeMagic    = []byte{0x4D, 0x5A}
+	// include exe and dll
+	peMagic     = []byte{0x4D, 0x5A}
 	rtfMagic    = []byte{0x7B, 0x5C, 0x72, 0x74, 0x66}
 	nesMagic    = []byte{0x4E, 0x45, 0x53, 0x1A}
 	crxMagic    = []byte{0x43, 0x72, 0x32, 0x34}
@@ -195,17 +207,68 @@ func Zst(buf []byte) bool {
 		return true
 	} else {
 		// skippable frames
-    if len(buf) < 8 {
-      return false
-    }
-		if binary.LittleEndian.Uint32(buf[:4]) & ZstdMagicSkippableMask == ZstdMagicSkippableStart {
+		if len(buf) < 8 {
+			return false
+		}
+		if binary.LittleEndian.Uint32(buf[:4])&ZstdMagicSkippableMask == ZstdMagicSkippableStart {
 			userDataLength := binary.LittleEndian.Uint32(buf[4:8])
-			if len(buf) < 8 + int(userDataLength) {
-			  return false
-      }
+			if len(buf) < 8+int(userDataLength) {
+				return false
+			}
 			nextFrame := buf[8+userDataLength:]
 			return Zst(nextFrame)
 		}
 		return false
 	}
+}
+
+func Exe(buf []byte) bool {
+
+	var err error
+	var reader *bytes.Reader
+	var f *pe.File
+	var subsystem uint16
+	if !compareBytes(buf, peMagic, 0) {
+		return false
+	}
+	if Dll(buf) {
+		return false
+	}
+	reader = bytes.NewReader(buf)
+	f, err = pe.NewFile(reader)
+	if nil != err {
+		return false
+	}
+	switch f.OptionalHeader.(type) {
+	case *pe.OptionalHeader32:
+		subsystem = f.OptionalHeader.(*pe.OptionalHeader32).Subsystem
+		break
+	case *pe.OptionalHeader64:
+		subsystem = f.OptionalHeader.(*pe.OptionalHeader64).Subsystem
+		break
+	default:
+		return false
+	}
+	if ImageSubsystemNative == subsystem || ImageSubsystemWindowsGui == subsystem ||
+		ImageSubsystemWindowsCui == subsystem {
+		return true
+	}
+	return false
+}
+func Dll(buf []byte) bool {
+	var err error
+	var reader *bytes.Reader
+	var f *pe.File
+	if !compareBytes(buf, peMagic, 0) {
+		return false
+	}
+	reader = bytes.NewReader(buf)
+	f, err = pe.NewFile(reader)
+	if nil != err {
+		return false
+	}
+	if 0 != f.Characteristics&ImageFileDll {
+		return true
+	}
+	return false
 }
