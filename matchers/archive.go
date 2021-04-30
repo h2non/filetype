@@ -207,14 +207,14 @@ func Zst(buf []byte) bool {
 		return true
 	} else {
 		// skippable frames
-		if len(buf) < 8 {
-			return false
-		}
-		if binary.LittleEndian.Uint32(buf[:4])&ZstdMagicSkippableMask == ZstdMagicSkippableStart {
-			userDataLength := binary.LittleEndian.Uint32(buf[4:8])
-			if len(buf) < 8+int(userDataLength) {
-				return false
-			}
+    if len(buf) < 8 {
+      return false
+    }
+    if binary.LittleEndian.Uint32(buf[:4]) & ZstdMagicSkippableMask == ZstdMagicSkippableStart {
+      userDataLength := binary.LittleEndian.Uint32(buf[4:8])
+      if len(buf) < 8 + int(userDataLength) {
+        return false
+      }
 			nextFrame := buf[8+userDataLength:]
 			return Zst(nextFrame)
 		}
