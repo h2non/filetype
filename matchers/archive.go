@@ -203,10 +203,10 @@ func MachO(buf []byte) bool {
 // There are two frame formats defined by Zstandard: Zstandard frames and Skippable frames.
 // See more details from https://tools.ietf.org/id/draft-kucherawy-dispatch-zstd-00.html#rfc.section.2
 func Zst(buf []byte) bool {
-	if compareBytes(buf, zstdMagic, 0) {
-		return true
-	} else {
-		// skippable frames
+  if compareBytes(buf, zstdMagic, 0) {
+    return true
+  } else {
+    // skippable frames
     if len(buf) < 8 {
       return false
     }
@@ -215,11 +215,11 @@ func Zst(buf []byte) bool {
       if len(buf) < 8 + int(userDataLength) {
         return false
       }
-			nextFrame := buf[8+userDataLength:]
-			return Zst(nextFrame)
-		}
-		return false
-	}
+      nextFrame := buf[8+userDataLength:]
+      return Zst(nextFrame)
+    }
+    return false
+  }
 }
 
 func Exe(buf []byte) bool {
