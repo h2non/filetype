@@ -12,6 +12,9 @@ var (
 	TypeXlsx = newType("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 	TypePpt  = newType("ppt", "application/vnd.ms-powerpoint")
 	TypePptx = newType("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+	TypeOdp  = newType("odp", "application/vnd.oasis.opendocument.presentation")
+	TypeOds  = newType("ods", "application/vnd.oasis.opendocument.spreadsheet")
+	TypeOdt  = newType("odt", "application/vnd.oasis.opendocument.text")
 )
 
 var Document = Map{
@@ -21,6 +24,9 @@ var Document = Map{
 	TypeXlsx: Xlsx,
 	TypePpt:  Ppt,
 	TypePptx: Pptx,
+	TypeOdp:  Odp,
+	TypeOds:  Ods,
+	TypeOdt:  Odt,
 }
 
 type docType int
@@ -33,6 +39,9 @@ const (
 	TYPE_PPT
 	TYPE_PPTX
 	TYPE_OOXML
+	TYPE_ODP
+	TYPE_ODS
+	TYPE_ODT
 )
 
 //reference: https://bz.apache.org/ooo/show_bug.cgi?id=111457
@@ -194,4 +203,52 @@ func search(buf []byte, start, rangeNum int) int {
 	}
 
 	return bytes.Index(buf[start:end], signature)
+}
+
+func Odp(buf []byte) bool {
+	return checkOdf(buf, TypeOdp.MIME.Value)
+}
+
+func Ods(buf []byte) bool {
+	return checkOdf(buf, TypeOds.MIME.Value)
+}
+
+func Odt(buf []byte) bool {
+	return checkOdf(buf, TypeOdt.MIME.Value)
+}
+
+// https://en.wikipedia.org/wiki/OpenDocument_technical_specification
+// https://en.wikipedia.org/wiki/ZIP_(file_format)
+func checkOdf(buf []byte, mimetype string) bool {
+	if 38+len(mimetype) >= len(buf) {
+		return false
+	}
+	// Perform all byte checks first for better performance
+	// Check ZIP start
+	if buf[0] != 'P' || buf[1] != 'K' || buf[2] != 3 || buf[3] != 4 {
+		return false
+	}
+	// Now check the first file data
+	// Compression method: not compressed
+	if buf[8] != 0 || buf[9] != 0 {
+		return false
+	}
+	// Filename length must be 8 for "mimetype"
+	if buf[26] != 8 || buf[27] != 0 {
+		return false
+	}
+	// Check the file contents sizes
+	if int(buf[18]) != len(mimetype) ||
+		buf[19] != 0 || buf[20] != 0 || buf[21] != 0 ||
+		int(buf[22]) != len(mimetype) ||
+		buf[23] != 0 || buf[24] != 0 || buf[25] != 0 {
+		return false
+	}
+	// No extra field (for data offset below)
+	if buf[28] != 0 || buf[29] != 0 {
+		return false
+	}
+	// Finally check the file name and contents
+	return string(buf[30:38]) == "mimetype" &&
+		string(buf[38:38+len(mimetype)]) == mimetype
 }
