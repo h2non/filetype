@@ -49,15 +49,14 @@ func Webm(buf []byte) bool {
 		buf[2] == 0xDF && buf[3] == 0xA3 &&
 		containsMatroskaSignature(buf, []byte{'w', 'e', 'b', 'm'})
 }
-
 func Mov(buf []byte) bool {
-	return len(buf) > 15 && ((buf[0] == 0x0 && buf[1] == 0x0 &&
-		buf[2] == 0x0 && buf[3] == 0x14 &&
-		buf[4] == 0x66 && buf[5] == 0x74 &&
-		buf[6] == 0x79 && buf[7] == 0x70) ||
-		(buf[4] == 0x6d && buf[5] == 0x6f && buf[6] == 0x6f && buf[7] == 0x76) ||
-		(buf[4] == 0x6d && buf[5] == 0x64 && buf[6] == 0x61 && buf[7] == 0x74) ||
-		(buf[12] == 0x6d && buf[13] == 0x64 && buf[14] == 0x61 && buf[15] == 0x74))
+  return len(buf) > 15 && (
+    (buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70) &&
+      ((buf[8] == 0x71 && buf[9] == 0x74 && buf[10] == 0x20 && buf[11] == 0x20) ||
+        (buf[0] == 0x0 && buf[1] == 0x0 && buf[2] == 0x0 && buf[3] == 0x14)) ||
+    (buf[4] == 0x6d && buf[5] == 0x6f && buf[6] == 0x6f && buf[7] == 0x76) ||
+    (buf[4] == 0x6d && buf[5] == 0x64 && buf[6] == 0x61 && buf[7] == 0x74) ||
+    (buf[12] == 0x6d && buf[13] == 0x64 && buf[14] == 0x61 && buf[15] == 0x74))
 }
 
 func Avi(buf []byte) bool {
