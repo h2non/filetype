@@ -215,7 +215,7 @@ func main() {
 
 - **mid** - `audio/midi`
 - **mp3** - `audio/mpeg`
-- **m4a** - `audio/m4a`
+- **m4a** - `audio/mp4`
 - **ogg** - `audio/ogg`
 - **flac** - `audio/x-flac`
 - **wav** - `audio/x-wav`
