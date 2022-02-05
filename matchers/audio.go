@@ -3,7 +3,7 @@ package matchers
 var (
 	TypeMidi = newType("mid", "audio/midi")
 	TypeMp3  = newType("mp3", "audio/mpeg")
-	TypeM4a  = newType("m4a", "audio/m4a")
+	TypeM4a  = newType("m4a", "audio/mp4")
 	TypeOgg  = newType("ogg", "audio/ogg")
 	TypeFlac = newType("flac", "audio/x-flac")
 	TypeWav  = newType("wav", "audio/x-wav")
