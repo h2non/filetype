@@ -53,8 +53,9 @@ func Webm(buf []byte) bool {
 func Mov(buf []byte) bool {
 	return len(buf) > 15 && ((buf[0] == 0x0 && buf[1] == 0x0 &&
 		buf[2] == 0x0 && (buf[3] == 0x14 || buf[3] == 0x20) &&
-		buf[4] == 0x66 && buf[5] == 0x74 &&
-		buf[6] == 0x79 && buf[7] == 0x70) ||
+		buf[4] == 0x66 && buf[5] == 0x74 && // 'f' 't'
+		buf[6] == 0x79 && buf[7] == 0x70 && // 'y' 'p'
+		buf[8] == 0x71 && buf[9] == 0x74) || // 'q' 't'
 		(buf[4] == 0x6d && buf[5] == 0x6f && buf[6] == 0x6f && buf[7] == 0x76) ||
 		(buf[4] == 0x6d && buf[5] == 0x64 && buf[6] == 0x61 && buf[7] == 0x74) ||
 		(buf[12] == 0x6d && buf[13] == 0x64 && buf[14] == 0x61 && buf[15] == 0x74))
