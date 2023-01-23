@@ -17,6 +17,7 @@ var (
 	TypeHeif     = newType("heif", "image/heif")
 	TypeDwg      = newType("dwg", "image/vnd.dwg")
 	TypeExr      = newType("exr", "image/x-exr")
+	TypeAvif     = newType("avif", "image/avif")
 )
 
 var Image = Map{
@@ -34,6 +35,7 @@ var Image = Map{
 	TypeHeif:     Heif,
 	TypeDwg:      Dwg,
 	TypeExr:      Exr,
+	TypeAvif:     Avif,
 }
 
 func Jpeg(buf []byte) bool {
@@ -148,4 +150,25 @@ func Exr(buf []byte) bool {
 	return len(buf) > 3 &&
 		buf[0] == 0x76 && buf[1] == 0x2f &&
 		buf[2] == 0x31 && buf[3] == 0x01
+}
+
+func Avif(buf []byte) bool {
+	if !isobmff.IsISOBMFF(buf) {
+		return false
+	}
+
+	majorBrand, _, compatibleBrands := isobmff.GetFtyp(buf)
+	if majorBrand == "avif" {
+		return true
+	}
+
+	if majorBrand == "mif1" || majorBrand == "msf1" {
+		for _, compatibleBrand := range compatibleBrands {
+			if compatibleBrand == "avif" {
+				return true
+			}
+		}
+	}
+
+	return false
 }
