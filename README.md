@@ -197,6 +197,7 @@ func main() {
 - **psd** - `image/vnd.adobe.photoshop`
 - **ico** - `image/vnd.microsoft.icon`
 - **dwg** - `image/vnd.dwg`
+- **avif** - `image/avif`
 
 #### Video
 
