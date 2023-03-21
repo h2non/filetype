@@ -3,7 +3,8 @@ package matchers
 import "github.com/h2non/filetype/matchers/isobmff"
 
 var (
-	TypeJpeg     = newType("jpg", "image/jpeg")
+  TypeJpg      = newType("jpg", "image/jpeg")
+	TypeJpeg     = newType("jpeg", "image/jpeg")
 	TypeJpeg2000 = newType("jp2", "image/jp2")
 	TypePng      = newType("png", "image/png")
 	TypeGif      = newType("gif", "image/gif")
@@ -21,6 +22,7 @@ var (
 )
 
 var Image = Map{
+  TypeJpg:      Jpg,
 	TypeJpeg:     Jpeg,
 	TypeJpeg2000: Jpeg2000,
 	TypePng:      Png,
