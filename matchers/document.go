@@ -44,7 +44,7 @@ const (
 	TYPE_ODT
 )
 
-//reference: https://bz.apache.org/ooo/show_bug.cgi?id=111457
+// reference: https://bz.apache.org/ooo/show_bug.cgi?id=111457
 func Doc(buf []byte) bool {
 	if len(buf) > 513 {
 		return buf[0] == 0xD0 && buf[1] == 0xCF &&
