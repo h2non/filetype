@@ -64,14 +64,17 @@ func Docx(buf []byte) bool {
 
 func Xls(buf []byte) bool {
 	if len(buf) > 513 {
-		return buf[0] == 0xD0 && buf[1] == 0xCF &&
-			buf[2] == 0x11 && buf[3] == 0xE0 &&
-			buf[512] == 0x09 && buf[513] == 0x08
-	} else {
-		return len(buf) > 3 &&
-			buf[0] == 0xD0 && buf[1] == 0xCF &&
-			buf[2] == 0x11 && buf[3] == 0xE0
+		isMSOfficeBFF := buf[0] == 0xD0 && buf[1] == 0xCF && buf[2] == 0x11 && buf[3] == 0xE0
+
+		switch {
+		case isMSOfficeBFF && buf[512] == 0x09 && buf[513] == 0x08: // BIFF5 && BIFF12(12)
+			return true
+		case isMSOfficeBFF && buf[512] == 0xFD && buf[513] == 0xFF: // BIFF12(11)
+			return true
+		}
 	}
+
+	return false
 }
 
 func Xlsx(buf []byte) bool {
