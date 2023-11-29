@@ -211,6 +211,7 @@ func main() {
 - **mpg** - `video/mpeg`
 - **flv** - `video/x-flv`
 - **3gp** - `video/3gpp`
+- **mxf** - `application/mxf`
 
 #### Audio
 
