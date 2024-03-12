@@ -54,6 +54,7 @@ func TestMatchFile(t *testing.T) {
 		{"zst"},
 		{"exr"},
 		{"avif"},
+		{"class"},
 	}
 
 	for _, test := range cases {
@@ -77,6 +78,7 @@ func TestMatchReader(t *testing.T) {
 		{bytes.NewBuffer([]byte{0xFF, 0xD8, 0xFF}), "jpg"},
 		{bytes.NewBuffer([]byte{0xFF, 0xD8, 0x00}), "unknown"},
 		{bytes.NewBuffer([]byte{0x89, 0x50, 0x4E, 0x47}), "png"},
+		{bytes.NewBuffer([]byte{0xCA, 0xFE, 0xBA, 0xBE, 0x00, 0x00, 0x00, 0xff}), "class"},
 	}
 
 	for _, test := range cases {
