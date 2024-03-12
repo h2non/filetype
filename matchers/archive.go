@@ -36,6 +36,7 @@ var (
 	TypeDcm    = newType("dcm", "application/dicom")
 	TypeIso    = newType("iso", "application/x-iso9660-image")
 	TypeMachO  = newType("macho", "application/x-mach-binary") // Mach-O binaries have no common extension.
+	TypeClass  = newType("class", "application/java-vm")       // Java class files
 )
 
 var Archive = Map{
@@ -67,6 +68,7 @@ var Archive = Map{
 	TypeDcm:    Dcm,
 	TypeIso:    Iso,
 	TypeMachO:  MachO,
+	TypeClass:  Class,
 }
 
 var (
@@ -184,7 +186,24 @@ func MachO(buf []byte) bool {
 		// Big endian versions below here...
 		(buf[0] == 0xCF && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
 		(buf[0] == 0xCE && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
-		(buf[0] == 0xCA && buf[1] == 0xFE && buf[2] == 0xBA && buf[3] == 0xBE))
+		// Java class files have a 0xCAFEBABE magic number. As the Class func can disambiguate,
+		// if buf has 0xCAFEBABE as a magic number but Class returns false, assume it's a MachO.
+		(buf[0] == 0xCA && buf[1] == 0xFE && buf[2] == 0xBA && buf[3] == 0xBE && !Class(buf)))
+}
+
+// Class matches Java class files which are pretty tricky.
+// They have the same magic number as some MachO FAT files.
+// Reference: https://opensource.apple.com/source/file/file-80.40.2/file/magic/Magdir/cafebabe.auto.html
+func Class(buf []byte) bool {
+	if len(buf) < 8 {
+		return false
+	}
+
+	if !(buf[0] == 0xCA && buf[1] == 0xFE && buf[2] == 0xBA && buf[3] == 0xBE) {
+		return false
+	}
+
+	return binary.BigEndian.Uint32(buf[4:8]) >= 44 // Java 1.0 corresponds to major version 44.
 }
 
 // Zstandard compressed data is made of one or more frames.
