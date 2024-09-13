@@ -1,25 +1,25 @@
-English | [简体中文](./README_zh_CN.md)
+[English](./README.md) | 简体中文
 # filetype [![GoDoc](https://godoc.org/github.com/h2non/filetype?status.svg)](https://godoc.org/github.com/h2non/filetype) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
-Small and dependency free [Go](https://golang.org) package to infer file and MIME type checking the [magic numbers](<https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files>) signature.
+小型且无依赖的 [Go](https://golang.org) 包，用于通过检查[魔数](https://en.wikipedia.org/wiki/Magic_number_(programming)#Magic_numbers_in_files)签名推断文件类型和 MIME 类型。
 
-For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) package. Python port: [filetype.py](https://github.com/h2non/filetype.py).
+如需检查 SVG 文件类型，请参阅 [go-is-svg](https://github.com/h2non/go-is-svg) 包。Python 版本: [filetype.py](https://github.com/h2non/filetype.py)。
 
-## Features
+## 功能特性
 
-- Supports a [wide range](#supported-types) of file types
-- Provides file extension and proper MIME type
-- File discovery by extension or MIME type
-- File discovery by class (image, video, audio...)
-- Provides a bunch of helpers and file matching shortcuts
-- [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers
-- Simple and semantic API
-- [Blazing fast](#benchmarks), even processing large files
-- Only first 262 bytes representing the max file header is required, so you can just [pass a slice](#file-header)
-- Dependency free (just Go code, no C compilation needed)
-- Cross-platform file recognition
+- 支持[广泛的](#supported-types)文件类型
+- 提供文件扩展名和正确的 MIME 类型
+- 通过扩展名或 MIME 类型进行文件识别
+- 通过类别（图像、视频、音频等）进行文件识别
+- 提供大量辅助工具和文件匹配快捷方式
+- [可扩展](#add-additional-file-type-matchers)：可以添加自定义的新类型和匹配器
+- 简单且语义化的 API
+- [速度极快](#benchmarks)，即使处理大型文件也不例外
+- 只需要前 262 字节的文件头，因此你可以[传递一个切片](#file-header)
+- 无依赖（仅需 Go 代码，无需 C 语言编译）
+- 跨平台文件识别
 
-## Installation
+## 安装
 
 ```bash
 go get github.com/h2non/filetype
@@ -27,16 +27,16 @@ go get github.com/h2non/filetype
 
 ## API
 
-See [Godoc](https://godoc.org/github.com/h2non/filetype) reference.
+请参考[Godoc](https://godoc.org/github.com/h2non/filetype) .
 
-### Subpackages
+### 关联子包
 
 - [`github.com/h2non/filetype/types`](https://godoc.org/github.com/h2non/filetype/types)
 - [`github.com/h2non/filetype/matchers`](https://godoc.org/github.com/h2non/filetype/matchers)
 
-## Examples
+## 示例
 
-#### Simple file type checking
+#### 简单的文件类型检查
 
 ```go
 package main
@@ -61,7 +61,7 @@ func main() {
 }
 ```
 
-#### Check type class
+#### 检查类型类别
 
 ```go
 package main
@@ -84,7 +84,7 @@ func main() {
 }
 ```
 
-#### Supported type
+#### 类型支持
 
 ```go
 package main
@@ -112,7 +112,7 @@ func main() {
 }
 ```
 
-#### File header
+#### 文件头
 
 ```go
 package main
@@ -140,7 +140,7 @@ func main() {
 }
 ```
 
-#### Add additional file type matchers
+#### 添加额外的文件类型匹配器
 
 ```go
 package main
@@ -182,7 +182,7 @@ func main() {
 }
 ```
 
-## Supported types
+## 已支持的类型
 
 #### Image
 
@@ -278,11 +278,11 @@ func main() {
 - **dex** - `application/vnd.android.dex`
 - **dey** - `application/vnd.android.dey`
 
-## Benchmarks
+## 性能基准
 
-Measured using [real files](https://github.com/h2non/filetype/tree/master/fixtures).
+通过 [real files](https://github.com/h2non/filetype/tree/master/fixtures) 测量.
 
-Environment: OSX x64 i7 2.7 Ghz
+运行环境: OSX x64 i7 2.7 Ghz
 
 ```bash
 BenchmarkMatchTar-8    1000000        1083 ns/op
