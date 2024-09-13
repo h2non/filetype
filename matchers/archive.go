@@ -31,6 +31,7 @@ var (
 	TypeAr     = newType("ar", "application/x-unix-archive")
 	TypeZ      = newType("Z", "application/x-compress")
 	TypeLz     = newType("lz", "application/x-lzip")
+	TypeLz4    = newType("lz4", "application/x-lz4")
 	TypeRpm    = newType("rpm", "application/x-rpm")
 	TypeElf    = newType("elf", "application/x-executable")
 	TypeDcm    = newType("dcm", "application/dicom")
@@ -62,6 +63,7 @@ var Archive = Map{
 	TypeAr:     bytePrefixMatcher(arMagic),
 	TypeZ:      Z,
 	TypeLz:     bytePrefixMatcher(lzMagic),
+	TypeLz4:    bytePrefixMatcher(lzMagic4),
 	TypeRpm:    Rpm,
 	TypeElf:    Elf,
 	TypeDcm:    Dcm,
@@ -95,6 +97,7 @@ var (
 	arMagic   = []byte{0x21, 0x3C, 0x61, 0x72, 0x63, 0x68, 0x3E}
 	zstdMagic = []byte{0x28, 0xB5, 0x2F, 0xFD}
 	lzMagic   = []byte{0x4C, 0x5A, 0x49, 0x50}
+	lzMagic4  = []byte{0x04, 0x22, 0x4D, 0x18} // 04 22 4D 18
 )
 
 func bytePrefixMatcher(magicPattern []byte) Matcher {

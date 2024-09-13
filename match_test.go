@@ -54,6 +54,7 @@ func TestMatchFile(t *testing.T) {
 		{"zst"},
 		{"exr"},
 		{"avif"},
+		{"lz4"},
 	}
 
 	for _, test := range cases {
