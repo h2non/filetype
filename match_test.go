@@ -71,12 +71,12 @@ func TestMatchFile(t *testing.T) {
 
 func TestMatchReader(t *testing.T) {
 	cases := []struct {
-		buf io.Reader
+		buf io.ReadSeeker
 		ext string
 	}{
-		{bytes.NewBuffer([]byte{0xFF, 0xD8, 0xFF}), "jpg"},
-		{bytes.NewBuffer([]byte{0xFF, 0xD8, 0x00}), "unknown"},
-		{bytes.NewBuffer([]byte{0x89, 0x50, 0x4E, 0x47}), "png"},
+		{bytes.NewReader([]byte{0xFF, 0xD8, 0xFF}), "jpg"},
+		{bytes.NewReader([]byte{0xFF, 0xD8, 0x00}), "unknown"},
+		{bytes.NewReader([]byte{0x89, 0x50, 0x4E, 0x47}), "png"},
 	}
 
 	for _, test := range cases {

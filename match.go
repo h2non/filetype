@@ -52,13 +52,15 @@ func MatchFile(filepath string) (types.Type, error) {
 }
 
 // MatchReader is convenient wrapper to Match() any Reader
-func MatchReader(reader io.Reader) (types.Type, error) {
+func MatchReader(reader io.ReadSeeker) (types.Type, error) {
 	buffer := make([]byte, 8192) // 8K makes msooxml tests happy and allows for expanded custom file checks
 
 	_, err := reader.Read(buffer)
 	if err != nil && err != io.EOF {
 		return types.Unknown, err
 	}
+
+	reader.Seek(0, 0)
 
 	return Match(buffer)
 }
