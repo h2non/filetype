@@ -250,6 +250,7 @@ func main() {
 - **ar** - `application/x-unix-archive`
 - **Z** - `application/x-compress`
 - **lz** - `application/x-lzip`
+- **lz4** - `application/x-lz4`
 - **rpm** - `application/x-rpm`
 - **elf** - `application/x-executable`
 - **dcm** - `application/dicom`
