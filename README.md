@@ -102,7 +102,7 @@ func main() {
     fmt.Println("Extension not supported")
   }
 
-  // Check if file is supported by extension
+  // Check if file is supported by mime type
   if filetype.IsMIMESupported("image/jpeg") {
     fmt.Println("MIME type supported")
   } else {
