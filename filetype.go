@@ -100,3 +100,12 @@ func IsMIMESupported(mime string) bool {
 func GetType(ext string) types.Type {
 	return types.Get(ext)
 }
+
+func GetTypeByMIME(mime string) types.Type {
+	for _, kind := range types.Types {
+		if kind.MIME.Value == mime {
+			return kind
+		}
+	}
+	return types.Unknown
+}
