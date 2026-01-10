@@ -1,6 +1,8 @@
 package matchers
 
-import "encoding/binary"
+import (
+	"encoding/binary"
+)
 
 const (
 	ZstdMagicSkippableStart = 0x184D2A50
@@ -37,6 +39,7 @@ var (
 	TypeIso     = newType("iso", "application/x-iso9660-image")
 	TypeMachO   = newType("macho", "application/x-mach-binary") // Mach-O binaries have no common extension.
 	TypeParquet = newType("parquet", "application/vnd.apache.parquet")
+	TypeUdf     = newType("udf", "application/x-iso13346-image") // https://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%85%89%E7%A2%9F%E6%A0%BC%E5%BC%8F
 )
 
 var Archive = Map{
@@ -178,6 +181,13 @@ func Iso(buf []byte) bool {
 		buf[32769] == 0x43 && buf[32770] == 0x44 &&
 		buf[32771] == 0x30 && buf[32772] == 0x30 &&
 		buf[32773] == 0x31
+}
+
+func Udf(buf []byte) bool {
+	return len(buf) >= 36870 &&
+		string(buf[32769:32774]) == "BEA01" &&
+		(string(buf[34817:34822]) == "NSR03" || string(buf[34817:34822]) == "NSR02") &&
+		string(buf[36865:36870]) == "TEA01"
 }
 
 func MachO(buf []byte) bool {
