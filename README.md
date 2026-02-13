@@ -42,13 +42,13 @@ package main
 
 import (
   "fmt"
-  "io/ioutil"
+  "os"
 
   "github.com/h2non/filetype"
 )
 
 func main() {
-  buf, _ := ioutil.ReadFile("sample.jpg")
+  buf, _ := os.ReadFile("sample.jpg")
 
   kind, _ := filetype.Match(buf)
   if kind == filetype.Unknown {
@@ -67,13 +67,13 @@ package main
 
 import (
   "fmt"
-  "io/ioutil"
+  "os"
 
   "github.com/h2non/filetype"
 )
 
 func main() {
-  buf, _ := ioutil.ReadFile("sample.jpg")
+  buf, _ := os.ReadFile("sample.jpg")
 
   if filetype.IsImage(buf) {
     fmt.Println("File is an image")
