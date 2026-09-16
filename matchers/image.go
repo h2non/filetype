@@ -95,9 +95,15 @@ func Tiff(buf []byte) bool {
 }
 
 func Bmp(buf []byte) bool {
-	return len(buf) > 1 &&
-		buf[0] == 0x42 &&
-		buf[1] == 0x4D
+	// BITMAPFILEHEADER is 14 bytes: "BM" + size + reserved (must be 0) + pixel offset.
+	// Matching only "BM" treats short ASCII like "BMW" as image/bmp (issue #117).
+	if len(buf) < 14 {
+		return false
+	}
+	if buf[0] != 0x42 || buf[1] != 0x4D {
+		return false
+	}
+	return buf[6] == 0 && buf[7] == 0 && buf[8] == 0 && buf[9] == 0
 }
 
 func Jxr(buf []byte) bool {

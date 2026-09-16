@@ -18,6 +18,16 @@ func TestMatch(t *testing.T) {
 		{[]byte{0xFF, 0xD8, 0xFF}, "jpg"},
 		{[]byte{0xFF, 0xD8, 0x00}, "unknown"},
 		{[]byte{0x89, 0x50, 0x4E, 0x47}, "png"},
+		{[]byte("BMW"), "unknown"},
+		{
+			[]byte{
+				'B', 'M',
+				0x3A, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00,
+				0x36, 0x00, 0x00, 0x00,
+			},
+			"bmp",
+		},
 	}
 
 	for _, test := range cases {
@@ -29,6 +39,30 @@ func TestMatch(t *testing.T) {
 		if match.Extension != test.ext {
 			t.Fatalf("Invalid image type: %s != %s", match.Extension, test.ext)
 		}
+	}
+}
+
+func TestBmpNotAsciiPrefix(t *testing.T) {
+	// Issue #117: "BMW" starts with BM but is not a BMP file.
+	kind, err := Match([]byte("BMW"))
+	if err != nil {
+		t.Fatalf("Match: %v", err)
+	}
+	if kind.Extension == "bmp" {
+		t.Fatalf("ASCII BMW matched as bmp")
+	}
+	if matchers.Bmp([]byte("BMW")) {
+		t.Fatalf("Bmp matcher accepted ASCII BMW")
+	}
+
+	header := make([]byte, 14)
+	header[0], header[1] = 'B', 'M'
+	if !matchers.Bmp(header) {
+		t.Fatalf("14-byte BM header with reserved=0 should match")
+	}
+	header[6] = 1
+	if matchers.Bmp(header) {
+		t.Fatalf("non-zero reserved field should not match")
 	}
 }
 
@@ -100,6 +134,7 @@ func TestMatches(t *testing.T) {
 		{[]byte{0xFF, 0xD8, 0xFF}, true},
 		{[]byte{0xFF, 0x0, 0x0}, false},
 		{[]byte{0x89, 0x50, 0x4E, 0x47}, true},
+		{[]byte("BMW"), false},
 	}
 
 	for _, test := range cases {
