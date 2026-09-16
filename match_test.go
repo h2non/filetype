@@ -18,6 +18,8 @@ func TestMatch(t *testing.T) {
 		{[]byte{0xFF, 0xD8, 0xFF}, "jpg"},
 		{[]byte{0xFF, 0xD8, 0x00}, "unknown"},
 		{[]byte{0x89, 0x50, 0x4E, 0x47}, "png"},
+		{[]byte("!<arch>\ndebian-binary"), "deb"},
+		{[]byte("!<arch>\n"), "ar"},
 	}
 
 	for _, test := range cases {
@@ -29,6 +31,42 @@ func TestMatch(t *testing.T) {
 		if match.Extension != test.ext {
 			t.Fatalf("Invalid image type: %s != %s", match.Extension, test.ext)
 		}
+	}
+}
+
+func TestDebNotMatchedAsAr(t *testing.T) {
+	// Issue #126: deb files share the ar !<arch> magic; map iteration used to let ar win.
+	deb := []byte("!<arch>\ndebian-binary")
+	if !matchers.Deb(deb) {
+		t.Fatalf("Deb matcher rejected debian-binary header")
+	}
+	if matchers.Ar(deb) {
+		t.Fatalf("Ar matcher accepted a Debian package")
+	}
+
+	for i := 0; i < 50; i++ {
+		kind, err := Match(deb)
+		if err != nil {
+			t.Fatalf("Match: %v", err)
+		}
+		if kind.Extension != "deb" {
+			t.Fatalf("debian package matched as %q, want deb", kind.Extension)
+		}
+	}
+
+	ar := []byte("!<arch>\n")
+	if matchers.Deb(ar) {
+		t.Fatalf("Deb matcher accepted a generic ar header")
+	}
+	if !matchers.Ar(ar) {
+		t.Fatalf("Ar matcher rejected a generic ar header")
+	}
+	kind, err := Match(ar)
+	if err != nil {
+		t.Fatalf("Match ar: %v", err)
+	}
+	if kind.Extension != "ar" {
+		t.Fatalf("generic ar matched as %q, want ar", kind.Extension)
 	}
 }
 

@@ -59,8 +59,8 @@ var Archive = Map{
 	TypeNes:     bytePrefixMatcher(nesMagic),
 	TypeCrx:     bytePrefixMatcher(crxMagic),
 	TypeCab:     Cab,
-	TypeDeb:     bytePrefixMatcher(debMagic),
-	TypeAr:      bytePrefixMatcher(arMagic),
+	TypeDeb:     Deb,
+	TypeAr:      Ar,
 	TypeZ:       Z,
 	TypeLz:      bytePrefixMatcher(lzMagic),
 	TypeRpm:     Rpm,
@@ -104,6 +104,17 @@ func bytePrefixMatcher(magicPattern []byte) Matcher {
 	return func(data []byte) bool {
 		return compareBytes(data, magicPattern, 0)
 	}
+}
+
+// Deb matches a Debian binary package (an ar archive whose first member is debian-binary).
+func Deb(buf []byte) bool {
+	return compareBytes(buf, debMagic, 0)
+}
+
+// Ar matches a Unix ar archive that is not a Debian package.
+// deb and ar share the !<arch> prefix; Match walks a map so ar can otherwise win first (issue #126).
+func Ar(buf []byte) bool {
+	return compareBytes(buf, arMagic, 0) && !Deb(buf)
 }
 
 func Zip(buf []byte) bool {
