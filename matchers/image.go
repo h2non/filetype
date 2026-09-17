@@ -152,21 +152,26 @@ func Exr(buf []byte) bool {
 		buf[2] == 0x31 && buf[3] == 0x01
 }
 
+func avifBrand(brand string) bool {
+	return brand == "avif" || brand == "avis"
+}
+
 func Avif(buf []byte) bool {
 	if !isobmff.IsISOBMFF(buf) {
 		return false
 	}
 
 	majorBrand, _, compatibleBrands := isobmff.GetFtyp(buf)
-	if majorBrand == "avif" {
+	if avifBrand(majorBrand) {
 		return true
 	}
 
-	if majorBrand == "mif1" || majorBrand == "msf1" {
-		for _, compatibleBrand := range compatibleBrands {
-			if compatibleBrand == "avif" {
-				return true
-			}
+	// libavif commonly writes major brand miaf/mif1/msf1 with avif
+	// in compatible_brands. Restricting the major brand to mif1/msf1
+	// missed those files.
+	for _, compatibleBrand := range compatibleBrands {
+		if avifBrand(compatibleBrand) {
+			return true
 		}
 	}
 
