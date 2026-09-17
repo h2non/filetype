@@ -1,8 +1,8 @@
 package matchers
 
 import (
-	"bytes"
 	"encoding/binary"
+	"strings"
 )
 
 var (
@@ -107,55 +107,63 @@ func msooxml(buf []byte) (typ docType, found bool) {
 		return
 	}
 
-	// make sure the first file is correct
-	if v, ok := checkMSOoml(buf, 0x1E); ok {
-		return v, ok
-	}
-
-	if !compareBytes(buf, []byte("[Content_Types].xml"), 0x1E) &&
-		!compareBytes(buf, []byte("_rels/.rels"), 0x1E) &&
-		!compareBytes(buf, []byte("docProps"), 0x1E) &&
-		!compareBytes(buf, []byte("_rels"), 0x1E) {
+	// Walk every local file header in the buffer. XLSX/DOCX/PPTX writers
+	// (Excel, excelize, Google Sheets, LibreOffice) do not share a ZIP
+	// entry order, so looking only at the 1st/3rd/4th name misses files.
+	sawOOXML := false
+	forEachZipLocalName(buf, func(name string) bool {
+		switch {
+		case strings.HasPrefix(name, "word/"):
+			typ, found = TYPE_DOCX, true
+			return true
+		case strings.HasPrefix(name, "xl/"):
+			typ, found = TYPE_XLSX, true
+			return true
+		case strings.HasPrefix(name, "ppt/"):
+			typ, found = TYPE_PPTX, true
+			return true
+		case name == "[Content_Types].xml" ||
+			strings.HasPrefix(name, "_rels") ||
+			strings.HasPrefix(name, "docProps"):
+			sawOOXML = true
+		}
+		return false
+	})
+	if found {
 		return
 	}
-
-	// skip to the second local file header
-	// since some documents include a 520-byte extra field following the file
-	// header, we need to scan for the next header
-	startOffset := int(binary.LittleEndian.Uint32(buf[18:22]) + 49)
-	idx := search(buf, startOffset, 6000)
-	if idx == -1 {
-		return
-	}
-
-	// now skip to the *third* local file header; again, we need to scan due to a
-	// 520-byte extra field following the file header
-	startOffset += idx + 4 + 26
-	idx = search(buf, startOffset, 6000)
-	if idx == -1 {
-		return
-	}
-
-	// and check the subdirectory name to determine which type of OOXML
-	// file we have.  Correct the mimetype with the registered ones:
-	// http://technet.microsoft.com/en-us/library/cc179224.aspx
-	startOffset += idx + 4 + 26
-	if typ, ok := checkMSOoml(buf, startOffset); ok {
-		return typ, ok
-	}
-
-	// OpenOffice/Libreoffice orders ZIP entry differently, so check the 4th file
-	startOffset += 26
-	idx = search(buf, startOffset, 6000)
-	if idx == -1 {
+	if sawOOXML {
 		return TYPE_OOXML, true
 	}
+	return
+}
 
-	startOffset += idx + 4 + 26
-	if typ, ok := checkMSOoml(buf, startOffset); ok {
-		return typ, ok
-	} else {
-		return TYPE_OOXML, true
+// forEachZipLocalName calls fn with each ZIP local-file name found in buf.
+// fn returning true stops the walk.
+func forEachZipLocalName(buf []byte, fn func(name string) bool) {
+	signature := []byte{'P', 'K', 0x03, 0x04}
+	offset := 0
+	for offset+30 <= len(buf) {
+		if !compareBytes(buf, signature, offset) {
+			offset++
+			continue
+		}
+		nameLen := int(binary.LittleEndian.Uint16(buf[offset+26 : offset+28]))
+		extraLen := int(binary.LittleEndian.Uint16(buf[offset+28 : offset+30]))
+		nameOff := offset + 30
+		if nameLen <= 0 || nameLen > 512 || nameOff+nameLen > len(buf) {
+			offset += 4
+			continue
+		}
+		name := string(buf[nameOff : nameOff+nameLen])
+		if fn(name) {
+			return
+		}
+		next := nameOff + nameLen + extraLen
+		if next <= offset {
+			return
+		}
+		offset = next
 	}
 }
 
@@ -174,39 +182,6 @@ func compareBytes(slice, subSlice []byte, startOffset int) bool {
 	}
 
 	return true
-}
-
-func checkMSOoml(buf []byte, offset int) (typ docType, ok bool) {
-	ok = true
-
-	switch {
-	case compareBytes(buf, []byte("word/"), offset):
-		typ = TYPE_DOCX
-	case compareBytes(buf, []byte("ppt/"), offset):
-		typ = TYPE_PPTX
-	case compareBytes(buf, []byte("xl/"), offset):
-		typ = TYPE_XLSX
-	default:
-		ok = false
-	}
-
-	return
-}
-
-func search(buf []byte, start, rangeNum int) int {
-	length := len(buf)
-	end := start + rangeNum
-	signature := []byte{'P', 'K', 0x03, 0x04}
-
-	if end > length {
-		end = length
-	}
-
-	if start >= end {
-		return -1
-	}
-
-	return bytes.Index(buf[start:end], signature)
 }
 
 func Odp(buf []byte) bool {
