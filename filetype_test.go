@@ -38,7 +38,24 @@ func TestIs(t *testing.T) {
 			t.Fatalf("Invalid match: %s", test.ext)
 		}
 	}
+}
 
+func TestIsExtension(t *testing.T) {
+	cases := []struct {
+		buf   []byte
+		ext   string
+		match bool
+	}{
+		{[]byte{0xFF, 0xD8, 0xFF}, "jpg", true},
+		{[]byte{0xFF, 0xD8, 0x00}, "jpg", false},
+		{[]byte{0x89, 0x50, 0x4E, 0x47}, "png", true},
+	}
+
+	for _, test := range cases {
+		if IsExtension(test.buf, test.ext) != test.match {
+			t.Fatalf("Invalid match: %s", test.ext)
+		}
+	}
 }
 
 func TestIsType(t *testing.T) {

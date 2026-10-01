@@ -83,6 +83,24 @@ func main() {
 }
 ```
 
+##### Available type class matchers
+
+* `IsImage` / `Image`: Checks if the file matches an image format
+* `IsAudio` / `Audio`: Checks if the file matches an audio format
+* `IsVideo` / `Video`: Checks if the file matches a video format
+* `IsFont` / `Font`: Checks if the file matches a font format
+* `IsArchive` / `Archive`: Checks if the file matches an archive format
+* `IsDocument` / `Document`: Checks if the file matches a document format
+* `IsApplication` / `Application`: Checks if the file matches an application format
+
+You can also match by specific file extension or MIME type:
+
+* `Is`: Checks if the file matches the magic number for the specified extension
+* `IsExtension`: Semantic alias for `Is()`
+* `IsType`: Checks if the file matches the specified `types.Type`
+* `IsMIME`: Checks if the file matches the specified MIME type
+
+
 #### Supported type
 
 ```go
