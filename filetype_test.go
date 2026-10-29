@@ -77,6 +77,34 @@ func TestIsMIME(t *testing.T) {
 	}
 }
 
+func TestIsMIMESharedByTypes(t *testing.T) {
+	cases := []struct {
+		name string
+		buf  []byte
+		mime string
+	}{
+		{"woff", []byte{0x77, 0x4F, 0x46, 0x46, 0x00, 0x01, 0x00, 0x00}, "application/font-woff"},
+		{"woff2", []byte{0x77, 0x4F, 0x46, 0x32, 0x00, 0x01, 0x00, 0x00}, "application/font-woff"},
+		{"ttf", []byte{0x00, 0x01, 0x00, 0x00, 0x00}, "application/font-sfnt"},
+		{"otf", []byte{0x4F, 0x54, 0x54, 0x4F, 0x00}, "application/font-sfnt"},
+	}
+
+	for _, test := range cases {
+		t.Run(test.name, func(t *testing.T) {
+			// The type registry has no guaranteed iteration order. Every
+			// matching type must work even when its sibling is visited first.
+			for i := 0; i < 100; i++ {
+				if !IsMIME(test.buf, test.mime) {
+					t.Fatalf("missing MIME match: %s", test.mime)
+				}
+			}
+			if IsMIME([]byte("not a font"), test.mime) {
+				t.Fatalf("unexpected MIME match: %s", test.mime)
+			}
+		})
+	}
+}
+
 func TestIsSupported(t *testing.T) {
 	cases := []struct {
 		ext   string

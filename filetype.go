@@ -58,7 +58,7 @@ func IsMIME(buf []byte, mime string) bool {
 		if kind.MIME.Value == mime {
 			matcher := matchers.Matchers[kind]
 			result = matcher(buf) != types.Unknown
-			return false
+			return !result
 		}
 		return true
 	})
