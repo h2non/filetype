@@ -51,16 +51,17 @@ func MatchFile(filepath string) (types.Type, error) {
 	return MatchReader(file)
 }
 
-// MatchReader is convenient wrapper to Match() any Reader
+// MatchReader is convenient wrapper to Match() any Reader.
+// It reads up to 8192 bytes, stopping at EOF.
 func MatchReader(reader io.Reader) (types.Type, error) {
 	buffer := make([]byte, 8192) // 8K makes msooxml tests happy and allows for expanded custom file checks
 
-	_, err := reader.Read(buffer)
-	if err != nil && err != io.EOF {
+	n, err := io.ReadFull(reader, buffer)
+	if err != nil && err != io.EOF && err != io.ErrUnexpectedEOF {
 		return types.Unknown, err
 	}
 
-	return Match(buffer)
+	return Match(buffer[:n])
 }
 
 // AddMatcher registers a new matcher type
