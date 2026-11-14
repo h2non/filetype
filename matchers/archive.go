@@ -1,6 +1,9 @@
 package matchers
 
-import "encoding/binary"
+import (
+	"bytes"
+	"encoding/binary"
+)
 
 const (
 	ZstdMagicSkippableStart = 0x184D2A50
@@ -114,10 +117,40 @@ func Zip(buf []byte) bool {
 }
 
 func Tar(buf []byte) bool {
-	return len(buf) > 261 &&
+	if len(buf) > 261 &&
 		buf[257] == 0x75 && buf[258] == 0x73 &&
 		buf[259] == 0x74 && buf[260] == 0x61 &&
-		buf[261] == 0x72
+		buf[261] == 0x72 {
+		return true
+	}
+	if len(buf) < 512 {
+		return false
+	}
+
+	// Legacy TAR has no magic signature. Check its octal checksum field
+	// before computing the checksum of the complete header.
+	field := bytes.Trim(buf[148:156], " \x00")
+	if len(field) == 0 {
+		return false
+	}
+	var checksum int64
+	for _, digit := range field {
+		if digit < '0' || digit > '7' {
+			return false
+		}
+		checksum = checksum*8 + int64(digit-'0')
+	}
+
+	var unsigned, signed int64
+	for i, b := range buf[:512] {
+		if i >= 148 && i < 156 {
+			b = ' '
+		}
+		unsigned += int64(b)
+		signed += int64(int8(b))
+	}
+	// Historical TAR implementations also used signed-byte checksums.
+	return checksum == unsigned || checksum == signed
 }
 
 func Rar(buf []byte) bool {
