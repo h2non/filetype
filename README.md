@@ -14,7 +14,7 @@ For SVG file type checking, see [go-is-svg](https://github.com/h2non/go-is-svg) 
 - [Pluggable](#add-additional-file-type-matchers): add custom new types and matchers
 - Simple and semantic API
 - [Blazing fast](#benchmarks), even processing large files
-- Only first 262 bytes representing the max file header is required, so you can just [pass a slice](#file-header)
+- Many formats can be detected from a small [header slice](#file-header). Legacy V7 TAR detection requires a complete 512-byte header; document formats may need more data.
 - Dependency free (just Go code, no C compilation needed)
 - Cross-platform file recognition
 
@@ -127,7 +127,8 @@ func main() {
   // Open a file descriptor
   file, _ := os.Open("movie.mp4")
 
-  // We only have to pass the file header = first 261 bytes
+  // Read a small header for the image check below.
+  // Other formats, including V7 TAR, can require more bytes.
   head := make([]byte, 261)
   file.Read(head)
 
