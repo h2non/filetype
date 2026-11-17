@@ -125,13 +125,13 @@ func Heif(buf []byte) bool {
 	}
 
 	majorBrand, _, compatibleBrands := isobmff.GetFtyp(buf)
-	if majorBrand == "heic" {
+	if majorBrand == "heic" || majorBrand == "heix" {
 		return true
 	}
 
 	if majorBrand == "mif1" || majorBrand == "msf1" {
 		for _, compatibleBrand := range compatibleBrands {
-			if compatibleBrand == "heic" {
+			if compatibleBrand == "heic" || compatibleBrand == "heix" {
 				return true
 			}
 		}
