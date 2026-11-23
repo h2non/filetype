@@ -50,7 +50,7 @@ var Archive = Map{
 	TypeXz:      bytePrefixMatcher(xzMagic),
 	TypeZstd:    Zst,
 	TypePdf:     bytePrefixMatcher(pdfMagic),
-	TypeExe:     bytePrefixMatcher(exeMagic),
+	TypeExe:     Exe,
 	TypeSwf:     Swf,
 	TypeRtf:     bytePrefixMatcher(rtfMagic),
 	TypeEot:     Eot,
@@ -118,6 +118,13 @@ func Tar(buf []byte) bool {
 		buf[257] == 0x75 && buf[258] == 0x73 &&
 		buf[259] == 0x74 && buf[260] == 0x61 &&
 		buf[261] == 0x72
+}
+
+// Exe matches the "MZ" signature of an executable. A tar archive whose first
+// member name starts with "MZ" also begins with these two bytes, so it is left
+// to the more specific tar matcher, whatever the order of the matchers.
+func Exe(buf []byte) bool {
+	return compareBytes(buf, exeMagic, 0) && !Tar(buf)
 }
 
 func Rar(buf []byte) bool {

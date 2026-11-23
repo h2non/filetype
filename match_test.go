@@ -1,6 +1,7 @@
 package filetype
 
 import (
+	"archive/tar"
 	"bytes"
 	"io"
 	"io/ioutil"
@@ -67,6 +68,37 @@ func TestMatchFile(t *testing.T) {
 	kind, _ := MatchFile("./fixtures/sample_skippable.zst")
 	if kind.Extension != "zst" {
 		t.Fatalf("Invalid type: %s != %s", kind.Extension, "zst")
+	}
+}
+
+func TestMatchTarWithMZName(t *testing.T) {
+	// A ustar archive whose first member name starts with "MZ" also starts
+	// with the exe signature. It must be matched as tar, independently of
+	// the order in which the matchers are tried.
+	var buf bytes.Buffer
+	tw := tar.NewWriter(&buf)
+	if err := tw.WriteHeader(&tar.Header{Name: "MZ.txt", Mode: 0644, Format: tar.FormatUSTAR}); err != nil {
+		t.Fatalf("Error: %s", err)
+	}
+	if err := tw.Close(); err != nil {
+		t.Fatalf("Error: %s", err)
+	}
+
+	for i := 0; i < 100; i++ {
+		kind, _ := Match(buf.Bytes())
+		if kind != matchers.TypeTar {
+			t.Fatalf("Invalid type: %s != tar", kind.Extension)
+		}
+		kind, _ = Archive(buf.Bytes())
+		if kind != matchers.TypeTar {
+			t.Fatalf("Invalid archive type: %s != tar", kind.Extension)
+		}
+	}
+
+	// a buffer with only the exe signature is still an exe
+	kind, _ := Match([]byte{0x4D, 0x5A, 0x90, 0x00})
+	if kind != matchers.TypeExe {
+		t.Fatalf("Invalid type: %s != exe", kind.Extension)
 	}
 }
 
